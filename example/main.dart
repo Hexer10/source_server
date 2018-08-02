@@ -1,4 +1,4 @@
-import 'package:SourceServer/SourceServer.dart';
+import 'package:source_server/source_server.dart';
 
 void main() async {
 

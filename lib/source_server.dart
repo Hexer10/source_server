@@ -12,8 +12,8 @@ const int SERVERDATA_EXECCOMMAND = 2;
 const int SERVERDATA_RESPONSE_VALUE = 0;
 
 
-/// [source_server] is used to connect to Source Dedicated Servers[CSGO, CSS, TF2, ...] using the RCON Protocol.
-class source_server {
+/// [SourceServer] is used to connect to Source Dedicated Servers[CSGO, CSS, TF2, ...] using the RCON Protocol.
+class SourceServer {
 
     RawSocket _socket;
     bool _connected = false;
@@ -25,14 +25,14 @@ class source_server {
     int _id = 1;
     Function _onDoneFunc;
 
-    /// The IP address set with [source_server] constructor.
+    /// The IP address set with [SourceServer] constructor.
     String get ip => _ip;
-    /// The port set with [source_server] constructor.
+    /// The port set with [SourceServer] constructor.
     int get port => _port;
-    /// The password set with [source_server] constructor.
+    /// The password set with [SourceServer] constructor.
     String get password => _password;
 
-    /// Construct [source_server] class, queries a NON-Empty [password] and optionally an [ip] and/or [port]
+    /// Construct [SourceServer] class, queries a NON-Empty [password] and optionally an [ip] and/or [port]
     SourceServer(String password, {String ip = 'localhost', int port = 27015}){
         if (password.isEmpty){
             throw('Password is empty!');
