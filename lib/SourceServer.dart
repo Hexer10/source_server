@@ -1,4 +1,4 @@
-library SourceServer;
+library source_server;
 
 import 'dart:io';
 import 'dart:collection';
@@ -12,8 +12,8 @@ const int SERVERDATA_EXECCOMMAND = 2;
 const int SERVERDATA_RESPONSE_VALUE = 0;
 
 
-/// [SourceServer] is used to connect to Source Dedicated Servers[CSGO, CSS, TF2, ...] using the RCON Protocol.
-class SourceServer {
+/// [source_server] is used to connect to Source Dedicated Servers[CSGO, CSS, TF2, ...] using the RCON Protocol.
+class source_server {
 
     RawSocket _socket;
     bool _connected = false;
@@ -25,14 +25,14 @@ class SourceServer {
     int _id = 1;
     Function _onDoneFunc;
 
-    /// The IP address set with [SourceServer] constructor.
+    /// The IP address set with [source_server] constructor.
     String get ip => _ip;
-    /// The port set with [SourceServer] constructor.
+    /// The port set with [source_server] constructor.
     int get port => _port;
-    /// The password set with [SourceServer] constructor.
+    /// The password set with [source_server] constructor.
     String get password => _password;
 
-    /// Construct [SourceServer] class, queries a NON-Empty [password] and optionally an [ip] and/or [port]
+    /// Construct [source_server] class, queries a NON-Empty [password] and optionally an [ip] and/or [port]
     SourceServer(String password, {String ip = 'localhost', int port = 27015}){
         if (password.isEmpty){
             throw('Password is empty!');
