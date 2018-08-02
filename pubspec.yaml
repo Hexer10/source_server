@@ -1,6 +1,6 @@
 name: SourceServer
 description: A library to connect to Source Dedicate Servers like CS:GO, CSS, TF2, ...
-version: 0.0.1
+version: 0.0.2
 author: Mattia <hexexer504@gmail.com>
 
 environment:
