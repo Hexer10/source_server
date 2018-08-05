@@ -1,4 +1,4 @@
-import 'package:source_server/source_server.dart';
+import '../lib/source_server.dart';
 
 void main() async {
 
@@ -8,4 +8,10 @@ void main() async {
     await rcon.connect();
     //Print the 'status' reply.
     print(await rcon.command('status'));
+
+    //Print all players name
+    var players = await rcon.getPlayers();
+    players.forEach((player) {
+       print(player.name);
+    });
 }

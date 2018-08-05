@@ -5,6 +5,7 @@ import 'dart:collection';
 import 'dart:convert';
 import 'dart:async';
 import 'dart:typed_data';
+import 'server_player.dart';
 
 const int SERVERDATA_AUTH = 3;
 const int SERVERDATA_AUTH_RESPONSE = 2;
@@ -18,6 +19,7 @@ class SourceServer {
     RawSocket _socket;
     bool _connected = false;
     Queue<Completer<Map<String, dynamic>>> _queue = new Queue();
+    List<ServerPlayer> _playersInfo = null;
 
     String _ip;
     int _port;
@@ -64,9 +66,14 @@ class SourceServer {
         return reply['body'];
     }
 
-    Future<String> updatePlayers() async {
+    Future<List<ServerPlayer>> getPlayers() async {
+        if (this._playersInfo != null)
+            return _playersInfo;
+
         List statusAttr = new List();
         List statusHeader = new List();
+        _playersInfo = new List();
+
         String status = await this.command('status');
         await status.split('\n').forEach((element) {
             if (element.indexOf('#') == 0 && element[0] != "#end"){
@@ -80,16 +87,37 @@ class SourceServer {
         statusAttr.removeAt(0);
         statusAttr.removeLast();
 
-        await statusAttr.forEach((element) {
-            List player = element.split(' ');
-            if (int.tryParse(player[1]) == null)
-                print('bot');
-            else
-                print('human');
-        });
 
-        print(jsonEncode(statusAttr));
-        return null;
+        await statusAttr.forEach((player) {
+            Map<String, dynamic> playerInfo = new Map();
+
+            //Get the player name
+            int start = player.indexOf('"');
+            int end = player.lastIndexOf('"');
+            String name = player.substring(start, end).substring(1);
+
+            //Remove the player name from our String
+            List info = player.replaceFirst('"$name" ', '').split(' ');
+
+            playerInfo['name'] = name;
+            playerInfo['userid'] = int.tryParse(info[0]);
+
+            if (int.tryParse(player.split(' ')[1]) == null){
+                playerInfo['steamid'] = "BOT";
+                playerInfo['onlinetime'] = null;
+                playerInfo['ping'] = null;
+                playerInfo['ip'] = null;
+            }
+            else {
+                playerInfo['steamid'] = info[2];
+                playerInfo['onlinetime'] = info[3];
+                playerInfo['ping'] = int.tryParse(info[5]);
+                playerInfo['ip'] = info[8];
+            }
+
+            _playersInfo.add(new ServerPlayer(playerInfo));
+        });
+        return _playersInfo;
     }
 
     Future<Map<String, dynamic>> _write(int type, String body, [int id]) async {
