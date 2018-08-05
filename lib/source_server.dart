@@ -64,6 +64,34 @@ class SourceServer {
         return reply['body'];
     }
 
+    Future<String> updatePlayers() async {
+        List statusAttr = new List();
+        List statusHeader = new List();
+        String status = await this.command('status');
+        await status.split('\n').forEach((element) {
+            if (element.indexOf('#') == 0 && element[0] != "#end"){
+                statusAttr.add(element.substring(1).trim());
+            }
+        });
+
+        await statusAttr[0].split(' ').forEach((element) {
+            statusHeader.add(element);
+        });
+        statusAttr.removeAt(0);
+        statusAttr.removeLast();
+
+        await statusAttr.forEach((element) {
+            List player = element.split(' ');
+            if (int.tryParse(player[1]) == null)
+                print('bot');
+            else
+                print('human');
+        });
+
+        print(jsonEncode(statusAttr));
+        return null;
+    }
+
     Future<Map<String, dynamic>> _write(int type, String body, [int id]) async {
         if (id != null)
             _id = id;
@@ -94,7 +122,7 @@ class SourceServer {
         return completer.future;
     }
 
-    void _onData(var data) async {
+    _onData(var data) async {
         if(data == RawSocketEvent.readClosed)
             _socket.close();
 
@@ -113,16 +141,16 @@ class SourceServer {
         _queue.removeFirst().complete(reply);
     }
 
-    void _onDone(){
+    _onDone(){
         _onDoneFunc();
         _connected = false;
     }
 
-    void _onError(var data){
+    _onError(var data){
         print(data);
     }
 
-    void _setList(int offset, ByteData bdata,Iterable<int> list) async {
+    _setList(int offset, ByteData bdata,Iterable<int> list) async {
         await list.forEach((element) {
             bdata.setInt8(offset, element);
             offset +=1;
