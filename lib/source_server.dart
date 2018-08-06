@@ -17,6 +17,8 @@ class SourceServer {
     RawSocket _socket;
     bool _connected = false;
     Queue<Completer<Map<String, dynamic>>> _queue = new Queue();
+
+    Map<String, String> _serverInfo = null;
     List<ServerPlayer> _playersInfo = null;
 
     String _ip;
@@ -65,6 +67,7 @@ class SourceServer {
         return reply['body'];
     }
 
+    /// Returns an array of [ServerPlayer] where are stored the player info.
     Future<List<ServerPlayer>> getPlayers() async {
         if (this._playersInfo != null) return _playersInfo;
 
@@ -114,6 +117,30 @@ class SourceServer {
             _playersInfo.add(new ServerPlayer(playerInfo));
         });
         return _playersInfo;
+    }
+
+    /// Returns server info.
+    Future<Map<String, dynamic>> getServerInfo() async {
+        if (_serverInfo != null)
+            return _serverInfo;
+
+        _serverInfo = new Map();
+        List<String> statusAttr = new List();
+
+        String status = await this.command('status');
+        await status.split('\n').forEach((element) {
+            if (element.indexOf('#') != 0) {
+                statusAttr.add(element.trim());
+            }
+        });
+
+        await statusAttr.forEach((element) {
+            int colon = element.indexOf(':');
+            if (colon != -1)
+                _serverInfo[element.substring(0, colon).trim()] = element.substring(colon+1).trim();
+        });
+
+        return _serverInfo;
     }
 
     Future<Map<String, dynamic>> _write(int type, String body, [int id]) async {

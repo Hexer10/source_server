@@ -9,9 +9,12 @@ void main() async {
     //Print the 'status' reply.
     print(await rcon.command('status'));
 
-    //Print all players name
+    //Print all players name.
     var players = await rcon.getPlayers();
     players.forEach((player) {
        print(player.name);
     });
+
+    //Print server info.
+    print(await rcon.getServerInfo());
 }
