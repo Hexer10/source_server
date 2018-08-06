@@ -68,8 +68,8 @@ class SourceServer {
     Future<List<ServerPlayer>> getPlayers() async {
         if (this._playersInfo != null) return _playersInfo;
 
-        List statusAttr = new List();
-        List statusHeader = new List();
+        List<String> statusAttr = new List();
+        List<String> statusHeader = new List();
         _playersInfo = new List();
 
         String status = await this.command('status');
@@ -144,7 +144,7 @@ class SourceServer {
         return completer.future;
     }
 
-    _onData(var data) async {
+    void _onData(var data) async {
         if (data == RawSocketEvent.readClosed) _socket.close();
 
         //Read the reply.
@@ -162,16 +162,16 @@ class SourceServer {
         _queue.removeFirst().complete(reply);
     }
 
-    _onDone() {
+    void _onDone() {
         _onDoneFunc();
         _connected = false;
     }
 
-    _onError(var data) {
-        print(data);
+    void _onError(var data, StackTrace trace) {
+        print(trace);
     }
 
-    _setList(int offset, ByteData bdata, Iterable<int> list) async {
+    void _setList(int offset, ByteData bdata, Iterable<int> list) async {
         await list.forEach((element) {
             bdata.setInt8(offset, element);
             offset += 1;
