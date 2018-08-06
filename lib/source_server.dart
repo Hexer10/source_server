@@ -12,10 +12,8 @@ const int SERVERDATA_AUTH_RESPONSE = 2;
 const int SERVERDATA_EXECCOMMAND = 2;
 const int SERVERDATA_RESPONSE_VALUE = 0;
 
-
 /// [SourceServer] is used to connect to Source Dedicated Servers[CSGO, CSS, TF2, ...] using the RCON Protocol.
 class SourceServer {
-
     RawSocket _socket;
     bool _connected = false;
     Queue<Completer<Map<String, dynamic>>> _queue = new Queue();
@@ -29,15 +27,17 @@ class SourceServer {
 
     /// The IP address set with [SourceServer] constructor.
     String get ip => _ip;
+
     /// The port set with [SourceServer] constructor.
     int get port => _port;
+
     /// The password set with [SourceServer] constructor.
     String get password => _password;
 
     /// Construct [SourceServer] class, queries a NON-Empty [password] and optionally an [ip] and/or [port]
-    SourceServer(String password, {String ip = 'localhost', int port = 27015}){
-        if (password.isEmpty){
-            throw('Password is empty!');
+    SourceServer(String password, {String ip = 'localhost', int port = 27015}) {
+        if (password.isEmpty) {
+            throw ('Password is empty!');
         }
 
         _ip = ip;
@@ -55,20 +55,18 @@ class SourceServer {
         return _write(SERVERDATA_AUTH, _password);
     }
 
-
     /// Sends a [command] to the [SourceServer].
     /// Returns a [Future] string containing the server reply.
     Future<String> command(String command) async {
         if (!_connected)
-            throw('The socket isn\'n connected yet!\nYou should use [connect] to do so');
+            throw ('The socket isn\'n connected yet!\nYou should use [connect] to do so');
 
         var reply = await _write(SERVERDATA_EXECCOMMAND, command);
         return reply['body'];
     }
 
     Future<List<ServerPlayer>> getPlayers() async {
-        if (this._playersInfo != null)
-            return _playersInfo;
+        if (this._playersInfo != null) return _playersInfo;
 
         List statusAttr = new List();
         List statusHeader = new List();
@@ -76,7 +74,7 @@ class SourceServer {
 
         String status = await this.command('status');
         await status.split('\n').forEach((element) {
-            if (element.indexOf('#') == 0 && element[0] != "#end"){
+            if (element.indexOf('#') == 0 && element[0] != "#end") {
                 statusAttr.add(element.substring(1).trim());
             }
         });
@@ -86,7 +84,6 @@ class SourceServer {
         });
         statusAttr.removeAt(0);
         statusAttr.removeLast();
-
 
         await statusAttr.forEach((player) {
             Map<String, dynamic> playerInfo = new Map();
@@ -102,13 +99,12 @@ class SourceServer {
             playerInfo['name'] = name;
             playerInfo['userid'] = int.tryParse(info[0]);
 
-            if (int.tryParse(player.split(' ')[1]) == null){
+            if (int.tryParse(player.split(' ')[1]) == null) {
                 playerInfo['steamid'] = "BOT";
                 playerInfo['onlinetime'] = null;
                 playerInfo['ping'] = null;
                 playerInfo['ip'] = null;
-            }
-            else {
+            } else {
                 playerInfo['steamid'] = info[2];
                 playerInfo['onlinetime'] = info[3];
                 playerInfo['ping'] = int.tryParse(info[5]);
@@ -121,8 +117,7 @@ class SourceServer {
     }
 
     Future<Map<String, dynamic>> _write(int type, String body, [int id]) async {
-        if (id != null)
-            _id = id;
+        if (id != null) _id = id;
 
         //Get the ASCII encoded list.
         var bodyASCII = ascii.encode(body);
@@ -136,8 +131,7 @@ class SourceServer {
         bdata.setInt32(4, _id++, Endian.little); //Any integer.
         bdata.setInt32(8, type, Endian.little); //Integer: SERVERDATA_*.
         _setList(12, bdata, bodyASCII);
-        bdata.setInt16(size-2, 0, Endian.little); //Write the null terminators.
-
+        bdata.setInt16(size - 2, 0, Endian.little); //Write the null terminators.
 
         //Write packet to the socket.
         var packet = bdata.buffer.asInt8List();
@@ -151,37 +145,36 @@ class SourceServer {
     }
 
     _onData(var data) async {
-        if(data == RawSocketEvent.readClosed)
-            _socket.close();
+        if (data == RawSocketEvent.readClosed) _socket.close();
 
         //Read the reply.
         List<int> buffer = await _socket.read();
-        if (buffer == null || buffer[8] != SERVERDATA_RESPONSE_VALUE)
-            return;
-
+        if (buffer == null || buffer[8] != SERVERDATA_RESPONSE_VALUE) return;
 
         //Build the map reply.
         Map<String, dynamic> reply = new Map();
         reply['size'] = buffer.first;
         reply['id'] = buffer[4];
         reply['type'] = buffer[8];
-        reply['body'] = ascii.decode(buffer.getRange(12, buffer.length -2).toList(), allowInvalid: true);
+        reply['body'] = ascii.decode(
+            buffer.getRange(12, buffer.length - 2).toList(),
+            allowInvalid: true);
         _queue.removeFirst().complete(reply);
     }
 
-    _onDone(){
+    _onDone() {
         _onDoneFunc();
         _connected = false;
     }
 
-    _onError(var data){
+    _onError(var data) {
         print(data);
     }
 
-    _setList(int offset, ByteData bdata,Iterable<int> list) async {
+    _setList(int offset, ByteData bdata, Iterable<int> list) async {
         await list.forEach((element) {
             bdata.setInt8(offset, element);
-            offset +=1;
+            offset += 1;
         });
     }
 }
