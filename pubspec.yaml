@@ -1,8 +1,8 @@
 name: source_server
 description: A library to connect to Source Dedicate Servers like CS:GO, CSS, TF2, ...
-version: 0.1.3
+version: 0.1.4
 author: Mattia <hexexer504@gmail.com>
 homepage: https://github.com/Hexer10/SourceServer
 
 environment:
-  sdk: '>=2.0.0-dev <3.0.0'
+  sdk: '>=2.0.0 <3.0.0'
