@@ -6,7 +6,7 @@ A library to connect to Source Dedicated Servers [CS:GO, CSS, TF2, ...]
 Import the library (make sure to check for the latest version).
 ```yaml
 depedencies:
-    source_server: ^0.0.3
+    source_server: ^0.1.4
 ```
 Then Construct our class.
 ```dart
@@ -29,8 +29,5 @@ var reply = await server.command('status');
 the method `command` will return a `Future` string holding the server reply.
 
 ### TODO
-
--   If packet is split in multiple requests return it properly.
--   Allow to get more info about the server and connected players.
--   Add a `status` command parser. 
-
+   
+Check the [issues](https://github.com/Hexer10/SourceServer/issues) page on github
