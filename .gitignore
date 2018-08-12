@@ -12,3 +12,6 @@ doc/api/
 
 #My debugging dirs
 bin/test.dart
+
+#IDE Files
+.idea/

@@ -79,19 +79,19 @@ class SourceServer {
     _playersInfo = [];
 
     String status = await this.command('status');
-    await status.split('\n').forEach((element) {
+    for (var element in status.split('\n'))
       if (element.indexOf('#') == 0 && element[0] != "#end") {
         statusAttr.add(element.substring(1).trim());
       }
-    });
 
-    await statusAttr[0].split(' ').forEach((element) {
+    for (var element in statusAttr[0].split(' ')) {
       statusHeader.add(element);
-    });
+    }
+
     statusAttr.removeAt(0);
     statusAttr.removeLast();
 
-    await statusAttr.forEach((player) {
+    for (var player in statusAttr) {
       Map<String, dynamic> playerInfo = {};
       //Get the player name
       int start = player.indexOf('"');
@@ -117,7 +117,7 @@ class SourceServer {
       }
 
       _playersInfo.add(ServerPlayer(playerInfo));
-    });
+    }
     return _playersInfo;
   }
 
@@ -139,14 +139,14 @@ class SourceServer {
       int colon = element.indexOf(':');
       if (colon != -1)
         _serverInfo[element.substring(0, colon).trim()] =
-            element.substring(colon + 1).trim();
+          element.substring(colon + 1).trim();
     });
 
     return _serverInfo;
   }
 
   Future<Map<String, dynamic>> _write(int type, String body,
-      {int id, bool skip: false}) async {
+                                      {int id, bool skip: false}) async {
     if (id != null) _id = id;
 
     //Get the ASCII encoded list.
@@ -246,10 +246,11 @@ class SourceServer {
   }
 
   void _setList(int offset, ByteData bdata, Iterable<int> list) async {
-    await list.forEach((element) {
+    for (var element in list) {
       bdata.setInt8(offset, element);
       offset += 1;
-    });
+    }
+    ;
   }
 
   //TODO Do this properly
