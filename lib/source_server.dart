@@ -17,12 +17,12 @@ const int SERVERDATA_RESPONSE_VALUE = 0;
 class SourceServer {
   RawSocket _socket;
   bool _connected = false;
-  Queue<Completer<Map<String, dynamic>>> _queue = new Queue();
+  Queue<Completer<Map<String, dynamic>>> _queue = Queue();
 
   static const List<int> _nullBody = [0, 1, 0, 0];
 
-  Map<String, String> _serverInfo = null;
-  List<ServerPlayer> _playersInfo = null;
+  Map<String, String> _serverInfo;
+  List<ServerPlayer> _playersInfo;
 
   String _ip;
   int _port;
@@ -74,9 +74,9 @@ class SourceServer {
   Future<List<ServerPlayer>> getPlayers() async {
     if (this._playersInfo != null) return _playersInfo;
 
-    List<String> statusAttr = new List();
-    List<String> statusHeader = new List();
-    _playersInfo = new List();
+    List<String> statusAttr = [];
+    List<String> statusHeader = [];
+    _playersInfo = [];
 
     String status = await this.command('status');
     await status.split('\n').forEach((element) {
@@ -92,8 +92,7 @@ class SourceServer {
     statusAttr.removeLast();
 
     await statusAttr.forEach((player) {
-      Map<String, dynamic> playerInfo = new Map();
-
+      Map<String, dynamic> playerInfo = {};
       //Get the player name
       int start = player.indexOf('"');
       int end = player.lastIndexOf('"');
@@ -117,7 +116,7 @@ class SourceServer {
         playerInfo['ip'] = info[8];
       }
 
-      _playersInfo.add(new ServerPlayer(playerInfo));
+      _playersInfo.add(ServerPlayer(playerInfo));
     });
     return _playersInfo;
   }
@@ -126,8 +125,8 @@ class SourceServer {
   Future<Map<String, dynamic>> getServerInfo() async {
     if (_serverInfo != null) return _serverInfo;
 
-    _serverInfo = new Map();
-    List<String> statusAttr = new List();
+    _serverInfo = {};
+    List<String> statusAttr = [];
 
     String status = await this.command('status');
     await status.split('\n').forEach((element) {
@@ -155,8 +154,8 @@ class SourceServer {
 
     //Get the packet size.
     var size = bodyASCII.length + 14;
-    var buffer = new Int8List(size).buffer;
-    var bdata = new ByteData.view(buffer);
+    var buffer = Int8List(size).buffer;
+    var bdata = ByteData.view(buffer);
 
     bdata.setInt32(0, size - 4, Endian.little); //Byte requests length ).
     bdata.setInt32(4, _id++, Endian.little); //Any integer.
@@ -170,10 +169,10 @@ class SourceServer {
 
     //TODO Find a better way to achieve this
     if (type == SERVERDATA_EXECCOMMAND) {
-      new Timer(Duration(milliseconds: 220), _writeNull);
+      Timer(Duration(milliseconds: 220), _writeNull);
     }
 
-    var completer = new Completer<Map<String, dynamic>>();
+    var completer = Completer<Map<String, dynamic>>();
     _queue.add(completer);
 
     //Return the reply.
@@ -182,11 +181,11 @@ class SourceServer {
 
   void _writeNull() {
     var size = 15;
-    var buffer = new Int8List(size).buffer;
-    var bdata = new ByteData.view(buffer);
+    var buffer = Int8List(size).buffer;
+    var bdata = ByteData.view(buffer);
 
-    buffer = new Int8List(size).buffer;
-    bdata = new ByteData.view(buffer);
+    buffer = Int8List(size).buffer;
+    bdata = ByteData.view(buffer);
     bdata.setInt32(0, size - 4, Endian.little); //Byte requests length ).
     bdata.setInt32(4, _id++, Endian.little); //Any integer.
     bdata.setInt32(8, 0, Endian.little); //Integer: SERVERDATA_*.
@@ -196,7 +195,7 @@ class SourceServer {
     _socket.write(packet, 0, packet.length);
   }
 
-  List<int> _bodyList = new List();
+  List<int> _bodyList = [];
   int _count = 0;
 
   void _onData(var data) async {
@@ -225,7 +224,7 @@ class SourceServer {
     }
 
     //Build the map reply.
-    Map<String, dynamic> reply = new Map();
+    Map<String, dynamic> reply = {};
     reply['size'] = buffer.first;
     reply['id'] = buffer[4];
     reply['type'] = buffer[8];
@@ -233,7 +232,7 @@ class SourceServer {
 
     if (_queue.isNotEmpty) {
       _queue.removeFirst().complete(reply);
-      _bodyList = new List();
+      _bodyList = [];
     }
   }
 
