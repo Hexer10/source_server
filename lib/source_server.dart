@@ -139,14 +139,14 @@ class SourceServer {
       int colon = element.indexOf(':');
       if (colon != -1)
         _serverInfo[element.substring(0, colon).trim()] =
-          element.substring(colon + 1).trim();
+            element.substring(colon + 1).trim();
     });
 
     return _serverInfo;
   }
 
   Future<Map<String, dynamic>> _write(int type, String body,
-                                      {int id, bool skip: false}) async {
+      {int id, bool skip: false}) async {
     if (id != null) _id = id;
 
     //Get the ASCII encoded list.
