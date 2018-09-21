@@ -42,7 +42,7 @@ class SourceServer {
   /// Construct [SourceServer] class, queries a NON-Empty [password] and optionally an [ip] and/or [port]
   SourceServer(String password, {String ip = 'localhost', int port = 27015}) {
     if (password.isEmpty) {
-      throw ('Password is empty!');
+      throw 'Password is empty!';
     }
 
     _ip = ip;
@@ -52,10 +52,10 @@ class SourceServer {
 
   /// Connects and authenticates to the remove Source Dedicated Server.
   /// Optionally you can provide [onDone] to be called when the connection is closed.
-  Future<Map<String, dynamic>> connect([Function onDone = null]) async {
+  Future<Map<String, dynamic>> connect([Function onDone]) async {
     _onDoneFunc = onDone;
     _socket = await RawSocket.connect(_ip, _port);
-    await _socket.listen(_onData, onError: _onError, onDone: _onDone);
+    _socket.listen(_onData, onError: _onError, onDone: _onDone);
     _connected = true;
     return _write(SERVERDATA_AUTH, _password);
   }
@@ -64,7 +64,7 @@ class SourceServer {
   /// Returns a [Future] string containing the server reply.
   Future<String> command(String command) async {
     if (!_connected)
-      throw ('The socket isn\'n connected yet!\nYou should use [connect] to do so');
+      throw 'The socket isn\'n connected yet!\nYou should use [connect] to do so';
 
     var reply = await _write(SERVERDATA_EXECCOMMAND, command);
     return reply['body'];
@@ -80,7 +80,7 @@ class SourceServer {
 
     String status = await this.command('status');
     for (var element in status.split('\n'))
-      if (element.indexOf('#') == 0 && element[0] != "#end") {
+      if (element.indexOf('#') == 0 && element[0] != '#end') {
         statusAttr.add(element.substring(1).trim());
       }
 
@@ -105,7 +105,7 @@ class SourceServer {
       playerInfo['userid'] = int.tryParse(info[0]);
 
       if (int.tryParse(player.split(' ')[1]) == null) {
-        playerInfo['steamid'] = "BOT";
+        playerInfo['steamid'] = 'BOT';
         playerInfo['onlinetime'] = null;
         playerInfo['ping'] = null;
         playerInfo['ip'] = null;
@@ -129,13 +129,13 @@ class SourceServer {
     List<String> statusAttr = [];
 
     String status = await this.command('status');
-    await status.split('\n').forEach((element) {
+    status.split('\n').forEach((element) {
       if (element.indexOf('#') != 0) {
         statusAttr.add(element.trim());
       }
     });
 
-    await statusAttr.forEach((element) {
+    statusAttr.forEach((element) {
       int colon = element.indexOf(':');
       if (colon != -1)
         _serverInfo[element.substring(0, colon).trim()] =
@@ -205,7 +205,7 @@ class SourceServer {
     }
 
     //Read the reply.
-    List<int> buffer = await _socket.read();
+    List<int> buffer = _socket.read();
 
     if (buffer == null) return;
 
@@ -250,7 +250,6 @@ class SourceServer {
       bdata.setInt8(offset, element);
       offset += 1;
     }
-    ;
   }
 
   //TODO Do this properly

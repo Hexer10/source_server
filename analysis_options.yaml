@@ -1,14 +1,23 @@
-analyzer:
-#   exclude:
-#     - path/to/excluded/files/**
-
-# Lint rules and documentation, see http://dart-lang.github.io/linter/lints
 linter:
   rules:
-    - cancel_subscriptions
-    - hash_and_equals
-    - iterable_contains_unrelated_type
-    - list_remove_unrelated_type
-    - test_types_in_equals
-    - unrelated_type_equality_checks
-    - valid_regexps
+  - avoid_empty_else
+  - empty_statements
+  - prefer_void_to_null
+  - unnecessary_statements
+  - always_declare_return_types
+  - avoid_init_to_null
+  - avoid_void_async
+  - await_only_futures
+  - library_names
+  - prefer_conditional_assignment
+  - prefer_is_empty
+  - prefer_single_quotes
+  - unnecessary_new
+  - unnecessary_null_aware_assignments
+  - unnecessary_null_in_if_null_operators
+  - unnecessary_parenthesis
+  - package_names
+  - iterable_contains_unrelated_type
+  - list_remove_unrelated_type
+  - test_types_in_equals
+  - unrelated_type_equality_checks

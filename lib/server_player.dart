@@ -1,5 +1,5 @@
 class ServerPlayer {
-  Map<String, dynamic> _player = new Map();
+  Map<String, dynamic> _player = Map();
 
   ServerPlayer(this._player);
 

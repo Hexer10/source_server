@@ -2,7 +2,7 @@ import '../lib/source_server.dart';
 
 void main() async {
   //By default the IP is: localhost and port: 27015 .
-  SourceServer rcon = new SourceServer('foo');
+  SourceServer rcon = SourceServer('foo');
   //Attempt to connect.
   await rcon.connect();
   //Print the 'status' reply.
