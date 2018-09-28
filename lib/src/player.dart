@@ -1,5 +1,7 @@
+library source_server.player;
+
 class ServerPlayer {
-  Map<String, dynamic> _player = Map();
+  Map<String, dynamic> _player = {};
 
   ServerPlayer(this._player);
 
