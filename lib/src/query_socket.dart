@@ -7,23 +7,24 @@ import 'dart:typed_data';
 
 /// Query Protocol
 class QuerySocket {
-
   // Packets sent
 
   //final _A2S_PING = 0x69;
   final _A2S_INFO = 0x54;
   final _A2S_PLAYER = 0x55;
+
   //final _A2S_RULES = 0x56;
   //final _A2S_SERVERQUERY_GETCHALLENGE = 0x57;
-
 
   //Packets received
 
   //static const _S2A_PING = 0x6A;
   static const _S2A_CHALLENGE = 0x41;
   static const _S2A_INFO = 0x49;
+
   //static const _S2A_INFO_OLD = 0x6D; // Old GoldSource, HLTV uses it
   static const _S2A_PLAYER = 0x44;
+
   //static const _S2A_RULES = 0x45;
   //static const _S2A_RCON = 0x6C;
 
@@ -66,7 +67,6 @@ class QuerySocket {
     _socket = await RawDatagramSocket.bind(InternetAddress.anyIPv4, 5000);
     _socket.listen(_onData);
   }
-
 
   void _onData(RawSocketEvent event) {
     if (event != RawSocketEvent.read) {
@@ -199,8 +199,7 @@ class QuerySocket {
   ///TODO(Hexah): Implement updateRules.
   //Future<void> updateRules() async {}
 
-  void close() =>
-    _socket.close();
+  void close() => _socket.close();
 
   void _setList(ByteData data, Iterable<int> list, int pos) {
     for (var e in list) {
