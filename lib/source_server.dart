@@ -9,6 +9,7 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:logging/logging.dart';
+import 'package:pedantic/pedantic.dart';
 
 import 'src/query_socket.dart';
 import 'src/rcon_socket.dart';
@@ -96,7 +97,7 @@ class SourceServer {
   Future<Map<String, Map<String, dynamic>>> getPlayers() async {
     if (_players == null || _players.isCompleted) {
       _players = Completer();
-      query.updatePlayers();
+      unawaited(query.updatePlayers());
     }
 
     return _players.future;
@@ -106,8 +107,8 @@ class SourceServer {
   /// [ref link]: https://developer.valvesoftware.com/wiki/Server_queries#Response_Format
   Future<Map<String, dynamic>> getInfo() async {
     if (_info == null || _info.isCompleted) {
-      query.updateInfo();
       _info = Completer();
+      query.updateInfo();
     }
 
     return _info.future;

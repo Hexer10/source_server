@@ -1,6 +1,6 @@
 name: source_server
 description: A dart implementation of Source's Query Protocol and RCON.
-version: 1.0.0
+version: 1.0.1
 homepage: https://github.com/Hexer10/source_query_rcon
 author: Mattia <hexer504@gmail.com>
 
@@ -9,3 +9,4 @@ environment:
 
 dependencies:
   logging: ^0.11.3+2
+  pedantic: ^1.5.0
