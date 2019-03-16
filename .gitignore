@@ -9,9 +9,5 @@ build/
 
 # Directory created by dartdoc
 doc/api/
-
-#My debugging dirs
-bin/test.dart
-
-#IDE Files
+source_query_rcon.iml
 .idea/
