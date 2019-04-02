@@ -37,6 +37,7 @@ class RconSocket {
   }
 
   Future<void> _onData(List<int> data) async {
+    print('Recived $data');
     //Skip the first packet
     if (++_count == 1) {
       return;
@@ -57,7 +58,7 @@ class RconSocket {
         }
       case _SERVERDATA_RESPONSE_VALUE:
         {
-          var body = ascii.decode(data.sublist(9));
+          var body = utf8.decode(data.sublist(9));
           _queue.removeFirst().complete(body);
           break;
         }
@@ -74,13 +75,14 @@ class RconSocket {
       _write(_SERVERDATA_EXECCOMMAND, command);
 
   Future<String> _write(int packetType, String body) {
-    List<int> asciiBody = ascii.encode(body);
-    final size = asciiBody.length + 13;
+    var encodedBody = utf8.encode(body);
+    final size = encodedBody.length + 14;
     var data = ByteData(size);
     data.setInt32(0, size - 4, Endian.little);
     data.setInt32(4, ++_packetId, Endian.little);
     data.setInt32(8, packetType, Endian.little);
-    _setList(data, asciiBody, 12);
+    _setList(data, encodedBody, 12);
+    print('Written ${data.buffer.asInt8List()}');
     _socket.add(data.buffer.asInt8List());
 
     if (packetType == _SERVERDATA_AUTH) {

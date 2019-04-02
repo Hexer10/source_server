@@ -95,7 +95,7 @@ class QuerySocket {
           var oldIndex = 0;
           for (var i = 1; i <= 4; i++) {
             index = data.indexWhere((e) => e == 0, oldIndex);
-            info[_infoKeys[i]] = ascii.decode(data.sublist(oldIndex, index));
+            info[_infoKeys[i]] = utf8.decode(data.sublist(oldIndex, index));
             oldIndex = index + 1;
           }
 
@@ -105,8 +105,8 @@ class QuerySocket {
           info[_infoKeys[6]] = bdata.getInt8(2);
           info[_infoKeys[7]] = bdata.getInt8(3);
           info[_infoKeys[8]] = bdata.getInt8(4);
-          info[_infoKeys[9]] = ascii.decode([bdata.getInt8(5)]);
-          info[_infoKeys[10]] = ascii.decode([bdata.getInt8(6)]);
+          info[_infoKeys[9]] = utf8.decode([bdata.getInt8(5)]);
+          info[_infoKeys[10]] = utf8.decode([bdata.getInt8(6)]);
           info[_infoKeys[11]] = bdata.getInt8(7);
           info[_infoKeys[12]] = bdata.getInt8(8);
 
@@ -138,7 +138,7 @@ class QuerySocket {
             Map userMap = <String, dynamic>{};
             userMap['index'] = data[start];
             var index = data.indexWhere((e) => e == 0, start + 1);
-            userMap['name'] = ascii.decode(data.sublist(start + 1, index));
+            userMap['name'] = utf8.decode(data.sublist(start + 1, index));
             var bdata = ByteData.view(
                 Uint8List.fromList(data.sublist(index + 1, index + 9)).buffer);
             userMap['score'] = bdata.getInt32(0, Endian.little);
@@ -155,7 +155,7 @@ class QuerySocket {
   }
 
   void updateInfo() {
-    var string = ascii.encode('Source Engine Query');
+    var string = utf8.encode('Source Engine Query');
     final len = 6 + string.length;
 
     var packet = ByteData(len);
