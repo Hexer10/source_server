@@ -192,7 +192,6 @@ class QuerySocket {
     packet.setUint8(4, _A2S_PLAYER);
     _setList(packet, _challenge, 5);
 
-    print('Sent: ${packet.buffer.asUint8List()}');
     _socket.send(packet.buffer.asUint8List(), address, port);
   }
 

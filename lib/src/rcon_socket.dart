@@ -31,7 +31,10 @@ class RconSocket {
   Future<void> connect() async {
     _socket = await Socket.connect(address, port);
     _socket.listen(_onData, onDone: _onDone);
-    _authenticate(password);
+    if ((await _authenticate(password)) == null) {
+      throw RconException(
+          'Authentication failed!', RconError.authenticationFailed);
+    }
   }
 
   void _onDone() {
@@ -39,7 +42,6 @@ class RconSocket {
   }
 
   Future<void> _onData(List<int> data) async {
-    print('Recived $data');
     //Skip the first packet
     if (++_count == 1) {
       return;
@@ -53,10 +55,10 @@ class RconSocket {
       case _SERVERDATA_AUTH_RESPONSE:
         {
           if (packetId == -1) {
-            throw RconException(
-                'Authentication failed!', RconError.authenticationFailed);
+            _queue.removeFirst().complete(null);
+            break;
           }
-
+          _queue.removeFirst().complete('');
           break;
         }
       case _SERVERDATA_RESPONSE_VALUE:
@@ -73,7 +75,8 @@ class RconSocket {
     }
   }
 
-  void _authenticate(String password) => _write(_SERVERDATA_AUTH, password);
+  Future<String> _authenticate(String password) =>
+      _write(_SERVERDATA_AUTH, password);
 
   Future<String> send(String command) =>
       _write(_SERVERDATA_EXECCOMMAND, command);
@@ -86,12 +89,8 @@ class RconSocket {
     data.setInt32(4, ++_packetId, Endian.little);
     data.setInt32(8, packetType, Endian.little);
     _setList(data, encodedBody, 12);
-    print('Written ${data.buffer.asInt8List()}');
-    _socket.add(data.buffer.asInt8List());
 
-    if (packetType == _SERVERDATA_AUTH) {
-      return null;
-    }
+    _socket.add(data.buffer.asInt8List());
 
     var completer = Completer<String>();
     _queue.add(completer);
