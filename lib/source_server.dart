@@ -11,6 +11,7 @@ import 'dart:io';
 import 'package:logging/logging.dart';
 import 'package:pedantic/pedantic.dart';
 
+import 'src/exceptions.dart';
 import 'src/query_socket.dart';
 import 'src/rcon_socket.dart';
 
@@ -78,7 +79,13 @@ class SourceServer {
 
     _password = password;
     _rcon = RconSocket(address, port, password);
-    await rcon.connect();
+
+    try {
+      await rcon.connect();
+    } on RconException catch (_) {
+      _rcon = null;
+      rethrow;
+    }
   }
 
   /// Returns a [Future] that completes with all the connected players info
