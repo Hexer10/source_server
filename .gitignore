@@ -12,4 +12,5 @@ doc/api/
 source_query_rcon.iml
 .idea/
 
-bin/
+./bin/
+

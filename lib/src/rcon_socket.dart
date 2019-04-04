@@ -6,6 +6,8 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
 
+import 'exceptions.dart';
+
 /// RCON Protocol
 class RconSocket {
   static const _SERVERDATA_AUTH = 3;
@@ -51,7 +53,8 @@ class RconSocket {
       case _SERVERDATA_AUTH_RESPONSE:
         {
           if (packetId == -1) {
-            throw Exception('Authentication failed!');
+            throw RconException(
+                'Authentication failed!', RconError.authenticationFailed);
           }
 
           break;
@@ -64,7 +67,8 @@ class RconSocket {
         }
       default:
         {
-          throw Exception('Invalid packet: $packetType!');
+          throw RconException(
+              'Invalid packet: $packetType!', RconError.invalidPacket);
         }
     }
   }

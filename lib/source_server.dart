@@ -14,6 +14,7 @@ import 'package:pedantic/pedantic.dart';
 import 'src/query_socket.dart';
 import 'src/rcon_socket.dart';
 
+export 'src/exceptions.dart';
 export 'src/query_socket.dart';
 export 'src/rcon_socket.dart';
 
