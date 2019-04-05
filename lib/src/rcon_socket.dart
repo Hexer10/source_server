@@ -63,7 +63,7 @@ class RconSocket {
         }
       case _SERVERDATA_RESPONSE_VALUE:
         {
-          var body = utf8.decode(data.sublist(9));
+          var body = utf8.decode(data.sublist(12));
           _queue.removeFirst().complete(body);
           break;
         }

@@ -34,7 +34,6 @@ class SourceServer {
 
   QuerySocket _query;
   RconSocket _rcon;
-  final _status = RegExp(r'^([^:]+):([^:].*)$');
 
   /// Direct access to the [QuerySocket].
   QuerySocket get query => _query;
@@ -145,8 +144,8 @@ class SourceServer {
   Map<String, String> _parseServer(List<String> lines) {
     var info = <String, String>{};
     for (var line in lines) {
-      var match = _status.firstMatch(line);
-      info[match.group(1).trim()] = match.group(2).trim();
+      var match = line.trim().split(':');
+      info[match[0].trim()] = match.sublist(1).join(':').trim();
     }
     _log.info('Parsed server: ```\n $info \n```');
     return info;
