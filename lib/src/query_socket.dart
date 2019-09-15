@@ -78,7 +78,7 @@ class QuerySocket {
       return;
     }
 
-    final Uint8List rawData = data.data;
+    final rawData = data.data;
 
     switch (rawData[4]) {
       //Info
