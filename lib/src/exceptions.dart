@@ -1,6 +1,7 @@
 enum RconError {
   invalidPacket,
   authenticationFailed,
+  noAuthentication
 }
 
 class RconException implements Exception {

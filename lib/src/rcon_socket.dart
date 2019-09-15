@@ -82,6 +82,10 @@ class RconSocket {
       _write(_SERVERDATA_EXECCOMMAND, command);
 
   Future<String> _write(int packetType, String body) {
+    if (_socket == null) {
+      throw RconException('Socket not connected', RconError.noAuthentication);
+    }
+
     var encodedBody = utf8.encode(body);
     final size = encodedBody.length + 14;
     var data = ByteData(size);

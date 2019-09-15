@@ -81,7 +81,7 @@ class SourceServer {
 
     try {
       await rcon.connect();
-    } on RconException catch (_) {
+    } on RconException {
       _rcon = null;
       rethrow;
     }
