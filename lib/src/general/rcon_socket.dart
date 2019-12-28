@@ -1,33 +1,22 @@
-library source_server.rcon;
-
-import 'dart:async';
-import 'dart:collection';
-import 'dart:convert';
-import 'dart:io';
-import 'dart:typed_data';
-
-import 'exceptions.dart';
+part of '../../server.dart';
 
 /// RCON Protocol
-class RconSocket {
+class RconSocket extends BaseSocket<Socket> {
   static const _SERVERDATA_AUTH = 3;
   static const _SERVERDATA_EXECCOMMAND = 2;
   static const _SERVERDATA_AUTH_RESPONSE = 2;
   static const _SERVERDATA_RESPONSE_VALUE = 0;
 
-  final InternetAddress address;
-  final int port;
   final String password;
 
   int _packetId = 0;
-  int _count = 0;
-
-  Socket _socket;
 
   final _queue = Queue<Completer<String>>();
+  final Logger _log = Logger('Rcon');
 
-  RconSocket(this.address, this.port, this.password);
+  RconSocket(address, port, this.password) : super(address, port);
 
+  @override
   Future<void> connect() async {
     _socket = await Socket.connect(address, port);
     _socket.listen(_onData, onDone: _onDone);
@@ -42,10 +31,7 @@ class RconSocket {
   }
 
   Future<void> _onData(List<int> data) async {
-    //Skip the first packet
-    if (++_count == 1) {
-      return;
-    }
+    _log.log(Level.FINEST, 'Recived data: $data');
 
     var bdata = ByteData.view(Int8List.fromList(data).buffer);
     var packetId = bdata.getInt32(4, Endian.little);
@@ -54,6 +40,8 @@ class RconSocket {
     switch (packetType) {
       case _SERVERDATA_AUTH_RESPONSE:
         {
+          _log.log(Level.FINE,
+              'Parsed AuthResponse - ID: $packetId, type: $packetType');
           if (packetId == -1) {
             _queue.removeFirst().complete(null);
             break;
@@ -63,7 +51,19 @@ class RconSocket {
         }
       case _SERVERDATA_RESPONSE_VALUE:
         {
-          var body = utf8.decode(data.sublist(12));
+          var bodyData = data.sublist(12);
+
+          //Skip packet if body is null and id = 1
+          if (bodyData[0] == 0 && bodyData[1] == 0 && packetId == 1) {
+            _log.log(Level.FINE,
+                'Parsed Response - ID: $packetId, Type: $packetType, Body: NULL-BODY'); // ignore: lines_longer_than_80_chars
+            return;
+          }
+
+          var body = utf8.decode(bodyData);
+          _log.log(Level.FINE,
+              'Parsed Response - ID: $packetId, Type: $packetType, Body: $body'); // ignore: lines_longer_than_80_chars
+
           _queue.removeFirst().complete(body);
           break;
         }
@@ -100,8 +100,6 @@ class RconSocket {
     _queue.add(completer);
     return completer.future;
   }
-
-  void close() => _socket.destroy();
 
   void _setList(ByteData data, Iterable<int> list, int pos) {
     for (var e in list) {

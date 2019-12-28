@@ -3,21 +3,7 @@
 ///  https://developer.valvesoftware.com/wiki/Server_queries
 ///  https://developer.valvesoftware.com/wiki/Source_RCON_Protocol
 ///  for the protocols documentations.
-library source_server;
-
-import 'dart:async';
-import 'dart:io';
-
-import 'package:logging/logging.dart';
-import 'package:pedantic/pedantic.dart';
-
-import 'src/exceptions.dart';
-import 'src/query_socket.dart';
-import 'src/rcon_socket.dart';
-
-export 'src/exceptions.dart';
-export 'src/query_socket.dart';
-export 'src/rcon_socket.dart';
+part of '../server.dart';
 
 /// RCON and Query
 class SourceServer {
@@ -32,11 +18,11 @@ class SourceServer {
   /// Password used for the RCON authentication
   String get password => _password;
 
-  QuerySocket _query;
+  SourceQuerySocket _query;
   RconSocket _rcon;
 
-  /// Direct access to the [QuerySocket].
-  QuerySocket get query => _query;
+  /// Direct access to the QuerySocket.
+  SourceQuerySocket get query => _query;
 
   /// Direct access to the [RconSocket].
   RconSocket get rcon => _rcon;
@@ -50,9 +36,10 @@ class SourceServer {
   /// or be supplied later with [rconAuthenticate].
   /// [connect] must be called in order to establish the connection
   /// to the Query and RCON servers.
-  SourceServer(this.address, this.port, [this._password]) {
-    _query = QuerySocket(address, port);
+  SourceServer(this.address, this.port, [String password]) {
+    _query = SourceQuerySocket(address, port);
 
+    // RCON protocol is the same in all games so far
     if (_password != null) {
       _rcon = RconSocket(address, port, password);
     }
@@ -65,6 +52,7 @@ class SourceServer {
 
     query.onInfo.listen(_onInfo);
     query.onPlayers.listen(_onPlayers);
+
     if (password != null) {
       await rcon.connect();
     }

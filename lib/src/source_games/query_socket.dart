@@ -1,17 +1,12 @@
-library source_server.query;
-
-import 'dart:async';
-import 'dart:convert';
-import 'dart:io';
-import 'dart:typed_data';
+part of '../../server.dart';
 
 /// Query Protocol
-class QuerySocket {
+class SourceQuerySocket<T> extends BaseSocket<RawDatagramSocket> {
   // Packets sent
 
   //final _A2S_PING = 0x69;
-  final _A2S_INFO = 0x54;
-  final _A2S_PLAYER = 0x55;
+  static const _A2S_INFO = 0x54;
+  static const _A2S_PLAYER = 0x55;
 
   //final _A2S_RULES = 0x56;
   //final _A2S_SERVERQUERY_GETCHALLENGE = 0x57;
@@ -32,8 +27,7 @@ class QuerySocket {
   final _onPlayers =
       StreamController<Map<String, Map<String, dynamic>>>.broadcast();
 
-  final InternetAddress address;
-  final int port;
+  final int listenPort;
 
   final _infoKeys = [
     'protocol',
@@ -55,16 +49,16 @@ class QuerySocket {
 
   Stream get onPlayers => _onPlayers.stream;
 
-  RawDatagramSocket _socket;
-
   List<int> _challenge;
 
   Completer<void> _challengeCompleter;
 
-  QuerySocket(this.address, this.port);
+  SourceQuerySocket(address, port, [this.listenPort = 5000])
+      : super(address, port);
 
+  @override
   Future<void> connect() async {
-    _socket = await RawDatagramSocket.bind(InternetAddress.anyIPv4, 5000);
+    _socket = await RawDatagramSocket.bind(InternetAddress.anyIPv4, listenPort);
     _socket.listen(_onData);
   }
 
@@ -197,8 +191,6 @@ class QuerySocket {
 
   ///TODO(Hexah): Implement updateRules.
   //Future<void> updateRules() async {}
-
-  void close() => _socket.close();
 
   void _setList(ByteData data, Iterable<int> list, int pos) {
     for (var e in list) {

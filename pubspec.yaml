@@ -10,3 +10,5 @@ environment:
 dependencies:
   logging: ^0.11.3+2
   pedantic: ^1.5.0
+  tuple: ^1.0.2
+
