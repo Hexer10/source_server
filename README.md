@@ -8,7 +8,7 @@ Created from templates made available by Stagehand under a BSD-style
 A simple usage example:
 
 ```dart
-import 'package:source_server/query_rcon.dart';
+import 'package:source_server/source_server.dart';
 
 main() {
   var awesome = new Awesome();
