@@ -1,4 +1,4 @@
-import 'package:query_rcon/source_server.dart';
+import 'package:source_server/source_server.dart';
 
 Future<void> main() async {
   final server =
