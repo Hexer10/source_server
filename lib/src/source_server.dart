@@ -22,7 +22,7 @@ class SourceServer with RconSocket, QuerySocket {
 
   /// Connects to the remote server using the server query protocol
   /// and the rcon protocol if the password was specified.
-  /// This throws if the authentication with the remote server failed.
+  /// This throws a [SocketException] if the authentication with the remote server failed.
   static Future<SourceServer> connect(dynamic address, int port,
       {String password}) async {
     final querySocket = await QuerySocket.connect(address, port);
@@ -31,6 +31,8 @@ class SourceServer with RconSocket, QuerySocket {
       rconSocket = await RconSocket.connect(address, port);
       final result = await rconSocket.authenticate(password);
       if (!result) {
+        querySocket.close();
+        rconSocket.close();
         throw const SocketException('RCON authentication failed!');
       }
     }
