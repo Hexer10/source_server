@@ -1,3 +1,7 @@
+## 3.1.1-dev
+- Custom exceptions
+- Stricter lints
+
 ## 3.1.0-dev
 - Null-safety
 - Bug fixes
