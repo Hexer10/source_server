@@ -1,3 +1,8 @@
+## 3.1.2-dev
+- Implement timeout
+- Fix Endianness error
+- Overridden `toString` in ServerVisibility, ServerVAC and ServerType classes
+
 ## 3.1.1-dev
 - Custom exceptions
 - Stricter lints

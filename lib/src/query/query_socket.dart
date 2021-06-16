@@ -121,7 +121,7 @@ class _QuerySocketImpl implements QuerySocket {
     final map = read.readString;
     final folder = read.readString;
     final game = read.readString;
-    final id = read.int16;
+    final id = read.uint16;
     final players = read.uint8;
     final maxPlayers = read.uint8;
     final bots = read.uint8;
@@ -169,7 +169,7 @@ class _QuerySocketImpl implements QuerySocket {
         keywords = read.readString;
       }
       if (edf & 0x01 != 0) {
-        gameId = read.int64;
+        gameId = read.uint64;
       }
       info = info.copyWith(
           port: port,

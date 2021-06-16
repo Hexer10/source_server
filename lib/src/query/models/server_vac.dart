@@ -21,4 +21,17 @@ class ServerVAC {
   }
 
   const ServerVAC._(this.code);
+
+  @override
+  String toString() {
+    switch (this) {
+      case unsecured:
+        return 'ServerVAC(unsecured)';
+      case secured:
+        return 'ServerVAC(secured)';
+      default:
+      // Never reaches here.
+        throw StateError('');
+    }
+  }
 }

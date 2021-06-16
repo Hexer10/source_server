@@ -4,17 +4,18 @@ import 'package:source_server/source_server.dart';
 
 Future<void> main() async {
   final server =
-      await SourceServer.connect('127.0.0.1', 27015, password: '1234');
+      await SourceServer.connect('192.168.255.1', 27015, password: 'ciao');
 
-  // You should manually add a timeout to all of this functions such as `server.getInfo().timeout(...)`
   final info = await server.getInfo();
-  final players = await server.getPlayers();
-  final rules = await server.getRules();
-  final status = await server.command('status');
-
   print(info);
+
+  final players = await server.getPlayers();
   print(players);
+
+  final rules = await server.getRules();
   print(rules);
+
+  final status = await server.command('status');
   print(status);
 
   server.close();

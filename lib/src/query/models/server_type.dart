@@ -27,4 +27,19 @@ class ServerType {
   }
 
   const ServerType._(this.code);
+
+  @override
+  String toString() {
+    switch (this) {
+      case dedicated:
+        return 'ServerType(dedicated)';
+      case nonDedicated:
+        return 'ServerType(nonDedicated)';
+      case sourceTv:
+        return 'ServerType(sourceTv)';
+      default:
+        // Never reaches here.
+        throw StateError('');
+    }
+  }
 }

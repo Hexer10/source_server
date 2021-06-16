@@ -13,7 +13,7 @@ abstract class RconSocket {
 
   /// Authenticates to the remote server.
   /// Returns false if the authentication failed, true otherwise.
-  FutureOr<bool> authenticate(String password);
+  Future<bool> authenticate(String password);
 
   /// Executes a command on the remote server.
   Future<String> command(String command);
@@ -67,7 +67,7 @@ class _RconSocketImpl implements RconSocket {
   }
 
   @override
-  FutureOr<bool> authenticate(String password) {
+  Future<bool> authenticate(String password) async {
     if (authCompleter?.isCompleted ?? false) {
       assert(authStatus != null);
       return authStatus!;

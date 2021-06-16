@@ -16,37 +16,37 @@ class ReadBuffer {
   int get int8 => data.getInt8(_pos++);
 
   int get uint16 {
-    final val = data.getUint16(_pos);
+    final val = data.getUint16(_pos, Endian.little);
     _pos += 2;
     return val;
   }
 
   int get int16 {
-    final val = data.getInt16(_pos);
+    final val = data.getInt16(_pos, Endian.little);
     _pos += 2;
     return val;
   }
 
   int get uint32 {
-    final val = data.getUint32(_pos);
+    final val = data.getUint32(_pos, Endian.little);
     _pos += 4;
     return val;
   }
 
   int get int32 {
-    final val = data.getInt32(_pos);
+    final val = data.getInt32(_pos, Endian.little);
     _pos += 4;
     return val;
   }
 
   int get uint64 {
-    final val = data.getUint64(_pos);
+    final val = data.getUint64(_pos, Endian.little);
     _pos += 8;
     return val;
   }
 
   int get int64 {
-    final val = data.getInt64(_pos);
+    final val = data.getInt64(_pos, Endian.little);
     _pos += 8;
     return val;
   }

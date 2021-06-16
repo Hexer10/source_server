@@ -27,4 +27,20 @@ class ServerOS {
   }
 
   const ServerOS._(this.code);
+
+
+  @override
+  String toString() {
+    switch (this) {
+      case linux:
+        return 'ServerOS(linux)';
+      case windows:
+        return 'ServerOS(windows)';
+      case mac:
+        return 'ServerOS(mac)';
+      default:
+      // Never reaches here.
+        throw StateError('');
+    }
+  }
 }

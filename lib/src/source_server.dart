@@ -15,17 +15,22 @@ class SourceServer implements RconSocket, QuerySocket {
   /// The port used for the connection.
   final int port;
 
+  /// Timeout to wait for the remote server reply.
+  final Duration timeout;
+
   final QuerySocket _querySocket;
 
   RconSocket? _rconSocket;
 
-  SourceServer._(this.address, this.port, this._querySocket, this._rconSocket);
+  SourceServer._(this.address, this.port, this._querySocket, this._rconSocket,
+      this.timeout);
 
   /// Connects to the remote server using the server query protocol
   /// and the rcon protocol if the password was specified.
   /// This throws a [SocketException] if the authentication with the remote server failed.
   static Future<SourceServer> connect(dynamic address, int port,
-      {String? password}) async {
+      {String? password,
+      Duration timeout = const Duration(seconds: 30)}) async {
     final querySocket = await QuerySocket.connect(address, port);
     RconSocket? rconSocket;
     if (password != null) {
@@ -37,7 +42,7 @@ class SourceServer implements RconSocket, QuerySocket {
         throw RconAuthenticationException(rconSocket.errorMessage ?? '');
       }
     }
-    return SourceServer._(address, port, querySocket, rconSocket);
+    return SourceServer._(address, port, querySocket, rconSocket, timeout);
   }
 
   /// Authenticates to the remote server.
@@ -48,8 +53,8 @@ class SourceServer implements RconSocket, QuerySocket {
     if (_rconSocket != null) {
       return true;
     }
-    _rconSocket = await RconSocket.connect(address, port);
-    final result = await _rconSocket!.authenticate(password);
+    _rconSocket = await RconSocket.connect(address, port).timeout(timeout);
+    final result = await _rconSocket!.authenticate(password).timeout(timeout);
     if (!result) {
       _rconSocket!.close();
       throw RconAuthenticationException(_rconSocket!.errorMessage ?? '');
@@ -69,7 +74,7 @@ class SourceServer implements RconSocket, QuerySocket {
       throw const RconException(
           'Cannot send an RCON command while not authenticated!');
     }
-    return _rconSocket!.command(command);
+    return _rconSocket!.command(command).timeout(timeout);
   }
 
   @override
@@ -79,13 +84,15 @@ class SourceServer implements RconSocket, QuerySocket {
   }
 
   @override
-  Future<ServerInfo> getInfo() => _querySocket.getInfo();
+  Future<ServerInfo> getInfo() => _querySocket.getInfo().timeout(timeout);
 
   @override
-  Future<List<QueryPlayer>> getPlayers() => _querySocket.getPlayers();
+  Future<List<QueryPlayer>> getPlayers() =>
+      _querySocket.getPlayers().timeout(timeout);
 
   @override
-  Future<Map<String, String>> getRules() => _querySocket.getRules();
+  Future<Map<String, String>> getRules() =>
+      _querySocket.getRules().timeout(timeout);
 
   @override
   String? get errorMessage => _rconSocket?.errorMessage;

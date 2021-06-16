@@ -21,4 +21,17 @@ class ServerVisibility {
   }
 
   const ServerVisibility._(this.code);
+
+  @override
+  String toString() {
+    switch (this) {
+      case public:
+        return 'ServerVisibility(public)';
+      case private:
+        return 'ServerVisibility(private)';
+      default:
+      // Never reaches here.
+        throw StateError('');
+    }
+  }
 }
