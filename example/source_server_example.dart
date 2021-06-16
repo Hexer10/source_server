@@ -6,8 +6,8 @@ Future<void> main() async {
 
   // You should manually add a timeout to all of this functions such as `server.getInfo().timeout(...)`
   final info = await server.getInfo();
-  final players = await server.getInfo();
-  final rules = await server.getInfo();
+  final players = await server.getPlayers();
+  final rules = await server.getRules();
   final status = await server.command('status');
 
   print(info);

@@ -1,5 +1,5 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
-// ignore_for_file: deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides
 
 part of 'query_player.dart';
 
@@ -9,12 +9,18 @@ part of 'query_player.dart';
 
 T _$identity<T>(T value) => value;
 
+final _privateConstructorUsedError = UnsupportedError(
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+
 /// @nodoc
 class _$QueryPlayerTearOff {
   const _$QueryPlayerTearOff();
 
-// ignore: unused_element
-  _QueryPlayer call({int index, String name, int score, double duration}) {
+  _QueryPlayer call(
+      {required int index,
+      required String name,
+      required int score,
+      required double duration}) {
     return _QueryPlayer(
       index: index,
       name: name,
@@ -25,24 +31,25 @@ class _$QueryPlayerTearOff {
 }
 
 /// @nodoc
-// ignore: unused_element
 const $QueryPlayer = _$QueryPlayerTearOff();
 
 /// @nodoc
 mixin _$QueryPlayer {
   /// Index of player.
-  int get index;
+  int get index => throw _privateConstructorUsedError;
 
   /// Name of the player.
-  String get name;
+  String get name => throw _privateConstructorUsedError;
 
   /// Player's score (usually "frags" or "kills".)
-  int get score;
+  int get score => throw _privateConstructorUsedError;
 
   /// Time (in seconds) player has been connected to the server.
-  double get duration;
+  double get duration => throw _privateConstructorUsedError;
 
-  $QueryPlayerCopyWith<QueryPlayer> get copyWith;
+  @JsonKey(ignore: true)
+  $QueryPlayerCopyWith<QueryPlayer> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -63,16 +70,28 @@ class _$QueryPlayerCopyWithImpl<$Res> implements $QueryPlayerCopyWith<$Res> {
 
   @override
   $Res call({
-    Object index = freezed,
-    Object name = freezed,
-    Object score = freezed,
-    Object duration = freezed,
+    Object? index = freezed,
+    Object? name = freezed,
+    Object? score = freezed,
+    Object? duration = freezed,
   }) {
     return _then(_value.copyWith(
-      index: index == freezed ? _value.index : index as int,
-      name: name == freezed ? _value.name : name as String,
-      score: score == freezed ? _value.score : score as int,
-      duration: duration == freezed ? _value.duration : duration as double,
+      index: index == freezed
+          ? _value.index
+          : index // ignore: cast_nullable_to_non_nullable
+              as int,
+      name: name == freezed
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String,
+      score: score == freezed
+          ? _value.score
+          : score // ignore: cast_nullable_to_non_nullable
+              as int,
+      duration: duration == freezed
+          ? _value.duration
+          : duration // ignore: cast_nullable_to_non_nullable
+              as double,
     ));
   }
 }
@@ -99,23 +118,40 @@ class __$QueryPlayerCopyWithImpl<$Res> extends _$QueryPlayerCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object index = freezed,
-    Object name = freezed,
-    Object score = freezed,
-    Object duration = freezed,
+    Object? index = freezed,
+    Object? name = freezed,
+    Object? score = freezed,
+    Object? duration = freezed,
   }) {
     return _then(_QueryPlayer(
-      index: index == freezed ? _value.index : index as int,
-      name: name == freezed ? _value.name : name as String,
-      score: score == freezed ? _value.score : score as int,
-      duration: duration == freezed ? _value.duration : duration as double,
+      index: index == freezed
+          ? _value.index
+          : index // ignore: cast_nullable_to_non_nullable
+              as int,
+      name: name == freezed
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String,
+      score: score == freezed
+          ? _value.score
+          : score // ignore: cast_nullable_to_non_nullable
+              as int,
+      duration: duration == freezed
+          ? _value.duration
+          : duration // ignore: cast_nullable_to_non_nullable
+              as double,
     ));
   }
 }
 
 /// @nodoc
+
 class _$_QueryPlayer implements _QueryPlayer {
-  _$_QueryPlayer({this.index, this.name, this.score, this.duration});
+  _$_QueryPlayer(
+      {required this.index,
+      required this.name,
+      required this.score,
+      required this.duration});
 
   @override
 
@@ -162,31 +198,37 @@ class _$_QueryPlayer implements _QueryPlayer {
       const DeepCollectionEquality().hash(score) ^
       const DeepCollectionEquality().hash(duration);
 
+  @JsonKey(ignore: true)
   @override
   _$QueryPlayerCopyWith<_QueryPlayer> get copyWith =>
       __$QueryPlayerCopyWithImpl<_QueryPlayer>(this, _$identity);
 }
 
 abstract class _QueryPlayer implements QueryPlayer {
-  factory _QueryPlayer({int index, String name, int score, double duration}) =
-      _$_QueryPlayer;
+  factory _QueryPlayer(
+      {required int index,
+      required String name,
+      required int score,
+      required double duration}) = _$_QueryPlayer;
 
   @override
 
   /// Index of player.
-  int get index;
+  int get index => throw _privateConstructorUsedError;
   @override
 
   /// Name of the player.
-  String get name;
+  String get name => throw _privateConstructorUsedError;
   @override
 
   /// Player's score (usually "frags" or "kills".)
-  int get score;
+  int get score => throw _privateConstructorUsedError;
   @override
 
   /// Time (in seconds) player has been connected to the server.
-  double get duration;
+  double get duration => throw _privateConstructorUsedError;
   @override
-  _$QueryPlayerCopyWith<_QueryPlayer> get copyWith;
+  @JsonKey(ignore: true)
+  _$QueryPlayerCopyWith<_QueryPlayer> get copyWith =>
+      throw _privateConstructorUsedError;
 }

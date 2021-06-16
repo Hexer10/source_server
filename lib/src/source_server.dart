@@ -6,7 +6,7 @@ import 'query/models/server_info.dart';
 import 'query/query_socket.dart';
 import 'rcon/rcon_socket.dart';
 
-class SourceServer with RconSocket, QuerySocket {
+class SourceServer implements RconSocket, QuerySocket {
   /// The address used for the connection.
   final dynamic address;
 
@@ -15,8 +15,7 @@ class SourceServer with RconSocket, QuerySocket {
 
   final QuerySocket _querySocket;
 
-  /* late final */
-  RconSocket _rconSocket;
+  RconSocket? _rconSocket;
 
   SourceServer._(this.address, this.port, this._querySocket, this._rconSocket);
 
@@ -24,9 +23,9 @@ class SourceServer with RconSocket, QuerySocket {
   /// and the rcon protocol if the password was specified.
   /// This throws a [SocketException] if the authentication with the remote server failed.
   static Future<SourceServer> connect(dynamic address, int port,
-      {String password}) async {
+      {String? password}) async {
     final querySocket = await QuerySocket.connect(address, port);
-    RconSocket rconSocket;
+    RconSocket? rconSocket;
     if (password != null) {
       rconSocket = await RconSocket.connect(address, port);
       final result = await rconSocket.authenticate(password);
@@ -48,7 +47,7 @@ class SourceServer with RconSocket, QuerySocket {
       return true;
     }
     _rconSocket = await RconSocket.connect(address, port);
-    final result = await _rconSocket.authenticate(password);
+    final result = await _rconSocket!.authenticate(password);
     if (!result) {
       throw const SocketException('RCON authentication failed!');
     }
@@ -63,14 +62,17 @@ class SourceServer with RconSocket, QuerySocket {
 
   @override
   Future<String> command(String command) {
-    assert(_rconSocket != null);
-    return _rconSocket.command(command);
+    if (_rconSocket == null) {
+      throw const SocketException(
+          'Cannot send an RCON command while not authenticated!');
+    }
+    return _rconSocket!.command(command);
   }
 
   @override
   Stream<String> get commandStream {
     assert(_rconSocket != null);
-    return _rconSocket.commandStream;
+    return _rconSocket!.commandStream;
   }
 
   @override
@@ -83,5 +85,5 @@ class SourceServer with RconSocket, QuerySocket {
   Future<Map<String, String>> getRules() => _querySocket.getRules();
 
   @override
-  String get errorMessage => _rconSocket.errorMessage;
+  String? get errorMessage => _rconSocket?.errorMessage;
 }

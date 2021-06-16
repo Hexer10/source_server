@@ -1,5 +1,5 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
-// ignore_for_file: deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides
 
 part of 'server_info.dart';
 
@@ -9,32 +9,34 @@ part of 'server_info.dart';
 
 T _$identity<T>(T value) => value;
 
+final _privateConstructorUsedError = UnsupportedError(
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+
 /// @nodoc
 class _$ServerInfoTearOff {
   const _$ServerInfoTearOff();
 
-// ignore: unused_element
   _ServerInfo call(
-      {int protocol,
-      String name,
-      String map,
-      String folder,
-      String game,
-      int id,
-      int players,
-      int maxPlayers,
-      int bots,
-      ServerType type,
-      ServerOS os,
-      ServerVisibility visibility,
-      ServerVAC vac,
-      String version,
-      @nullable int port,
-      @nullable int steamId,
-      @nullable int tvPort,
-      @nullable String tvName,
-      @nullable String keywords,
-      @nullable int gameId}) {
+      {required int protocol,
+      required String name,
+      required String map,
+      required String folder,
+      required String game,
+      required int id,
+      required int players,
+      required int maxPlayers,
+      required int bots,
+      required ServerType type,
+      required ServerOS os,
+      required ServerVisibility visibility,
+      required ServerVAC vac,
+      required String version,
+      int? port,
+      int? steamId,
+      int? tvPort,
+      String? tvName,
+      String? keywords,
+      int? gameId}) {
     return _ServerInfo(
       protocol: protocol,
       name: name,
@@ -61,77 +63,73 @@ class _$ServerInfoTearOff {
 }
 
 /// @nodoc
-// ignore: unused_element
 const $ServerInfo = _$ServerInfoTearOff();
 
 /// @nodoc
 mixin _$ServerInfo {
   /// Protocol version used by the server.
-  int get protocol;
+  int get protocol => throw _privateConstructorUsedError;
 
   /// Name of the server.
-  String get name;
+  String get name => throw _privateConstructorUsedError;
 
   /// Map the server has currently loaded.
-  String get map;
+  String get map => throw _privateConstructorUsedError;
 
   /// Name of the folder containing the game files.
-  String get folder;
+  String get folder => throw _privateConstructorUsedError;
 
   /// Full name of the game.
-  String get game;
+  String get game => throw _privateConstructorUsedError;
 
   /// Steam Application ID of game.
-  int get id;
+  int get id => throw _privateConstructorUsedError;
 
   /// Number of players on the server.
-  int get players;
+  int get players => throw _privateConstructorUsedError;
 
   /// Maximum number of players the server reports it can hold.
-  int get maxPlayers;
+  int get maxPlayers => throw _privateConstructorUsedError;
 
   /// Number of bots on the server.
-  int get bots;
+  int get bots => throw _privateConstructorUsedError;
 
   /// Server type.
-  ServerType get type;
+  ServerType get type => throw _privateConstructorUsedError;
 
   /// Server operating system.
-  ServerOS get os;
+  ServerOS get os => throw _privateConstructorUsedError;
 
   /// Server visibility. Indicates if the server is password protected.
-  ServerVisibility get visibility;
+  ServerVisibility get visibility => throw _privateConstructorUsedError;
 
   /// Server VAC status.
-  ServerVAC get vac; /* TODO: Add TheShip flags */
+  ServerVAC get vac =>
+      throw _privateConstructorUsedError; /* TODO: Add TheShip flags */
   /// Version of the game installed on the server.
-  String get version;
+  String get version => throw _privateConstructorUsedError;
 
   /// Server's port number.
-  @nullable
-  int get port;
+  int? get port => throw _privateConstructorUsedError;
 
   /// Server's SteamID.
-  @nullable
-  int get steamId;
+  int? get steamId => throw _privateConstructorUsedError;
 
   /// Spectator port number for SourceTV.
-  @nullable
-  int get tvPort;
+  int? get tvPort => throw _privateConstructorUsedError;
 
   /// Name of the spectator server for SourceTV.
-  @nullable
-  String get tvName;
+  String? get tvName => throw _privateConstructorUsedError;
 
   /// Tags that describe the game according to the server (for future use.)
-  @nullable
-  String get keywords;
+  String? get keywords => throw _privateConstructorUsedError;
 
   /// The server's 64-bit GameID.
-  @nullable
-  int get gameId;
+  int? get gameId => throw _privateConstructorUsedError;
 
-  $ServerInfoCopyWith<ServerInfo> get copyWith;
+  @JsonKey(ignore: true)
+  $ServerInfoCopyWith<ServerInfo> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -154,12 +152,12 @@ abstract class $ServerInfoCopyWith<$Res> {
       ServerVisibility visibility,
       ServerVAC vac,
       String version,
-      @nullable int port,
-      @nullable int steamId,
-      @nullable int tvPort,
-      @nullable String tvName,
-      @nullable String keywords,
-      @nullable int gameId});
+      int? port,
+      int? steamId,
+      int? tvPort,
+      String? tvName,
+      String? keywords,
+      int? gameId});
 }
 
 /// @nodoc
@@ -172,50 +170,108 @@ class _$ServerInfoCopyWithImpl<$Res> implements $ServerInfoCopyWith<$Res> {
 
   @override
   $Res call({
-    Object protocol = freezed,
-    Object name = freezed,
-    Object map = freezed,
-    Object folder = freezed,
-    Object game = freezed,
-    Object id = freezed,
-    Object players = freezed,
-    Object maxPlayers = freezed,
-    Object bots = freezed,
-    Object type = freezed,
-    Object os = freezed,
-    Object visibility = freezed,
-    Object vac = freezed,
-    Object version = freezed,
-    Object port = freezed,
-    Object steamId = freezed,
-    Object tvPort = freezed,
-    Object tvName = freezed,
-    Object keywords = freezed,
-    Object gameId = freezed,
+    Object? protocol = freezed,
+    Object? name = freezed,
+    Object? map = freezed,
+    Object? folder = freezed,
+    Object? game = freezed,
+    Object? id = freezed,
+    Object? players = freezed,
+    Object? maxPlayers = freezed,
+    Object? bots = freezed,
+    Object? type = freezed,
+    Object? os = freezed,
+    Object? visibility = freezed,
+    Object? vac = freezed,
+    Object? version = freezed,
+    Object? port = freezed,
+    Object? steamId = freezed,
+    Object? tvPort = freezed,
+    Object? tvName = freezed,
+    Object? keywords = freezed,
+    Object? gameId = freezed,
   }) {
     return _then(_value.copyWith(
-      protocol: protocol == freezed ? _value.protocol : protocol as int,
-      name: name == freezed ? _value.name : name as String,
-      map: map == freezed ? _value.map : map as String,
-      folder: folder == freezed ? _value.folder : folder as String,
-      game: game == freezed ? _value.game : game as String,
-      id: id == freezed ? _value.id : id as int,
-      players: players == freezed ? _value.players : players as int,
-      maxPlayers: maxPlayers == freezed ? _value.maxPlayers : maxPlayers as int,
-      bots: bots == freezed ? _value.bots : bots as int,
-      type: type == freezed ? _value.type : type as ServerType,
-      os: os == freezed ? _value.os : os as ServerOS,
+      protocol: protocol == freezed
+          ? _value.protocol
+          : protocol // ignore: cast_nullable_to_non_nullable
+              as int,
+      name: name == freezed
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String,
+      map: map == freezed
+          ? _value.map
+          : map // ignore: cast_nullable_to_non_nullable
+              as String,
+      folder: folder == freezed
+          ? _value.folder
+          : folder // ignore: cast_nullable_to_non_nullable
+              as String,
+      game: game == freezed
+          ? _value.game
+          : game // ignore: cast_nullable_to_non_nullable
+              as String,
+      id: id == freezed
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int,
+      players: players == freezed
+          ? _value.players
+          : players // ignore: cast_nullable_to_non_nullable
+              as int,
+      maxPlayers: maxPlayers == freezed
+          ? _value.maxPlayers
+          : maxPlayers // ignore: cast_nullable_to_non_nullable
+              as int,
+      bots: bots == freezed
+          ? _value.bots
+          : bots // ignore: cast_nullable_to_non_nullable
+              as int,
+      type: type == freezed
+          ? _value.type
+          : type // ignore: cast_nullable_to_non_nullable
+              as ServerType,
+      os: os == freezed
+          ? _value.os
+          : os // ignore: cast_nullable_to_non_nullable
+              as ServerOS,
       visibility: visibility == freezed
           ? _value.visibility
-          : visibility as ServerVisibility,
-      vac: vac == freezed ? _value.vac : vac as ServerVAC,
-      version: version == freezed ? _value.version : version as String,
-      port: port == freezed ? _value.port : port as int,
-      steamId: steamId == freezed ? _value.steamId : steamId as int,
-      tvPort: tvPort == freezed ? _value.tvPort : tvPort as int,
-      tvName: tvName == freezed ? _value.tvName : tvName as String,
-      keywords: keywords == freezed ? _value.keywords : keywords as String,
-      gameId: gameId == freezed ? _value.gameId : gameId as int,
+          : visibility // ignore: cast_nullable_to_non_nullable
+              as ServerVisibility,
+      vac: vac == freezed
+          ? _value.vac
+          : vac // ignore: cast_nullable_to_non_nullable
+              as ServerVAC,
+      version: version == freezed
+          ? _value.version
+          : version // ignore: cast_nullable_to_non_nullable
+              as String,
+      port: port == freezed
+          ? _value.port
+          : port // ignore: cast_nullable_to_non_nullable
+              as int?,
+      steamId: steamId == freezed
+          ? _value.steamId
+          : steamId // ignore: cast_nullable_to_non_nullable
+              as int?,
+      tvPort: tvPort == freezed
+          ? _value.tvPort
+          : tvPort // ignore: cast_nullable_to_non_nullable
+              as int?,
+      tvName: tvName == freezed
+          ? _value.tvName
+          : tvName // ignore: cast_nullable_to_non_nullable
+              as String?,
+      keywords: keywords == freezed
+          ? _value.keywords
+          : keywords // ignore: cast_nullable_to_non_nullable
+              as String?,
+      gameId: gameId == freezed
+          ? _value.gameId
+          : gameId // ignore: cast_nullable_to_non_nullable
+              as int?,
     ));
   }
 }
@@ -241,12 +297,12 @@ abstract class _$ServerInfoCopyWith<$Res> implements $ServerInfoCopyWith<$Res> {
       ServerVisibility visibility,
       ServerVAC vac,
       String version,
-      @nullable int port,
-      @nullable int steamId,
-      @nullable int tvPort,
-      @nullable String tvName,
-      @nullable String keywords,
-      @nullable int gameId});
+      int? port,
+      int? steamId,
+      int? tvPort,
+      String? tvName,
+      String? keywords,
+      int? gameId});
 }
 
 /// @nodoc
@@ -261,77 +317,136 @@ class __$ServerInfoCopyWithImpl<$Res> extends _$ServerInfoCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object protocol = freezed,
-    Object name = freezed,
-    Object map = freezed,
-    Object folder = freezed,
-    Object game = freezed,
-    Object id = freezed,
-    Object players = freezed,
-    Object maxPlayers = freezed,
-    Object bots = freezed,
-    Object type = freezed,
-    Object os = freezed,
-    Object visibility = freezed,
-    Object vac = freezed,
-    Object version = freezed,
-    Object port = freezed,
-    Object steamId = freezed,
-    Object tvPort = freezed,
-    Object tvName = freezed,
-    Object keywords = freezed,
-    Object gameId = freezed,
+    Object? protocol = freezed,
+    Object? name = freezed,
+    Object? map = freezed,
+    Object? folder = freezed,
+    Object? game = freezed,
+    Object? id = freezed,
+    Object? players = freezed,
+    Object? maxPlayers = freezed,
+    Object? bots = freezed,
+    Object? type = freezed,
+    Object? os = freezed,
+    Object? visibility = freezed,
+    Object? vac = freezed,
+    Object? version = freezed,
+    Object? port = freezed,
+    Object? steamId = freezed,
+    Object? tvPort = freezed,
+    Object? tvName = freezed,
+    Object? keywords = freezed,
+    Object? gameId = freezed,
   }) {
     return _then(_ServerInfo(
-      protocol: protocol == freezed ? _value.protocol : protocol as int,
-      name: name == freezed ? _value.name : name as String,
-      map: map == freezed ? _value.map : map as String,
-      folder: folder == freezed ? _value.folder : folder as String,
-      game: game == freezed ? _value.game : game as String,
-      id: id == freezed ? _value.id : id as int,
-      players: players == freezed ? _value.players : players as int,
-      maxPlayers: maxPlayers == freezed ? _value.maxPlayers : maxPlayers as int,
-      bots: bots == freezed ? _value.bots : bots as int,
-      type: type == freezed ? _value.type : type as ServerType,
-      os: os == freezed ? _value.os : os as ServerOS,
+      protocol: protocol == freezed
+          ? _value.protocol
+          : protocol // ignore: cast_nullable_to_non_nullable
+              as int,
+      name: name == freezed
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String,
+      map: map == freezed
+          ? _value.map
+          : map // ignore: cast_nullable_to_non_nullable
+              as String,
+      folder: folder == freezed
+          ? _value.folder
+          : folder // ignore: cast_nullable_to_non_nullable
+              as String,
+      game: game == freezed
+          ? _value.game
+          : game // ignore: cast_nullable_to_non_nullable
+              as String,
+      id: id == freezed
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int,
+      players: players == freezed
+          ? _value.players
+          : players // ignore: cast_nullable_to_non_nullable
+              as int,
+      maxPlayers: maxPlayers == freezed
+          ? _value.maxPlayers
+          : maxPlayers // ignore: cast_nullable_to_non_nullable
+              as int,
+      bots: bots == freezed
+          ? _value.bots
+          : bots // ignore: cast_nullable_to_non_nullable
+              as int,
+      type: type == freezed
+          ? _value.type
+          : type // ignore: cast_nullable_to_non_nullable
+              as ServerType,
+      os: os == freezed
+          ? _value.os
+          : os // ignore: cast_nullable_to_non_nullable
+              as ServerOS,
       visibility: visibility == freezed
           ? _value.visibility
-          : visibility as ServerVisibility,
-      vac: vac == freezed ? _value.vac : vac as ServerVAC,
-      version: version == freezed ? _value.version : version as String,
-      port: port == freezed ? _value.port : port as int,
-      steamId: steamId == freezed ? _value.steamId : steamId as int,
-      tvPort: tvPort == freezed ? _value.tvPort : tvPort as int,
-      tvName: tvName == freezed ? _value.tvName : tvName as String,
-      keywords: keywords == freezed ? _value.keywords : keywords as String,
-      gameId: gameId == freezed ? _value.gameId : gameId as int,
+          : visibility // ignore: cast_nullable_to_non_nullable
+              as ServerVisibility,
+      vac: vac == freezed
+          ? _value.vac
+          : vac // ignore: cast_nullable_to_non_nullable
+              as ServerVAC,
+      version: version == freezed
+          ? _value.version
+          : version // ignore: cast_nullable_to_non_nullable
+              as String,
+      port: port == freezed
+          ? _value.port
+          : port // ignore: cast_nullable_to_non_nullable
+              as int?,
+      steamId: steamId == freezed
+          ? _value.steamId
+          : steamId // ignore: cast_nullable_to_non_nullable
+              as int?,
+      tvPort: tvPort == freezed
+          ? _value.tvPort
+          : tvPort // ignore: cast_nullable_to_non_nullable
+              as int?,
+      tvName: tvName == freezed
+          ? _value.tvName
+          : tvName // ignore: cast_nullable_to_non_nullable
+              as String?,
+      keywords: keywords == freezed
+          ? _value.keywords
+          : keywords // ignore: cast_nullable_to_non_nullable
+              as String?,
+      gameId: gameId == freezed
+          ? _value.gameId
+          : gameId // ignore: cast_nullable_to_non_nullable
+              as int?,
     ));
   }
 }
 
 /// @nodoc
+
 class _$_ServerInfo implements _ServerInfo {
   _$_ServerInfo(
-      {this.protocol,
-      this.name,
-      this.map,
-      this.folder,
-      this.game,
-      this.id,
-      this.players,
-      this.maxPlayers,
-      this.bots,
-      this.type,
-      this.os,
-      this.visibility,
-      this.vac,
-      this.version,
-      @nullable this.port,
-      @nullable this.steamId,
-      @nullable this.tvPort,
-      @nullable this.tvName,
-      @nullable this.keywords,
-      @nullable this.gameId});
+      {required this.protocol,
+      required this.name,
+      required this.map,
+      required this.folder,
+      required this.game,
+      required this.id,
+      required this.players,
+      required this.maxPlayers,
+      required this.bots,
+      required this.type,
+      required this.os,
+      required this.visibility,
+      required this.vac,
+      required this.version,
+      this.port,
+      this.steamId,
+      this.tvPort,
+      this.tvName,
+      this.keywords,
+      this.gameId});
 
   @override
 
@@ -391,33 +506,27 @@ class _$_ServerInfo implements _ServerInfo {
   @override
 
   /// Server's port number.
-  @nullable
-  final int port;
+  final int? port;
   @override
 
   /// Server's SteamID.
-  @nullable
-  final int steamId;
+  final int? steamId;
   @override
 
   /// Spectator port number for SourceTV.
-  @nullable
-  final int tvPort;
+  final int? tvPort;
   @override
 
   /// Name of the spectator server for SourceTV.
-  @nullable
-  final String tvName;
+  final String? tvName;
   @override
 
   /// Tags that describe the game according to the server (for future use.)
-  @nullable
-  final String keywords;
+  final String? keywords;
   @override
 
   /// The server's 64-bit GameID.
-  @nullable
-  final int gameId;
+  final int? gameId;
 
   @override
   String toString() {
@@ -501,6 +610,7 @@ class _$_ServerInfo implements _ServerInfo {
       const DeepCollectionEquality().hash(keywords) ^
       const DeepCollectionEquality().hash(gameId);
 
+  @JsonKey(ignore: true)
   @override
   _$ServerInfoCopyWith<_ServerInfo> get copyWith =>
       __$ServerInfoCopyWithImpl<_ServerInfo>(this, _$identity);
@@ -508,112 +618,108 @@ class _$_ServerInfo implements _ServerInfo {
 
 abstract class _ServerInfo implements ServerInfo {
   factory _ServerInfo(
-      {int protocol,
-      String name,
-      String map,
-      String folder,
-      String game,
-      int id,
-      int players,
-      int maxPlayers,
-      int bots,
-      ServerType type,
-      ServerOS os,
-      ServerVisibility visibility,
-      ServerVAC vac,
-      String version,
-      @nullable int port,
-      @nullable int steamId,
-      @nullable int tvPort,
-      @nullable String tvName,
-      @nullable String keywords,
-      @nullable int gameId}) = _$_ServerInfo;
+      {required int protocol,
+      required String name,
+      required String map,
+      required String folder,
+      required String game,
+      required int id,
+      required int players,
+      required int maxPlayers,
+      required int bots,
+      required ServerType type,
+      required ServerOS os,
+      required ServerVisibility visibility,
+      required ServerVAC vac,
+      required String version,
+      int? port,
+      int? steamId,
+      int? tvPort,
+      String? tvName,
+      String? keywords,
+      int? gameId}) = _$_ServerInfo;
 
   @override
 
   /// Protocol version used by the server.
-  int get protocol;
+  int get protocol => throw _privateConstructorUsedError;
   @override
 
   /// Name of the server.
-  String get name;
+  String get name => throw _privateConstructorUsedError;
   @override
 
   /// Map the server has currently loaded.
-  String get map;
+  String get map => throw _privateConstructorUsedError;
   @override
 
   /// Name of the folder containing the game files.
-  String get folder;
+  String get folder => throw _privateConstructorUsedError;
   @override
 
   /// Full name of the game.
-  String get game;
+  String get game => throw _privateConstructorUsedError;
   @override
 
   /// Steam Application ID of game.
-  int get id;
+  int get id => throw _privateConstructorUsedError;
   @override
 
   /// Number of players on the server.
-  int get players;
+  int get players => throw _privateConstructorUsedError;
   @override
 
   /// Maximum number of players the server reports it can hold.
-  int get maxPlayers;
+  int get maxPlayers => throw _privateConstructorUsedError;
   @override
 
   /// Number of bots on the server.
-  int get bots;
+  int get bots => throw _privateConstructorUsedError;
   @override
 
   /// Server type.
-  ServerType get type;
+  ServerType get type => throw _privateConstructorUsedError;
   @override
 
   /// Server operating system.
-  ServerOS get os;
+  ServerOS get os => throw _privateConstructorUsedError;
   @override
 
   /// Server visibility. Indicates if the server is password protected.
-  ServerVisibility get visibility;
+  ServerVisibility get visibility => throw _privateConstructorUsedError;
   @override
 
   /// Server VAC status.
-  ServerVAC get vac;
+  ServerVAC get vac => throw _privateConstructorUsedError;
   @override /* TODO: Add TheShip flags */
   /// Version of the game installed on the server.
-  String get version;
+  String get version => throw _privateConstructorUsedError;
   @override
 
   /// Server's port number.
-  @nullable
-  int get port;
+  int? get port => throw _privateConstructorUsedError;
   @override
 
   /// Server's SteamID.
-  @nullable
-  int get steamId;
+  int? get steamId => throw _privateConstructorUsedError;
   @override
 
   /// Spectator port number for SourceTV.
-  @nullable
-  int get tvPort;
+  int? get tvPort => throw _privateConstructorUsedError;
   @override
 
   /// Name of the spectator server for SourceTV.
-  @nullable
-  String get tvName;
+  String? get tvName => throw _privateConstructorUsedError;
   @override
 
   /// Tags that describe the game according to the server (for future use.)
-  @nullable
-  String get keywords;
+  String? get keywords => throw _privateConstructorUsedError;
   @override
 
   /// The server's 64-bit GameID.
-  @nullable
-  int get gameId;
+  int? get gameId => throw _privateConstructorUsedError;
   @override
-  _$ServerInfoCopyWith<_ServerInfo> get copyWith;
+  @JsonKey(ignore: true)
+  _$ServerInfoCopyWith<_ServerInfo> get copyWith =>
+      throw _privateConstructorUsedError;
 }
