@@ -4,6 +4,8 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
 
+import '../exceptions/exceptions.dart';
+
 /// Allows the connection to a remote server using the rcon protocol.
 /// If the current ip address is banned no reply will be sent and the authentication will hang forever.
 abstract class RconSocket {
@@ -80,22 +82,20 @@ class _RconSocketImpl implements RconSocket {
     assert(authCompleter == null);
 
     authCompleter = Completer<bool>();
-    socket.add(RconPacket.auth(password: password, id: 1).bytes);
+    socket.add(_RconPacket.auth(password: password, id: 1).bytes);
     return authCompleter!.future;
   }
 
   @override
   Future<String> command(String command) {
     if (!(authStatus ?? false)) {
-      throw SocketException(
-          'Cannot send an RCON command while not authenticated!',
-          address: socket.address,
-          port: socket.port);
+      throw const RconException(
+          'Cannot send an RCON command while not authenticated!');
     }
     final resultCompleter = Completer<String>();
 
     cmdMap[packetId] = resultCompleter;
-    socket.add(RconPacket.command(command: command, id: packetId++).bytes);
+    socket.add(_RconPacket.command(command: command, id: packetId++).bytes);
 
     return resultCompleter.future;
   }
@@ -106,7 +106,7 @@ class _RconSocketImpl implements RconSocket {
   }
 
   void onEvent(Uint8List event) {
-    final packet = RconPacket(event);
+    final packet = _RconPacket(event);
     if (packet.id == 0) {
       return;
     }
@@ -128,7 +128,7 @@ class _RconSocketImpl implements RconSocket {
   }
 }
 
-class RconPacket {
+class _RconPacket {
   final Uint8List bytes;
 
   late final ByteData _byteData;
@@ -143,11 +143,11 @@ class RconPacket {
 
   String get bodyAsString => utf8.decode(body, allowMalformed: true);
 
-  RconPacket(this.bytes) {
+  _RconPacket(this.bytes) {
     _byteData = ByteData.view(bytes.buffer);
   }
 
-  factory RconPacket.from(
+  factory _RconPacket.from(
       {int id = 0, int type = 0, dynamic body = const [0x00]}) {
     assert((body is List<int> && body.isNotEmpty) || body is String);
     if (body is String) {
@@ -169,17 +169,17 @@ class RconPacket {
 
       bytes.setList(offset, body);
 
-      return RconPacket(bytes.buffer.asUint8List());
+      return _RconPacket(bytes.buffer.asUint8List());
     }
-    throw StateError('Invalid body type');
+    throw ArgumentError.value(body, 'body', 'Invalid type');
   }
 
-  factory RconPacket.auth({required String password, required int id}) {
-    return RconPacket.from(body: password, type: 3, id: id);
+  factory _RconPacket.auth({required String password, required int id}) {
+    return _RconPacket.from(body: password, type: 3, id: id);
   }
 
-  factory RconPacket.command({required String command, required int id}) {
-    return RconPacket.from(body: command, type: 2, id: id);
+  factory _RconPacket.command({required String command, required int id}) {
+    return _RconPacket.from(body: command, type: 2, id: id);
   }
 }
 

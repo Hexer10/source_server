@@ -1,11 +1,13 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'exceptions/exceptions.dart';
 import 'query/models/query_player.dart';
 import 'query/models/server_info.dart';
 import 'query/query_socket.dart';
 import 'rcon/rcon_socket.dart';
 
+/// Wrapper for both [RconSocket] and [QuerySocket]
 class SourceServer implements RconSocket, QuerySocket {
   /// The address used for the connection.
   final dynamic address;
@@ -32,14 +34,14 @@ class SourceServer implements RconSocket, QuerySocket {
       if (!result) {
         querySocket.close();
         rconSocket.close();
-        throw const SocketException('RCON authentication failed!');
+        throw RconAuthenticationException(rconSocket.errorMessage ?? '');
       }
     }
     return SourceServer._(address, port, querySocket, rconSocket);
   }
 
   /// Authenticates to the remote server.
-  /// Throws a [SocketException] if the authentication fails.
+  /// Throws a [RconAuthenticationException] if the authentication fails.
   /// Can be used to connected to the rcon without specifying the password in [connect].
   @override
   Future<bool> authenticate(String password) async {
@@ -49,7 +51,8 @@ class SourceServer implements RconSocket, QuerySocket {
     _rconSocket = await RconSocket.connect(address, port);
     final result = await _rconSocket!.authenticate(password);
     if (!result) {
-      throw const SocketException('RCON authentication failed!');
+      _rconSocket!.close();
+      throw RconAuthenticationException(_rconSocket!.errorMessage ?? '');
     }
     return true;
   }
@@ -63,7 +66,7 @@ class SourceServer implements RconSocket, QuerySocket {
   @override
   Future<String> command(String command) {
     if (_rconSocket == null) {
-      throw const SocketException(
+      throw const RconException(
           'Cannot send an RCON command while not authenticated!');
     }
     return _rconSocket!.command(command);

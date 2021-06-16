@@ -1,3 +1,4 @@
+export 'src/exceptions/exceptions.dart';
 export 'src/query/models/query_player.dart';
 export 'src/query/models/server_info.dart';
 export 'src/query/models/server_os.dart';

@@ -1,3 +1,4 @@
+/// Wrapper for server types.
 class ServerType {
   /// Dedicated server
   static const ServerType dedicated = ServerType._(0x64);
@@ -8,8 +9,10 @@ class ServerType {
   /// SourceTV relay (proxy)
   static const ServerType sourceTv = ServerType._(0x70);
 
+  /// The [ServerType] as raw int.
   final int code;
 
+  /// Initialize an instance of [ServerType] from a [code].
   factory ServerType(int code) {
     if (code == 0x64) {
       return dedicated;

@@ -1,4 +1,4 @@
-// [0x6c, 0x77, 0x6d, 0x6f]
+/// Wrapper for the server OS.
 class ServerOS {
   /// Linux
   static const ServerOS linux = ServerOS._(0x6c);
@@ -9,8 +9,10 @@ class ServerOS {
   /// Mac
   static const ServerOS mac = ServerOS._(0x6d);
 
+  /// The [ServerOS] as raw int.
   final int code;
 
+  /// Initialize an instance of [ServerOS] from a [code].
   factory ServerOS(int code) {
     if (code == 0x6c) {
       return linux;

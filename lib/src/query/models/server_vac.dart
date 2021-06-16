@@ -1,3 +1,4 @@
+/// Wrapper for the server VAC status.
 class ServerVAC {
   /// VAC Disabled
   static const ServerVAC unsecured = ServerVAC._(0);
@@ -5,8 +6,10 @@ class ServerVAC {
   /// Secure VAC server
   static const ServerVAC secured = ServerVAC._(1);
 
+  /// The [ServerVAC] as raw int.
   final int code;
 
+  /// Initialize an instance of [ServerVAC] from a [code].
   factory ServerVAC(int code) {
     if (code == 0) {
       return unsecured;

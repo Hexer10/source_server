@@ -8,7 +8,10 @@ import 'server_visibility.dart';
 part 'server_info.freezed.dart';
 
 @freezed
+
+/// Info returned from a A2A_INFO packet.
 class ServerInfo with _$ServerInfo {
+  /// Initialize an instance of [ServerInfo].
   factory ServerInfo({
     /// Protocol version used by the server.
     required int protocol,

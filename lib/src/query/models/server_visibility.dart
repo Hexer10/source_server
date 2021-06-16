@@ -1,3 +1,4 @@
+/// Wrapper for the server visibility.
 class ServerVisibility {
   /// Public - Not password protected.
   static const ServerVisibility public = ServerVisibility._(0);
@@ -5,8 +6,10 @@ class ServerVisibility {
   /// Private - Password protected.
   static const ServerVisibility private = ServerVisibility._(1);
 
+  /// The [ServerVisibility] as raw int.
   final int code;
 
+  /// Initialize an instance of [ServerVisibility] from a [code].
   factory ServerVisibility(int code) {
     if (code == 0) {
       return public;

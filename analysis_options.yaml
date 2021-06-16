@@ -1,4 +1,4 @@
-include: package:lint/analysis_options.yaml
+include: package:lint/analysis_options_package.yaml
 
 analyzer:
   strong-mode:
@@ -13,5 +13,5 @@ linter:
   rules:
     prefer_relative_imports: true
     avoid_relative_lib_imports: false
-    avoid_print: false
     unawaited_futures: true
+    public_member_api_docs: true
