@@ -8,67 +8,67 @@ import 'server_visibility.dart';
 part 'server_info.freezed.dart';
 
 @freezed
-abstract class ServerInfo with _$ServerInfo {
+class ServerInfo with _$ServerInfo {
   factory ServerInfo({
     /// Protocol version used by the server.
-    int protocol,
+    required int protocol,
 
     /// Name of the server.
-    String name,
+    required String name,
 
     /// Map the server has currently loaded.
-    String map,
+    required String map,
 
     /// Name of the folder containing the game files.
-    String folder,
+    required String folder,
 
     /// Full name of the game.
-    String game,
+    required String game,
 
     /// Steam Application ID of game.
-    int id,
+    required int id,
 
     /// Number of players on the server.
-    int players,
+    required int players,
 
     /// Maximum number of players the server reports it can hold.
-    int maxPlayers,
+    required int maxPlayers,
 
     /// Number of bots on the server.
-    int bots,
+    required int bots,
 
     /// Server type.
-    ServerType type,
+    required ServerType type,
 
     /// Server operating system.
-    ServerOS os,
+    required ServerOS os,
 
     /// Server visibility. Indicates if the server is password protected.
-    ServerVisibility visibility,
+    required ServerVisibility visibility,
 
     /// Server VAC status.
-    ServerVAC vac,
+    required ServerVAC vac,
     /* TODO: Add TheShip flags */
 
     /// Version of the game installed on the server.
-    String version,
+    required String version,
 
     /// Server's port number.
-    @nullable int port,
+    int? port,
 
     /// Server's SteamID.
-    @nullable int steamId,
+    int? steamId,
 
     /// Spectator port number for SourceTV.
-    @nullable int tvPort,
+    int? tvPort,
 
     /// Name of the spectator server for SourceTV.
-    @nullable String tvName,
+    String? tvName,
 
     /// Tags that describe the game according to the server (for future use.)
-    @nullable String keywords,
+    String? keywords,
 
     /// The server's 64-bit GameID.
-    @nullable int gameId,
+    int? gameId,
   }) = _ServerInfo;
 }

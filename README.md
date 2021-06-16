@@ -1,22 +1,33 @@
-A library for Dart developers.
+# SourceSerer
 
-Created from templates made available by Stagehand under a BSD-style
-[license](https://github.com/dart-lang/stagehand/blob/master/LICENSE).
+A library to connect to Source Dedicated Servers [CS:GO, CSS, TF2, ...]
 
-## Usage
-
-A simple usage example:
-
-```dart
-import 'package:source_server/source_server.dart';
-
-main() {
-  var awesome = new Awesome();
-}
+## Get started
+Import the library (make sure to check for the latest version).
+```yaml
+depedencies:
+    source_server: ^3.1.0-dev
 ```
 
-## Features and bugs
+Connect to the server
+```dart
+  final server = await SourceServer.connect('127.0.0.1', 27015, password: '1234');
+```
+The password parameter can be supplied to connect via RCON as well.
 
-Please file feature requests and bugs at the [issue tracker][tracker].
 
-[tracker]: http://example.com/issues/replaceme
+After connecting you can issue the query commands:
+```dart
+  final info = await server.getInfo();
+  final players = await server.getPlayers();
+  final rules = await server.getRules();
+```
+
+## Sending RCON commands
+
+The RCON password must be supplied to send RCON commands.
+
+```dart
+final reply = await server.command('status');
+```
+the method `command` will return a `Future` string holding the server reply.

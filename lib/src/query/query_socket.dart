@@ -2,8 +2,7 @@ import 'dart:async';
 import 'dart:io';
 import 'dart:typed_data';
 
-import 'package:typed_buffer/typed_buffer.dart';
-
+import '../read_buffer.dart';
 import 'models/query_player.dart';
 import 'models/server_info.dart';
 import 'models/server_os.dart';
@@ -37,7 +36,7 @@ abstract class QuerySocket {
     assert(address is String || address is InternetAddress);
     if (address is String) {
       // ignore: parameter_assignments
-      address = (await InternetAddress.lookup(address as String)).first;
+      address = (await InternetAddress.lookup(address)).first;
     }
 
     final socket =
@@ -51,76 +50,75 @@ class _QuerySocketImpl implements QuerySocket {
   final int port;
   final RawDatagramSocket socket;
 
-  Completer<ServerInfo> infoCompleter;
-  Completer<Uint8List> challengeCompleter;
-  Completer<List<QueryPlayer>> playersCompleter;
-  Completer<Map<String, String>> rulesCompleter;
+  Completer<ServerInfo>? infoCompleter;
+  Completer<Uint8List>? challengeCompleter;
+  Completer<List<QueryPlayer>>? playersCompleter;
+  Completer<Map<String, String>>? rulesCompleter;
 
-  Uint8List challenge;
+  Uint8List? _challenge;
 
-  _QuerySocketImpl(this.address, this.port, this.socket)
-      : assert(socket != null) {
+  _QuerySocketImpl(this.address, this.port, this.socket) {
     socket.listen(onEvent);
   }
 
   Future<Uint8List> getChallenge() async {
-    if (challenge != null) {
-      return challenge;
+    if (_challenge != null) {
+      return _challenge!;
     }
     // assert(!(challengeCompleter?.isCompleted ?? false));
     if (challengeCompleter != null) {
-      return challengeCompleter.future;
+      return challengeCompleter!.future;
     }
     challengeCompleter = Completer<Uint8List>();
     socket.send(QueryPacket.challenge.bytes, address, port);
-    return challengeCompleter.future;
+    return challengeCompleter!.future;
   }
 
   @override
   Future<ServerInfo> getInfo() {
     assert(!(infoCompleter?.isCompleted ?? false));
     if (infoCompleter != null) {
-      return infoCompleter.future;
+      return infoCompleter!.future;
     }
     infoCompleter = Completer<ServerInfo>();
     socket.send(QueryPacket.info.bytes, address, port);
-    return infoCompleter.future;
+    return infoCompleter!.future;
   }
 
   @override
   Future<List<QueryPlayer>> getPlayers() async {
     assert(!(playersCompleter?.isCompleted ?? false));
     if (playersCompleter != null) {
-      return playersCompleter.future;
+      return playersCompleter!.future;
     }
     playersCompleter = Completer<List<QueryPlayer>>();
     // ignore: unawaited_futures
     getChallenge().then((value) =>
         socket.send(QueryPacket.players(value).bytes, address, port));
-    return playersCompleter.future;
+    return playersCompleter!.future;
   }
 
   @override
   Future<Map<String, String>> getRules() async {
     assert(!(rulesCompleter?.isCompleted ?? false));
     if (rulesCompleter != null) {
-      return rulesCompleter.future;
+      return rulesCompleter!.future;
     }
     rulesCompleter = Completer<Map<String, String>>();
     // ignore: unawaited_futures
     getChallenge().then(
         (value) => socket.send(QueryPacket.rules(value).bytes, address, port));
-    return rulesCompleter.future;
+    return rulesCompleter!.future;
   }
 
   void parseInfo(Uint8List bytes) {
     final read = ReadBuffer.fromUint8List(bytes);
 
     final protocol = read.uint8;
-    final name = read.nullTerminatedUtf8String;
-    final map = read.nullTerminatedUtf8String;
-    final folder = read.nullTerminatedUtf8String;
-    final game = read.nullTerminatedUtf8String;
+    final name = read.readString;
+    final map = read.readString;
+    final folder = read.readString;
+    final game = read.readString;
     final id = read.int16;
     final players = read.uint8;
     final maxPlayers = read.uint8;
@@ -130,7 +128,7 @@ class _QuerySocketImpl implements QuerySocket {
     final visibility = ServerVisibility(read.uint8);
     final vac = ServerVAC(read.uint8);
     /* TODO: Add TheShip flags*/
-    final version = read.nullTerminatedUtf8String;
+    final version = read.readString;
     var info = ServerInfo(
         protocol: protocol,
         name: name,
@@ -148,25 +146,25 @@ class _QuerySocketImpl implements QuerySocket {
         version: version);
     if (read.canReadMore) {
       final edf = read.uint8;
-      int port;
-      int steamId;
-      int tvPort;
-      String tvName;
-      String keywords;
-      int gameId;
+      int? port;
+      int? steamId;
+      int? tvPort;
+      String? tvName;
+      String? keywords;
+      int? gameId;
 
       if (edf & 0x80 != 0) {
-        port = read.uint8;
+        port = read.uint16;
       }
       if (edf & 0x10 != 0) {
         steamId = read.int64;
       }
       if (edf & 0x40 != 0) {
-        tvPort = read.uint8;
-        tvName = read.nullTerminatedUtf8String;
+        tvPort = read.uint16;
+        tvName = read.readString;
       }
       if (edf & 0x20 != 0) {
-        keywords = read.nullTerminatedUtf8String;
+        keywords = read.readString;
       }
       if (edf & 0x01 != 0) {
         gameId = read.int64;
@@ -180,44 +178,44 @@ class _QuerySocketImpl implements QuerySocket {
           gameId: gameId);
     }
 
-    infoCompleter.complete(info);
+    infoCompleter!.complete(info);
     infoCompleter = null;
   }
 
   void parseChallenge(Uint8List bytes) {
-    challenge = bytes;
-    challengeCompleter.complete(challenge);
+    _challenge = bytes;
+    challengeCompleter!.complete(_challenge);
     challengeCompleter = null;
   }
 
   void parsePlayers(Uint8List bytes) {
     assert(playersCompleter != null);
-    assert(!playersCompleter.isCompleted);
+    assert(!playersCompleter!.isCompleted);
     final read = ReadBuffer.fromUint8List(bytes.sublist(1));
     final players = <QueryPlayer>[];
     while (read.canReadMore) {
       players.add(QueryPlayer(
           index: read.uint8,
-          name: read.nullTerminatedUtf8String,
+          name: read.readString,
           score: read.int32,
-          duration: read.float));
+          duration: read.float32));
       /* TODO: Add TheShip params */
     }
-    playersCompleter.complete(players);
+    playersCompleter!.complete(players);
     playersCompleter = null;
   }
 
   void parseRules(Uint8List bytes) {
     assert(rulesCompleter != null);
-    assert(!rulesCompleter.isCompleted);
+    assert(!rulesCompleter!.isCompleted);
     final read = ReadBuffer.fromUint8List(bytes.sublist(2));
     final rules = <String, String>{};
     while (read.canReadMore) {
-      final key = read.nullTerminatedUtf8String;
-      final value = read.nullTerminatedUtf8String;
+      final key = read.readString;
+      final value = read.readString;
       rules[key] = value;
     }
-    rulesCompleter.complete(rules);
+    rulesCompleter!.complete(rules);
     rulesCompleter = null;
   }
 
@@ -226,6 +224,10 @@ class _QuerySocketImpl implements QuerySocket {
       return;
     }
     final datagram = socket.receive();
+    if (datagram == null) {
+      return;
+    }
+
     final data = datagram.data;
     final header = data[4];
 
@@ -244,7 +246,6 @@ class _QuerySocketImpl implements QuerySocket {
 
   @override
   void close() => socket.close();
-
 }
 
 class QueryPacket {
@@ -285,7 +286,6 @@ class QueryPacket {
 
   QueryPacket.players(Uint8List challenge)
       : bytes = [0xff, 0xff, 0xff, 0xff, 0x55, ...challenge];
-
 
   QueryPacket.rules(Uint8List challenge)
       : bytes = [0xff, 0xff, 0xff, 0xff, 0x56, ...challenge];

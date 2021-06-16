@@ -22,7 +22,7 @@ abstract class RconSocket {
   Stream<String> get commandStream;
 
   /// If the authentication failed this is might contain a more descriptive message.
-  String get errorMessage;
+  String? get errorMessage;
 
   /// Closes the connection
   void close();
@@ -32,7 +32,7 @@ abstract class RconSocket {
     assert(address is String || address is InternetAddress);
     if (address is String) {
       // ignore: parameter_assignments
-      address = (await InternetAddress.lookup(address as String)).first;
+      address = (await InternetAddress.lookup(address)).first;
     }
 
     final socket = await Socket.connect(address, port);
@@ -44,25 +44,23 @@ class _RconSocketImpl implements RconSocket {
   final Socket socket;
   final StreamController<String> _commandStream = StreamController<String>();
 
-  /* late final */
-  String _errorMessage;
+  String? _errorMessage;
 
   @override
   Stream<String> get commandStream => _commandStream.stream;
 
   @override
-  String get errorMessage => _errorMessage;
+  String? get errorMessage => _errorMessage;
 
-  /* late final */
-  Completer<bool> authCompleter;
+  Completer<bool>? authCompleter;
   final HashMap<int, Completer<String>> cmdMap =
       HashMap<int, Completer<String>>();
 
   bool skip = true;
   int packetId = 2;
-  bool authStatus;
+  bool? authStatus;
 
-  _RconSocketImpl(this.socket) : assert(socket != null) {
+  _RconSocketImpl(this.socket) {
     socket.listen(onEvent);
   }
 
@@ -70,23 +68,30 @@ class _RconSocketImpl implements RconSocket {
   FutureOr<bool> authenticate(String password) {
     if (authCompleter?.isCompleted ?? false) {
       assert(authStatus != null);
-      return authStatus;
+      return authStatus!;
     }
     if (authCompleter != null) {
-      return authCompleter.future;
+      return authCompleter!.future;
     }
-    assert(password != null && password.isNotEmpty);
+
+    if (password.isEmpty) {
+      throw ArgumentError.value(password, 'password', 'Cannot be empty!');
+    }
     assert(authCompleter == null);
 
     authCompleter = Completer<bool>();
     socket.add(RconPacket.auth(password: password, id: 1).bytes);
-    return authCompleter.future;
+    return authCompleter!.future;
   }
 
   @override
   Future<String> command(String command) {
-    assert(command != null);
-    assert(authStatus ?? false);
+    if (!(authStatus ?? false)) {
+      throw SocketException(
+          'Cannot send an RCON command while not authenticated!',
+          address: socket.address,
+          port: socket.port);
+    }
     final resultCompleter = Completer<String>();
 
     cmdMap[packetId] = resultCompleter;
@@ -106,19 +111,15 @@ class _RconSocketImpl implements RconSocket {
       return;
     }
 
-    if (packet.id == 1) {
-      if (packet.type == 0) {
-        authStatus = false;
-        authCompleter.complete(false);
+    if (packet.type == 2) {
+      authStatus = packet.id != -1;
+      authCompleter!.complete(packet.id != -1);
+    } else if (packet.type == 0) {
+      // Auth packet
+      if (packet.id == 1) {
         _errorMessage = packet.bodyAsString;
         return;
       }
-      assert(!authCompleter.isCompleted);
-
-      authStatus = packet.id != -1;
-      authCompleter.complete(packet.id != -1);
-      _errorMessage = '';
-    } else if (packet.type == 0) {
       final body = packet.bodyAsString;
       _commandStream.add(body);
 
@@ -130,8 +131,7 @@ class _RconSocketImpl implements RconSocket {
 class RconPacket {
   final Uint8List bytes;
 
-  /* late final */
-  ByteData _byteData;
+  late final ByteData _byteData;
 
   int get size => _byteData.getInt32(0, Endian.little);
 
@@ -149,12 +149,9 @@ class RconPacket {
 
   factory RconPacket.from(
       {int id = 0, int type = 0, dynamic body = const [0x00]}) {
-    assert(id != null);
-    assert(type != null);
-    assert(body != null);
     assert((body is List<int> && body.isNotEmpty) || body is String);
     if (body is String) {
-      body = [...utf8.encode(body as String), 0x00];
+      body = [...utf8.encode(body), 0x00];
     }
     if (body is List<int>) {
       final size = 4 + 4 + body.length + 1;
@@ -177,11 +174,11 @@ class RconPacket {
     throw StateError('Invalid body type');
   }
 
-  factory RconPacket.auth({String password, int id}) {
+  factory RconPacket.auth({required String password, required int id}) {
     return RconPacket.from(body: password, type: 3, id: id);
   }
 
-  factory RconPacket.command({String command, int id}) {
+  factory RconPacket.command({required String command, required int id}) {
     return RconPacket.from(body: command, type: 2, id: id);
   }
 }
