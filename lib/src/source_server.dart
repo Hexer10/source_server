@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:io';
-import 'dart:math';
 
 import 'exceptions/exceptions.dart';
 import 'query/models/query_player.dart';
