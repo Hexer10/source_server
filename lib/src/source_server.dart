@@ -29,11 +29,10 @@ class SourceServer implements RconSocket, QuerySocket {
   /// Connects to the remote server using the server query protocol
   /// and the rcon protocol if the password was specified.
   /// This throws a [SocketException] if the authentication with the remote server failed.
-   static Future<SourceServer> connect(dynamic address, int port,
+  static Future<SourceServer> connect(dynamic address, int port,
       {String? password,
       Duration timeout = const Duration(seconds: 30)}) async {
-    final querySocket = await QuerySocket.connect(
-        address, port, localPort: getRandomPort(3000, 6000));
+    final querySocket = await QuerySocket.connect(address, port);
     RconSocket? rconSocket;
     if (password != null) {
       rconSocket = await RconSocket.connect(address, port);
@@ -98,13 +97,4 @@ class SourceServer implements RconSocket, QuerySocket {
 
   @override
   String? get errorMessage => _rconSocket?.errorMessage;
-
-
-  /// Get random port for localPort
-  /// Makes parallel connections possible
-  static int getRandomPort(int min, int max){
-    final rn = Random();
-
-    return min + rn.nextInt(max - min);
-  }
 }
