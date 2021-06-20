@@ -3,13 +3,14 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import '../exceptions/exceptions.dart';
-import '../read_buffer.dart';
+import '../buffer.dart';
 import 'models/query_player.dart';
 import 'models/server_info.dart';
 import 'models/server_os.dart';
 import 'models/server_type.dart';
 import 'models/server_vac.dart';
 import 'models/server_visibility.dart';
+import 'query_packet.dart';
 
 /// Wrapper for the query protocol.
 abstract class QuerySocket {
@@ -72,7 +73,7 @@ class _QuerySocketImpl implements QuerySocket {
       return challengeCompleter!.future;
     }
     challengeCompleter = Completer<Uint8List>();
-    socket.send(_QueryPacket.challenge.bytes, address, port);
+    socket.send(QueryPacket.challenge.bytes, address, port);
     return challengeCompleter!.future;
   }
 
@@ -83,7 +84,7 @@ class _QuerySocketImpl implements QuerySocket {
       return infoCompleter!.future;
     }
     infoCompleter = Completer<ServerInfo>();
-    socket.send(_QueryPacket.info.bytes, address, port);
+    socket.send(QueryPacket.info.bytes, address, port);
     return infoCompleter!.future;
   }
 
@@ -96,7 +97,7 @@ class _QuerySocketImpl implements QuerySocket {
     playersCompleter = Completer<List<QueryPlayer>>();
     // ignore: unawaited_futures
     getChallenge().then((value) =>
-        socket.send(_QueryPacket.players(value).bytes, address, port));
+        socket.send(QueryPacket.players(value).bytes, address, port));
     return playersCompleter!.future;
   }
 
@@ -109,7 +110,7 @@ class _QuerySocketImpl implements QuerySocket {
     rulesCompleter = Completer<Map<String, String>>();
     // ignore: unawaited_futures
     getChallenge().then(
-        (value) => socket.send(_QueryPacket.rules(value).bytes, address, port));
+        (value) => socket.send(QueryPacket.rules(value).bytes, address, port));
     return rulesCompleter!.future;
   }
 
@@ -155,6 +156,7 @@ class _QuerySocketImpl implements QuerySocket {
       String? keywords;
       int? gameId;
 
+      var x = 0x80 | 0x10 | 0x40 | 0x20 | 0x01;
       if (edf & 0x80 != 0) {
         port = read.uint16;
       }
@@ -230,6 +232,7 @@ class _QuerySocketImpl implements QuerySocket {
       return;
     }
 
+
     final data = datagram.data;
     final header = data[4];
 
@@ -250,45 +253,3 @@ class _QuerySocketImpl implements QuerySocket {
   void close() => socket.close();
 }
 
-class _QueryPacket {
-  static const _QueryPacket info = _QueryPacket([
-    0xff,
-    0xff,
-    0xff,
-    0xff,
-    0x54, // T
-    0x53, // Source Engine Query
-    0x6f,
-    0x75,
-    0x72,
-    0x63,
-    0x65,
-    0x20,
-    0x45,
-    0x6e,
-    0x67,
-    0x69,
-    0x6e,
-    0x65,
-    0x20,
-    0x51,
-    0x75,
-    0x65,
-    0x72,
-    0x79,
-    0x0
-  ]);
-
-  static const _QueryPacket challenge =
-      _QueryPacket([0xff, 0xff, 0xff, 0xff, 0x55, 0xff, 0xff, 0xff, 0xff]);
-
-  final List<int> bytes;
-
-  const _QueryPacket(this.bytes);
-
-  _QueryPacket.players(Uint8List challenge)
-      : bytes = [0xff, 0xff, 0xff, 0xff, 0x55, ...challenge];
-
-  _QueryPacket.rules(Uint8List challenge)
-      : bytes = [0xff, 0xff, 0xff, 0xff, 0x56, ...challenge];
-}

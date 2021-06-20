@@ -4,19 +4,19 @@ import 'package:source_server/source_server.dart';
 
 Future<void> main() async {
   final server =
-      await SourceServer.connect('192.168.255.1', 27015, password: 'ciao');
+      await SourceServer.connect('127.0.0.1', 27015);
 
-  final info = await server.getInfo();
+  final info =await server.getInfo();
   print(info);
 
-  final players = await server.getPlayers();
+/*  final players = await server.getPlayers();
   print(players);
 
   final rules = await server.getRules();
   print(rules);
 
   final status = await server.command('status');
-  print(status);
+  print(status);*/
 
   server.close();
 }
