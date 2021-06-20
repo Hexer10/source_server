@@ -34,7 +34,7 @@ abstract class QuerySocket {
   /// Setup the connection to the remote server.
   /// This does not guarantee that the connection will be established successfully.
   static Future<QuerySocket> connect(dynamic address, int port,
-      {int localPort = 6000}) async {
+      {int localPort = 0}) async {
     assert(address is String || address is InternetAddress);
     if (address is String) {
       // ignore: parameter_assignments
