@@ -213,7 +213,6 @@ class DummyServer {
         return;
       }
 
-
       socket.add(RconPacket.from(id: packet.id, type: 2, body: 'hello').bytes);
     }
   }

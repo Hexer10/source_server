@@ -30,7 +30,7 @@ class ServerVisibility {
       case private:
         return 'ServerVisibility(private)';
       default:
-      // Never reaches here.
+        // Never reaches here.
         throw StateError('');
     }
   }

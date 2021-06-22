@@ -30,7 +30,7 @@ class ServerVAC {
       case secured:
         return 'ServerVAC(secured)';
       default:
-      // Never reaches here.
+        // Never reaches here.
         throw StateError('');
     }
   }

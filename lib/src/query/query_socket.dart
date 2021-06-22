@@ -2,8 +2,8 @@ import 'dart:async';
 import 'dart:io';
 import 'dart:typed_data';
 
-import '../exceptions/exceptions.dart';
 import '../buffer.dart';
+import '../exceptions/exceptions.dart';
 import 'models/query_player.dart';
 import 'models/server_info.dart';
 import 'models/server_os.dart';
@@ -231,7 +231,6 @@ class _QuerySocketImpl implements QuerySocket {
       return;
     }
 
-
     final data = datagram.data;
     final header = data[4];
 
@@ -251,4 +250,3 @@ class _QuerySocketImpl implements QuerySocket {
   @override
   void close() => socket.close();
 }
-

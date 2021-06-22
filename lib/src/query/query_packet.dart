@@ -49,7 +49,6 @@ class QueryPacket {
       : bytes = [0xff, 0xff, 0xff, 0xff, 0x55, ...challenge];
 
   ///
-  @visibleForTesting
   QueryPacket.rules(Uint8List challenge)
       : bytes = [0xff, 0xff, 0xff, 0xff, 0x56, ...challenge];
 

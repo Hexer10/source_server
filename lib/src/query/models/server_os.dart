@@ -28,7 +28,6 @@ class ServerOS {
 
   const ServerOS._(this.code);
 
-
   @override
   String toString() {
     switch (this) {
@@ -39,7 +38,7 @@ class ServerOS {
       case mac:
         return 'ServerOS(mac)';
       default:
-      // Never reaches here.
+        // Never reaches here.
         throw StateError('');
     }
   }

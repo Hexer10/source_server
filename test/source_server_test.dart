@@ -9,8 +9,7 @@ void main() async {
   const svPort = 27015;
   const svRconPass = 'ciao';
 
-  final server =
-    await SourceServer.connect(svIp, svPort, password: svRconPass);
+  final server = await SourceServer.connect(svIp, svPort, password: svRconPass);
 
   test('Get Server Info', () async {
     final info = await server.getInfo();
