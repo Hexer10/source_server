@@ -1,7 +1,6 @@
 import 'dart:typed_data';
 
 import 'package:collection/collection.dart';
-import 'package:meta/meta.dart';
 
 ///
 class QueryPacket {

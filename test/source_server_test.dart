@@ -1,8 +1,7 @@
+import 'package:source_server/source_server.dart';
 import 'package:test/test.dart';
 
-import 'package:source_server/source_server.dart';
-
-void main() async {
+Future<void> main() async {
   // Make sure to run any source server on your local machine
   // and put correct ip, port and rcon password
   const svIp = '127.0.0.1';
