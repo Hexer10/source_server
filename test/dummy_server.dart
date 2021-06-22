@@ -1,26 +1,27 @@
 import 'dart:io';
-
 import 'dart:typed_data';
 
 import 'package:collection/collection.dart';
 import 'package:source_server/source_server.dart';
-import 'package:source_server/src/query/query_packet.dart';
 import 'package:source_server/src/buffer.dart';
+import 'package:source_server/src/query/query_packet.dart';
+import 'package:source_server/src/rcon/rcon_packet.dart';
 
 class DummyServer {
   final RawDatagramSocket udpSocket;
   final ServerSocket tcpSocket;
+  final String password;
 
-  DummyServer._(this.tcpSocket, this.udpSocket) {
+  DummyServer._(this.tcpSocket, this.udpSocket, this.password) {
     udpSocket.listen(onQueryData);
     tcpSocket.listen(newSocket);
   }
 
   static Future<DummyServer> bind(dynamic address,
-      {int port = 27015, String rconPsw = ''}) async {
+      {int port = 27015, String password = ''}) async {
     final tcpSocket = await ServerSocket.bind(address, port);
     final udpSocket = await RawDatagramSocket.bind(address, port);
-    return DummyServer._(tcpSocket, udpSocket);
+    return DummyServer._(tcpSocket, udpSocket, password);
   }
 
   static const _eq = IterableEquality<int>();
@@ -46,39 +47,58 @@ class DummyServer {
       return;
     }
 
-    if (!_eq.equals(bytes.sublist(0,4), _emptyPacket)) {
+    if (!_eq.equals(bytes.sublist(0, 4), _emptyPacket)) {
       return;
     }
 
     final header = bytes[4];
 
+    // A2S_INFO
     if (QueryPacket.info == packet) {
       udpSocket.send(infoReply, datagram.address, datagram.port);
       return;
     }
 
-    if (QueryPacket.challenge == packet) {
-      udpSocket.send(getChallengeReply(), datagram.address, datagram.port);
-      return;
-    }
-
+    // A2S_PLAYERS
     if (header == 0x55) {
       if (bytes.length != 9) {
         return;
       }
       final challenge = bytes.sublist(5, 9);
       if (_eq.equals(challenge, _emptyPacket)) {
-        udpSocket.send(getChallengeReply(), datagram.address, datagram.port);
+        udpSocket.send(challengeReply, datagram.address, datagram.port);
         return;
       }
       if (_eq.equals(challenge, _challengePacket)) {
-        // Send player list
+        udpSocket.send(playersReply, datagram.address, datagram.port);
+        return;
+      }
+      return;
+    }
+
+    // A2S_RULES
+    if (header == 0x56) {
+      if (bytes.length != 9) {
+        return;
+      }
+      final challenge = bytes.sublist(5, 9);
+      if (_eq.equals(challenge, _emptyPacket)) {
+        udpSocket.send(challengeReply, datagram.address, datagram.port);
+        return;
+      }
+      if (_eq.equals(challenge, _challengePacket)) {
+        udpSocket.send(rulesReply, datagram.address, datagram.port);
+        return;
       }
       return;
     }
   }
 
   late final List<int> infoReply = _getInfoReply();
+  late final List<int> playersReply = _getPlayersReply();
+  late final List<int> rulesReply = _getRulesReply();
+
+  final List<int> challengeReply = [..._emptyPacket, 0x41, ..._challengePacket];
 
   List<int> _getInfoReply() {
     final write = WriteBuffer(153, fixedSize: true);
@@ -115,9 +135,44 @@ class DummyServer {
     return write.data.buffer.asUint8List();
   }
 
-  List<int> getChallengeReply() {
-    return
-        const [..._emptyPacket, 0x41, ..._challengePacket];
+  List<int> _getPlayersReply() {
+    final write = WriteBuffer(0);
+    const players = 16;
+
+    write.writeUint8(0xFF);
+    write.writeUint8(0xFF);
+    write.writeUint8(0xFF);
+    write.writeUint8(0xFF);
+    write.writeUint8(0x44); // Header
+
+    write.writeUint8(players); // Players
+    for (var i = 0; i < players; i++) {
+      write.writeUint8(0); // Index
+      write.writeString('Player - $i'); // Name
+      write.writeInt32(i * 3); // Score
+      write.writeFloat32(i * 5); // Connection time
+    }
+
+    return write.data.buffer.asUint8List();
+  }
+
+  List<int> _getRulesReply() {
+    final write = WriteBuffer(0);
+    const rules = 8;
+
+    write.writeUint8(0xFF);
+    write.writeUint8(0xFF);
+    write.writeUint8(0xFF);
+    write.writeUint8(0xFF);
+    write.writeUint8(0x45); // Header
+
+    write.writeUint16(rules); // Rules
+    for (var i = 0; i < rules; i++) {
+      write.writeString('rule_$i'); // Name
+      write.writeString('value_$i'); // Value
+    }
+
+    return write.data.buffer.asUint8List();
   }
 
   /* TCP SECTION - RCON */
@@ -131,6 +186,35 @@ class DummyServer {
   }
 
   void onRconData(Socket socket, Uint8List data) {
-    print(data);
+    if (data.length < 14) {
+      return;
+    }
+
+    final packet = RconPacket(data);
+
+    if (packet.size + 4 != data.length) {
+      return;
+    }
+
+    // Auth
+    if (packet.type == 3) {
+      socket.add(RconPacket.from(id: packet.id).bytes);
+      if (password.isNotEmpty && password == packet.bodyAsString) {
+        authStatus[socket.address] = true;
+        socket.add(RconPacket.from(id: packet.id, type: 2).bytes);
+      } else if (password.isNotEmpty) {
+        socket.add(RconPacket.from(id: 0xFFFFFF, type: 2).bytes);
+      }
+      return;
+    }
+
+    if (packet.type == 2) {
+      if (authStatus[socket.address] != true) {
+        return;
+      }
+
+
+      socket.add(RconPacket.from(id: packet.id, type: 2, body: 'hello').bytes);
+    }
   }
 }

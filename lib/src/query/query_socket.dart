@@ -156,7 +156,6 @@ class _QuerySocketImpl implements QuerySocket {
       String? keywords;
       int? gameId;
 
-      var x = 0x80 | 0x10 | 0x40 | 0x20 | 0x01;
       if (edf & 0x80 != 0) {
         port = read.uint16;
       }

@@ -1,3 +1,7 @@
+## 3.1.3-dev
+- The query client now uses a random port (previously it would always listen to the port 6000). Thanks to @mohitkyadav
+- Added test.
+
 ## 3.1.2-dev
 - Implement timeout
 - Fix Endianness error
