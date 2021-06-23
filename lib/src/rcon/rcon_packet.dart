@@ -18,9 +18,7 @@ class RconPacket {
 
   String get bodyAsString => utf8.decode(body, allowMalformed: true);
 
-  RconPacket(this.bytes) {
-    _byteData = ByteData.view(bytes.buffer);
-  }
+  RconPacket(this.bytes) : _byteData = ByteData.view(bytes.buffer);
 
   factory RconPacket.from(
       {int id = 0, int type = 0, dynamic body = const [0x00]}) {
@@ -59,12 +57,9 @@ class RconPacket {
 }
 
 extension on ByteData {
-  int setList(int byteOffset, List<int> value) {
-    var count = 0;
-    for (final e in value) {
-      setUint8(byteOffset + count, e);
-      count++;
+  void setList(int byteOffset, List<int> value) {
+    for (var i = 0; i < value.length; i++) {
+      setUint8(byteOffset + i, value[i]);
     }
-    return count;
   }
 }

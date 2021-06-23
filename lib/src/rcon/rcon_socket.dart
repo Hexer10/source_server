@@ -3,6 +3,8 @@ import 'dart:collection';
 import 'dart:io';
 import 'dart:typed_data';
 
+import 'package:logging/logging.dart';
+
 import '../exceptions/exceptions.dart';
 import 'rcon_packet.dart';
 
@@ -43,6 +45,9 @@ abstract class RconSocket {
 }
 
 class _RconSocketImpl implements RconSocket {
+  late final Logger logger =
+      Logger('RconSocket(${socket.address.address}:${socket.port})');
+
   final Socket socket;
   final StreamController<String> _commandStream = StreamController<String>();
 
@@ -82,7 +87,10 @@ class _RconSocketImpl implements RconSocket {
     assert(authCompleter == null);
 
     authCompleter = Completer<bool>();
-    socket.add(RconPacket.auth(password: password, id: 1).bytes);
+    final packet = RconPacket.auth(password: password, id: 1).bytes;
+    socket.add(packet);
+    logger.info('Sent authentication packet');
+    logger.fine('Authentication packet(${packet.length}):\n$packet\n');
     return authCompleter!.future;
   }
 
@@ -95,7 +103,11 @@ class _RconSocketImpl implements RconSocket {
     final resultCompleter = Completer<String>();
 
     cmdMap[packetId] = resultCompleter;
-    socket.add(RconPacket.command(command: command, id: packetId++).bytes);
+
+    final packet = RconPacket.command(command: command, id: packetId++).bytes;
+    socket.add(packet);
+    logger.info('Sent command: $command');
+    logger.fine('Command packet(${packet.length}):\n$packet\n');
 
     return resultCompleter.future;
   }
@@ -106,6 +118,7 @@ class _RconSocketImpl implements RconSocket {
   }
 
   void onEvent(Uint8List event) {
+    logger.fine('Received packet(${event.length}):\n$event\n');
     final packet = RconPacket(event);
     if (packet.id == 0) {
       return;

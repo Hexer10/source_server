@@ -1,11 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 
-import 'exceptions/exceptions.dart';
-import 'query/models/query_player.dart';
-import 'query/models/server_info.dart';
-import 'query/query_socket.dart';
-import 'rcon/rcon_socket.dart';
+import '../source_server.dart';
 
 /// Wrapper for both [RconSocket] and [QuerySocket]
 class SourceServer implements RconSocket, QuerySocket {
@@ -34,8 +30,8 @@ class SourceServer implements RconSocket, QuerySocket {
     final querySocket = await QuerySocket.connect(address, port);
     RconSocket? rconSocket;
     if (password != null) {
-      rconSocket = await RconSocket.connect(address, port);
-      final result = await rconSocket.authenticate(password);
+      rconSocket = await RconSocket.connect(address, port).timeout(timeout);
+      final result = await rconSocket.authenticate(password).timeout(timeout);
       if (!result) {
         querySocket.close();
         rconSocket.close();
@@ -91,7 +87,7 @@ class SourceServer implements RconSocket, QuerySocket {
       _querySocket.getPlayers().timeout(timeout);
 
   @override
-  Future<Map<String, String>> getRules() =>
+  Future<List<ServerRule>> getRules() =>
       _querySocket.getRules().timeout(timeout);
 
   @override

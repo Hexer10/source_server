@@ -2,14 +2,8 @@ import 'dart:async';
 import 'dart:io';
 import 'dart:typed_data';
 
+import '../../source_server.dart';
 import '../buffer.dart';
-import '../exceptions/exceptions.dart';
-import 'models/query_player.dart';
-import 'models/server_info.dart';
-import 'models/server_os.dart';
-import 'models/server_type.dart';
-import 'models/server_vac.dart';
-import 'models/server_visibility.dart';
 import 'query_packet.dart';
 
 /// Wrapper for the query protocol.
@@ -27,7 +21,7 @@ abstract class QuerySocket {
   /// Returns the server rules, or configuration variables in name/value pairs.
   /// Warning: In some games such as CS:GO this never completes without
   /// having installed a plugin on the server.
-  Future<Map<String, String>> getRules();
+  Future<List<ServerRule>> getRules();
 
   /// Closes the connection
   void close();
@@ -56,7 +50,7 @@ class _QuerySocketImpl implements QuerySocket {
   Completer<ServerInfo>? infoCompleter;
   Completer<Uint8List>? challengeCompleter;
   Completer<List<QueryPlayer>>? playersCompleter;
-  Completer<Map<String, String>>? rulesCompleter;
+  Completer<List<ServerRule>>? rulesCompleter;
 
   Uint8List? _challenge;
 
@@ -102,12 +96,12 @@ class _QuerySocketImpl implements QuerySocket {
   }
 
   @override
-  Future<Map<String, String>> getRules() async {
+  Future<List<ServerRule>> getRules() async {
     assert(!(rulesCompleter?.isCompleted ?? false));
     if (rulesCompleter != null) {
       return rulesCompleter!.future;
     }
-    rulesCompleter = Completer<Map<String, String>>();
+    rulesCompleter = Completer<List<ServerRule>>();
     // ignore: unawaited_futures
     getChallenge().then(
         (value) => socket.send(QueryPacket.rules(value).bytes, address, port));
@@ -212,11 +206,9 @@ class _QuerySocketImpl implements QuerySocket {
     assert(rulesCompleter != null);
     assert(!rulesCompleter!.isCompleted);
     final read = ReadBuffer.fromUint8List(bytes.sublist(2));
-    final rules = <String, String>{};
+    final rules = <ServerRule>[];
     while (read.canReadMore) {
-      final key = read.readString;
-      final value = read.readString;
-      rules[key] = value;
+      rules.add(ServerRule(read.readString, read.readString));
     }
     rulesCompleter!.complete(rules);
     rulesCompleter = null;

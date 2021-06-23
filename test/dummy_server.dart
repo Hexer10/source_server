@@ -181,11 +181,12 @@ class DummyServer {
   void newSocket(Socket socket) {
     authStatus[socket.address] = false;
 
-    socket.listen((data) => onRconData(socket, data),
-        onDone: () => authStatus.remove(socket.address));
+    socket.listen((data) => onRconData(socket, data), onDone: () {
+      authStatus.remove(socket.address);
+    });
   }
 
-  void onRconData(Socket socket, Uint8List data) {
+  Future<void> onRconData(Socket socket, Uint8List data) async {
     if (data.length < 14) {
       return;
     }
@@ -200,20 +201,37 @@ class DummyServer {
     if (packet.type == 3) {
       socket.add(RconPacket.from(id: packet.id).bytes);
       if (password.isNotEmpty && password == packet.bodyAsString) {
+        // Workaround to avoid this and the previous packet to be added to the same packet.
+        await Future(
+            () => socket.add(RconPacket.from(id: packet.id, type: 2).bytes));
         authStatus[socket.address] = true;
-        socket.add(RconPacket.from(id: packet.id, type: 2).bytes);
-      } else if (password.isNotEmpty) {
-        socket.add(RconPacket.from(id: 0xFFFFFF, type: 2).bytes);
+      } else {
+        await Future(
+            () => socket.add(RconPacket.from(id: 0xFFFFFFFF, type: 2).bytes));
       }
       return;
     }
 
     if (packet.type == 2) {
       if (authStatus[socket.address] != true) {
+        socket.add(RconPacket.from(id: packet.id).bytes);
         return;
       }
 
-      socket.add(RconPacket.from(id: packet.id, type: 2, body: 'hello').bytes);
+      final body = packet.bodyAsString;
+      final args = body.split(RegExp(r'\s+'));
+
+      // The only valid command
+      if (args[0] != 'echo') {
+        socket.add(RconPacket.from(
+                id: packet.id, body: 'Unknown command "${args[0]}"\n')
+            .bytes);
+        return;
+      }
+
+      socket.add(RconPacket.from(
+              id: packet.id, body: '${args.sublist(1).join(' ')} \n')
+          .bytes);
     }
   }
 }

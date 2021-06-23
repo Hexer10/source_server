@@ -1,3 +1,9 @@
+## 3.2.0-dev
+- BREAKING CHANGE: Now `getRules` returns `List<ServerRule>`.
+- Implemented a dummy server that replicates locally a CS:GO server query and rcon protocol.
+- Implement more tests.
+
+
 ## 3.1.3-dev
 - The query client now uses a random port (previously it would always listen to the port 6000). Thanks to @mohitkyadav
 - Added test.
