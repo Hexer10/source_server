@@ -23,6 +23,7 @@ Future<void> main() async {
   test('Get Server Rules', () async {
     final rules = await server.getRules();
     expect(rules, isNotNull);
+    expect(rules, isA<List<ServerRule>>());
   });
 
   test('Test Custom Command', () async {

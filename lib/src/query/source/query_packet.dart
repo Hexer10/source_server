@@ -35,7 +35,7 @@ class QueryPacket {
 
   ///
   static const QueryPacket challenge =
-      QueryPacket([0xff, 0xff, 0xff, 0xff, 0x55, 0xff, 0xff, 0xff, 0xff]);
+      QueryPacket([0xff, 0xff, 0xff, 0xff, 0x56, 0xff, 0xff, 0xff, 0xff]);
 
   ///
   final List<int> bytes;
@@ -50,6 +50,10 @@ class QueryPacket {
   ///
   QueryPacket.rules(Uint8List challenge)
       : bytes = [0xff, 0xff, 0xff, 0xff, 0x56, ...challenge];
+
+  ///
+  QueryPacket.infoChallenge(Uint8List challenge)
+      : bytes = [...info.bytes, ...challenge];
 
   @override
   bool operator ==(Object other) {

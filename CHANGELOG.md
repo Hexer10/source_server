@@ -1,3 +1,10 @@
+## 3.3.0-dev
+- Increased minimum sdk version: 2.14
+- Implemented minecraft ping protocol.
+- Implemented the new "A2S_PING" challenge: https://steamcommunity.com/discussions/forum/14/2974028351344359625/
+- Improved tests.
+- 
+
 ## 3.2.0-dev
 - BREAKING CHANGE: Now `getRules` returns `List<ServerRule>`.
 - Implemented a dummy server that replicates locally a CS:GO server query and rcon protocol.

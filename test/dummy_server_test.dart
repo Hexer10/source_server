@@ -22,6 +22,9 @@ void main() {
 
     test('getInfo returns correct info', () async {
       final info = await server.getInfo();
+
+      expect(info, isA<ServerInfo>());
+
       expect(info.protocol, 17);
       expect(info.name, 'Dummy server! - Join here!');
       expect(info.map, 'de_dust2');
@@ -45,6 +48,9 @@ void main() {
 
     test('getPlayers returns correct players', () async {
       final players = await server.getPlayers();
+
+      expect(players, isA<List<QueryPlayer>>());
+
       expect(players, hasLength(16));
 
       final secondPlayer = players[1];
@@ -56,6 +62,8 @@ void main() {
 
     test('getReturns returns correct rules', () async {
       final rules = await server.getRules();
+
+      expect(rules, isA<List<ServerRule>>());
 
       expect(rules, hasLength(8));
 
@@ -85,7 +93,7 @@ void main() {
               await SourceServer.connect('127.0.0.1', 9125, password: '12345')
                 ..close(),
           throwsA(isA<RconAuthenticationException>()));
-      dummy.close();
+      await dummy.close();
     });
 
     test('Correct RCON commands', () async {

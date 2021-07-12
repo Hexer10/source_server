@@ -4,7 +4,7 @@ import 'dart:typed_data';
 import 'package:collection/collection.dart';
 import 'package:source_server/source_server.dart';
 import 'package:source_server/src/buffer.dart';
-import 'package:source_server/src/query/query_packet.dart';
+import 'package:source_server/src/query/source/query_packet.dart';
 import 'package:source_server/src/rcon/rcon_packet.dart';
 
 class DummyServer {

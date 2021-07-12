@@ -9,5 +9,5 @@ class QueryException implements Exception {
   const QueryException(this.message);
 
   @override
-  String toString() => 'RconException: $message';
+  String toString() => 'QueryException: $message';
 }

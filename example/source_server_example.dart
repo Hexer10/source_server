@@ -3,10 +3,28 @@
 import 'package:source_server/source_server.dart';
 
 Future<void> main() async {
-  final server = await SourceServer.connect('127.0.0.1', 27015);
+  final server = await SourceServer.connect('192.168.122.1', 27015);
 
   final info = await server.getInfo();
   print(info);
+
+  final info2 = await server.getInfo();
+  print(info2);
+
+  final pg = await server.getPlayers();
+  print(pg);
+
+  final info3 = await server.getInfo();
+  print(info3);
+
+  final pg2 = await server.getPlayers();
+  print(pg2);
+
+  final pg3 = await server.getRules();
+  print(pg3);
+
+  final info4 = await server.getInfo();
+  print(info4);
 
 /*  final players = await server.getPlayers();
   print(players);

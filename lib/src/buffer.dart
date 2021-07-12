@@ -63,7 +63,11 @@ class ReadBuffer {
     return val;
   }
 
-  String get readString {
+  int peek(int pos) => data.getUint8(_pos + pos);
+
+  void skip(int count) => _pos += count;
+
+  String get string {
     final bytes = <int>[];
     for (var val = uint8;; val = uint8) {
       if (val == 0) {
@@ -118,9 +122,9 @@ class WriteBuffer {
     data.setInt8(pos, value);
   }
 
-  void writeUint16(int value) {
+  void writeUint16(int value, [Endian endian = Endian.little]) {
     final pos = _checkSize(2);
-    data.setUint16(pos, value, Endian.little);
+    data.setUint16(pos, value, endian);
   }
 
   void writeInt16(int value) {
@@ -166,6 +170,13 @@ class WriteBuffer {
     }
     if (nullTerminated) {
       writeUint8(0);
+    }
+  }
+
+  void writeBytes(List<int> bytes) {
+    _checkSize(bytes.length, updatePos: false);
+    for (final byte in bytes) {
+      writeUint8(byte);
     }
   }
 }
