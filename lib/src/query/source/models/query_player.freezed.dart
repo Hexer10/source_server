@@ -1,5 +1,7 @@
+// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides
+// ignore_for_file: type=lint
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
 part of 'query_player.dart';
 
@@ -10,28 +12,7 @@ part of 'query_player.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
-
-/// @nodoc
-class _$QueryPlayerTearOff {
-  const _$QueryPlayerTearOff();
-
-  _QueryPlayer call(
-      {required int index,
-      required String name,
-      required int score,
-      required double duration}) {
-    return _QueryPlayer(
-      index: index,
-      name: name,
-      score: score,
-      duration: duration,
-    );
-  }
-}
-
-/// @nodoc
-const $QueryPlayer = _$QueryPlayerTearOff();
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
 mixin _$QueryPlayer {
@@ -97,24 +78,24 @@ class _$QueryPlayerCopyWithImpl<$Res> implements $QueryPlayerCopyWith<$Res> {
 }
 
 /// @nodoc
-abstract class _$QueryPlayerCopyWith<$Res>
+abstract class _$$_QueryPlayerCopyWith<$Res>
     implements $QueryPlayerCopyWith<$Res> {
-  factory _$QueryPlayerCopyWith(
-          _QueryPlayer value, $Res Function(_QueryPlayer) then) =
-      __$QueryPlayerCopyWithImpl<$Res>;
+  factory _$$_QueryPlayerCopyWith(
+          _$_QueryPlayer value, $Res Function(_$_QueryPlayer) then) =
+      __$$_QueryPlayerCopyWithImpl<$Res>;
   @override
   $Res call({int index, String name, int score, double duration});
 }
 
 /// @nodoc
-class __$QueryPlayerCopyWithImpl<$Res> extends _$QueryPlayerCopyWithImpl<$Res>
-    implements _$QueryPlayerCopyWith<$Res> {
-  __$QueryPlayerCopyWithImpl(
-      _QueryPlayer _value, $Res Function(_QueryPlayer) _then)
-      : super(_value, (v) => _then(v as _QueryPlayer));
+class __$$_QueryPlayerCopyWithImpl<$Res> extends _$QueryPlayerCopyWithImpl<$Res>
+    implements _$$_QueryPlayerCopyWith<$Res> {
+  __$$_QueryPlayerCopyWithImpl(
+      _$_QueryPlayer _value, $Res Function(_$_QueryPlayer) _then)
+      : super(_value, (v) => _then(v as _$_QueryPlayer));
 
   @override
-  _QueryPlayer get _value => super._value as _QueryPlayer;
+  _$_QueryPlayer get _value => super._value as _$_QueryPlayer;
 
   @override
   $Res call({
@@ -123,7 +104,7 @@ class __$QueryPlayerCopyWithImpl<$Res> extends _$QueryPlayerCopyWithImpl<$Res>
     Object? score = freezed,
     Object? duration = freezed,
   }) {
-    return _then(_QueryPlayer(
+    return _then(_$_QueryPlayer(
       index: index == freezed
           ? _value.index
           : index // ignore: cast_nullable_to_non_nullable
@@ -153,21 +134,20 @@ class _$_QueryPlayer implements _QueryPlayer {
       required this.score,
       required this.duration});
 
-  @override
-
   /// Index of player.
-  final int index;
   @override
+  final int index;
 
   /// Name of the player.
-  final String name;
   @override
+  final String name;
 
   /// Player's score (usually "frags" or "kills".)
-  final int score;
   @override
+  final int score;
 
   /// Time (in seconds) player has been connected to the server.
+  @override
   final double duration;
 
   @override
@@ -178,38 +158,34 @@ class _$_QueryPlayer implements _QueryPlayer {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is _QueryPlayer &&
-            (identical(other.index, index) ||
-                const DeepCollectionEquality().equals(other.index, index)) &&
-            (identical(other.name, name) ||
-                const DeepCollectionEquality().equals(other.name, name)) &&
-            (identical(other.score, score) ||
-                const DeepCollectionEquality().equals(other.score, score)) &&
-            (identical(other.duration, duration) ||
-                const DeepCollectionEquality()
-                    .equals(other.duration, duration)));
+        (other.runtimeType == runtimeType &&
+            other is _$_QueryPlayer &&
+            const DeepCollectionEquality().equals(other.index, index) &&
+            const DeepCollectionEquality().equals(other.name, name) &&
+            const DeepCollectionEquality().equals(other.score, score) &&
+            const DeepCollectionEquality().equals(other.duration, duration));
   }
 
   @override
-  int get hashCode =>
-      runtimeType.hashCode ^
-      const DeepCollectionEquality().hash(index) ^
-      const DeepCollectionEquality().hash(name) ^
-      const DeepCollectionEquality().hash(score) ^
-      const DeepCollectionEquality().hash(duration);
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(index),
+      const DeepCollectionEquality().hash(name),
+      const DeepCollectionEquality().hash(score),
+      const DeepCollectionEquality().hash(duration));
 
   @JsonKey(ignore: true)
   @override
-  _$QueryPlayerCopyWith<_QueryPlayer> get copyWith =>
-      __$QueryPlayerCopyWithImpl<_QueryPlayer>(this, _$identity);
+  _$$_QueryPlayerCopyWith<_$_QueryPlayer> get copyWith =>
+      __$$_QueryPlayerCopyWithImpl<_$_QueryPlayer>(this, _$identity);
 }
 
 abstract class _QueryPlayer implements QueryPlayer {
   factory _QueryPlayer(
-      {required int index,
-      required String name,
-      required int score,
-      required double duration}) = _$_QueryPlayer;
+      {required final int index,
+      required final String name,
+      required final int score,
+      required final double duration}) = _$_QueryPlayer;
 
   @override
 
@@ -229,6 +205,6 @@ abstract class _QueryPlayer implements QueryPlayer {
   double get duration => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
-  _$QueryPlayerCopyWith<_QueryPlayer> get copyWith =>
+  _$$_QueryPlayerCopyWith<_$_QueryPlayer> get copyWith =>
       throw _privateConstructorUsedError;
 }

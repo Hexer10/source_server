@@ -16,6 +16,7 @@ class ServerPingInfo with _$ServerPingInfo {
     required Players players,
 
     /// MOTD description.
+    // ignore: invalid_annotation_target
     @JsonKey(fromJson: _descriptionToJson) required Description description,
 
     /// Favicon data uri.

@@ -1,5 +1,7 @@
+// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides
+// ignore_for_file: type=lint
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
 part of 'server_info.dart';
 
@@ -10,60 +12,7 @@ part of 'server_info.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
-
-/// @nodoc
-class _$ServerInfoTearOff {
-  const _$ServerInfoTearOff();
-
-  _ServerInfo call(
-      {required int protocol,
-      required String name,
-      required String map,
-      required String folder,
-      required String game,
-      required int id,
-      required int players,
-      required int maxPlayers,
-      required int bots,
-      required ServerType type,
-      required ServerOS os,
-      required ServerVisibility visibility,
-      required ServerVAC vac,
-      required String version,
-      int? port,
-      int? steamId,
-      int? tvPort,
-      String? tvName,
-      String? keywords,
-      int? gameId}) {
-    return _ServerInfo(
-      protocol: protocol,
-      name: name,
-      map: map,
-      folder: folder,
-      game: game,
-      id: id,
-      players: players,
-      maxPlayers: maxPlayers,
-      bots: bots,
-      type: type,
-      os: os,
-      visibility: visibility,
-      vac: vac,
-      version: version,
-      port: port,
-      steamId: steamId,
-      tvPort: tvPort,
-      tvName: tvName,
-      keywords: keywords,
-      gameId: gameId,
-    );
-  }
-}
-
-/// @nodoc
-const $ServerInfo = _$ServerInfoTearOff();
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
 mixin _$ServerInfo {
@@ -277,10 +226,11 @@ class _$ServerInfoCopyWithImpl<$Res> implements $ServerInfoCopyWith<$Res> {
 }
 
 /// @nodoc
-abstract class _$ServerInfoCopyWith<$Res> implements $ServerInfoCopyWith<$Res> {
-  factory _$ServerInfoCopyWith(
-          _ServerInfo value, $Res Function(_ServerInfo) then) =
-      __$ServerInfoCopyWithImpl<$Res>;
+abstract class _$$_ServerInfoCopyWith<$Res>
+    implements $ServerInfoCopyWith<$Res> {
+  factory _$$_ServerInfoCopyWith(
+          _$_ServerInfo value, $Res Function(_$_ServerInfo) then) =
+      __$$_ServerInfoCopyWithImpl<$Res>;
   @override
   $Res call(
       {int protocol,
@@ -306,14 +256,14 @@ abstract class _$ServerInfoCopyWith<$Res> implements $ServerInfoCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$ServerInfoCopyWithImpl<$Res> extends _$ServerInfoCopyWithImpl<$Res>
-    implements _$ServerInfoCopyWith<$Res> {
-  __$ServerInfoCopyWithImpl(
-      _ServerInfo _value, $Res Function(_ServerInfo) _then)
-      : super(_value, (v) => _then(v as _ServerInfo));
+class __$$_ServerInfoCopyWithImpl<$Res> extends _$ServerInfoCopyWithImpl<$Res>
+    implements _$$_ServerInfoCopyWith<$Res> {
+  __$$_ServerInfoCopyWithImpl(
+      _$_ServerInfo _value, $Res Function(_$_ServerInfo) _then)
+      : super(_value, (v) => _then(v as _$_ServerInfo));
 
   @override
-  _ServerInfo get _value => super._value as _ServerInfo;
+  _$_ServerInfo get _value => super._value as _$_ServerInfo;
 
   @override
   $Res call({
@@ -338,7 +288,7 @@ class __$ServerInfoCopyWithImpl<$Res> extends _$ServerInfoCopyWithImpl<$Res>
     Object? keywords = freezed,
     Object? gameId = freezed,
   }) {
-    return _then(_ServerInfo(
+    return _then(_$_ServerInfo(
       protocol: protocol == freezed
           ? _value.protocol
           : protocol // ignore: cast_nullable_to_non_nullable
@@ -448,84 +398,84 @@ class _$_ServerInfo implements _ServerInfo {
       this.keywords,
       this.gameId});
 
-  @override
-
   /// Protocol version used by the server.
-  final int protocol;
   @override
+  final int protocol;
 
   /// Name of the server.
-  final String name;
   @override
+  final String name;
 
   /// Map the server has currently loaded.
-  final String map;
   @override
+  final String map;
 
   /// Name of the folder containing the game files.
-  final String folder;
   @override
+  final String folder;
 
   /// Full name of the game.
-  final String game;
   @override
+  final String game;
 
   /// Steam Application ID of game.
-  final int id;
   @override
+  final int id;
 
   /// Number of players on the server.
-  final int players;
   @override
+  final int players;
 
   /// Maximum number of players the server reports it can hold.
-  final int maxPlayers;
   @override
+  final int maxPlayers;
 
   /// Number of bots on the server.
-  final int bots;
   @override
+  final int bots;
 
   /// Server type.
-  final ServerType type;
   @override
+  final ServerType type;
 
   /// Server operating system.
-  final ServerOS os;
   @override
+  final ServerOS os;
 
   /// Server visibility. Indicates if the server is password protected.
-  final ServerVisibility visibility;
   @override
+  final ServerVisibility visibility;
 
   /// Server VAC status.
-  final ServerVAC vac;
-  @override /* TODO: Add TheShip flags */
-  /// Version of the game installed on the server.
-  final String version;
   @override
+  final ServerVAC vac;
+/* TODO: Add TheShip flags */
+  /// Version of the game installed on the server.
+  @override
+  final String version;
 
   /// Server's port number.
-  final int? port;
   @override
+  final int? port;
 
   /// Server's SteamID.
-  final int? steamId;
   @override
+  final int? steamId;
 
   /// Spectator port number for SourceTV.
-  final int? tvPort;
   @override
+  final int? tvPort;
 
   /// Name of the spectator server for SourceTV.
-  final String? tvName;
   @override
+  final String? tvName;
 
   /// Tags that describe the game according to the server (for future use.)
-  final String? keywords;
   @override
+  final String? keywords;
 
   /// The server's 64-bit GameID.
+  @override
   final int? gameId;
 
   @override
@@ -536,108 +486,85 @@ class _$_ServerInfo implements _ServerInfo {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is _ServerInfo &&
-            (identical(other.protocol, protocol) ||
-                const DeepCollectionEquality()
-                    .equals(other.protocol, protocol)) &&
-            (identical(other.name, name) ||
-                const DeepCollectionEquality().equals(other.name, name)) &&
-            (identical(other.map, map) ||
-                const DeepCollectionEquality().equals(other.map, map)) &&
-            (identical(other.folder, folder) ||
-                const DeepCollectionEquality().equals(other.folder, folder)) &&
-            (identical(other.game, game) ||
-                const DeepCollectionEquality().equals(other.game, game)) &&
-            (identical(other.id, id) ||
-                const DeepCollectionEquality().equals(other.id, id)) &&
-            (identical(other.players, players) ||
-                const DeepCollectionEquality()
-                    .equals(other.players, players)) &&
-            (identical(other.maxPlayers, maxPlayers) ||
-                const DeepCollectionEquality()
-                    .equals(other.maxPlayers, maxPlayers)) &&
-            (identical(other.bots, bots) ||
-                const DeepCollectionEquality().equals(other.bots, bots)) &&
-            (identical(other.type, type) ||
-                const DeepCollectionEquality().equals(other.type, type)) &&
-            (identical(other.os, os) ||
-                const DeepCollectionEquality().equals(other.os, os)) &&
-            (identical(other.visibility, visibility) ||
-                const DeepCollectionEquality()
-                    .equals(other.visibility, visibility)) &&
-            (identical(other.vac, vac) ||
-                const DeepCollectionEquality().equals(other.vac, vac)) &&
-            (identical(other.version, version) ||
-                const DeepCollectionEquality()
-                    .equals(other.version, version)) &&
-            (identical(other.port, port) ||
-                const DeepCollectionEquality().equals(other.port, port)) &&
-            (identical(other.steamId, steamId) ||
-                const DeepCollectionEquality()
-                    .equals(other.steamId, steamId)) &&
-            (identical(other.tvPort, tvPort) ||
-                const DeepCollectionEquality().equals(other.tvPort, tvPort)) &&
-            (identical(other.tvName, tvName) ||
-                const DeepCollectionEquality().equals(other.tvName, tvName)) &&
-            (identical(other.keywords, keywords) ||
-                const DeepCollectionEquality()
-                    .equals(other.keywords, keywords)) &&
-            (identical(other.gameId, gameId) ||
-                const DeepCollectionEquality().equals(other.gameId, gameId)));
+        (other.runtimeType == runtimeType &&
+            other is _$_ServerInfo &&
+            const DeepCollectionEquality().equals(other.protocol, protocol) &&
+            const DeepCollectionEquality().equals(other.name, name) &&
+            const DeepCollectionEquality().equals(other.map, map) &&
+            const DeepCollectionEquality().equals(other.folder, folder) &&
+            const DeepCollectionEquality().equals(other.game, game) &&
+            const DeepCollectionEquality().equals(other.id, id) &&
+            const DeepCollectionEquality().equals(other.players, players) &&
+            const DeepCollectionEquality()
+                .equals(other.maxPlayers, maxPlayers) &&
+            const DeepCollectionEquality().equals(other.bots, bots) &&
+            const DeepCollectionEquality().equals(other.type, type) &&
+            const DeepCollectionEquality().equals(other.os, os) &&
+            const DeepCollectionEquality()
+                .equals(other.visibility, visibility) &&
+            const DeepCollectionEquality().equals(other.vac, vac) &&
+            const DeepCollectionEquality().equals(other.version, version) &&
+            const DeepCollectionEquality().equals(other.port, port) &&
+            const DeepCollectionEquality().equals(other.steamId, steamId) &&
+            const DeepCollectionEquality().equals(other.tvPort, tvPort) &&
+            const DeepCollectionEquality().equals(other.tvName, tvName) &&
+            const DeepCollectionEquality().equals(other.keywords, keywords) &&
+            const DeepCollectionEquality().equals(other.gameId, gameId));
   }
 
   @override
-  int get hashCode =>
-      runtimeType.hashCode ^
-      const DeepCollectionEquality().hash(protocol) ^
-      const DeepCollectionEquality().hash(name) ^
-      const DeepCollectionEquality().hash(map) ^
-      const DeepCollectionEquality().hash(folder) ^
-      const DeepCollectionEquality().hash(game) ^
-      const DeepCollectionEquality().hash(id) ^
-      const DeepCollectionEquality().hash(players) ^
-      const DeepCollectionEquality().hash(maxPlayers) ^
-      const DeepCollectionEquality().hash(bots) ^
-      const DeepCollectionEquality().hash(type) ^
-      const DeepCollectionEquality().hash(os) ^
-      const DeepCollectionEquality().hash(visibility) ^
-      const DeepCollectionEquality().hash(vac) ^
-      const DeepCollectionEquality().hash(version) ^
-      const DeepCollectionEquality().hash(port) ^
-      const DeepCollectionEquality().hash(steamId) ^
-      const DeepCollectionEquality().hash(tvPort) ^
-      const DeepCollectionEquality().hash(tvName) ^
-      const DeepCollectionEquality().hash(keywords) ^
-      const DeepCollectionEquality().hash(gameId);
+  int get hashCode => Object.hashAll([
+        runtimeType,
+        const DeepCollectionEquality().hash(protocol),
+        const DeepCollectionEquality().hash(name),
+        const DeepCollectionEquality().hash(map),
+        const DeepCollectionEquality().hash(folder),
+        const DeepCollectionEquality().hash(game),
+        const DeepCollectionEquality().hash(id),
+        const DeepCollectionEquality().hash(players),
+        const DeepCollectionEquality().hash(maxPlayers),
+        const DeepCollectionEquality().hash(bots),
+        const DeepCollectionEquality().hash(type),
+        const DeepCollectionEquality().hash(os),
+        const DeepCollectionEquality().hash(visibility),
+        const DeepCollectionEquality().hash(vac),
+        const DeepCollectionEquality().hash(version),
+        const DeepCollectionEquality().hash(port),
+        const DeepCollectionEquality().hash(steamId),
+        const DeepCollectionEquality().hash(tvPort),
+        const DeepCollectionEquality().hash(tvName),
+        const DeepCollectionEquality().hash(keywords),
+        const DeepCollectionEquality().hash(gameId)
+      ]);
 
   @JsonKey(ignore: true)
   @override
-  _$ServerInfoCopyWith<_ServerInfo> get copyWith =>
-      __$ServerInfoCopyWithImpl<_ServerInfo>(this, _$identity);
+  _$$_ServerInfoCopyWith<_$_ServerInfo> get copyWith =>
+      __$$_ServerInfoCopyWithImpl<_$_ServerInfo>(this, _$identity);
 }
 
 abstract class _ServerInfo implements ServerInfo {
   factory _ServerInfo(
-      {required int protocol,
-      required String name,
-      required String map,
-      required String folder,
-      required String game,
-      required int id,
-      required int players,
-      required int maxPlayers,
-      required int bots,
-      required ServerType type,
-      required ServerOS os,
-      required ServerVisibility visibility,
-      required ServerVAC vac,
-      required String version,
-      int? port,
-      int? steamId,
-      int? tvPort,
-      String? tvName,
-      String? keywords,
-      int? gameId}) = _$_ServerInfo;
+      {required final int protocol,
+      required final String name,
+      required final String map,
+      required final String folder,
+      required final String game,
+      required final int id,
+      required final int players,
+      required final int maxPlayers,
+      required final int bots,
+      required final ServerType type,
+      required final ServerOS os,
+      required final ServerVisibility visibility,
+      required final ServerVAC vac,
+      required final String version,
+      final int? port,
+      final int? steamId,
+      final int? tvPort,
+      final String? tvName,
+      final String? keywords,
+      final int? gameId}) = _$_ServerInfo;
 
   @override
 
@@ -720,6 +647,6 @@ abstract class _ServerInfo implements ServerInfo {
   int? get gameId => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
-  _$ServerInfoCopyWith<_ServerInfo> get copyWith =>
+  _$$_ServerInfoCopyWith<_$_ServerInfo> get copyWith =>
       throw _privateConstructorUsedError;
 }

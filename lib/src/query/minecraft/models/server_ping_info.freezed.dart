@@ -1,5 +1,7 @@
+// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides
+// ignore_for_file: type=lint
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
 part of 'server_ping_info.dart';
 
@@ -10,38 +12,11 @@ part of 'server_ping_info.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 ServerPingInfo _$ServerPingInfoFromJson(Map<String, dynamic> json) {
   return _ServerPingInfo.fromJson(json);
 }
-
-/// @nodoc
-class _$ServerPingInfoTearOff {
-  const _$ServerPingInfoTearOff();
-
-  _ServerPingInfo call(
-      {required Version version,
-      required Players players,
-      @JsonKey(fromJson: _descriptionToJson) required Description description,
-      String? favicon,
-      Modinfo? modinfo}) {
-    return _ServerPingInfo(
-      version: version,
-      players: players,
-      description: description,
-      favicon: favicon,
-      modinfo: modinfo,
-    );
-  }
-
-  ServerPingInfo fromJson(Map<String, Object> json) {
-    return ServerPingInfo.fromJson(json);
-  }
-}
-
-/// @nodoc
-const $ServerPingInfo = _$ServerPingInfoTearOff();
 
 /// @nodoc
 mixin _$ServerPingInfo {
@@ -52,6 +27,7 @@ mixin _$ServerPingInfo {
   Players get players => throw _privateConstructorUsedError;
 
   /// MOTD description.
+// ignore: invalid_annotation_target
   @JsonKey(fromJson: _descriptionToJson)
   Description get description => throw _privateConstructorUsedError;
 
@@ -160,11 +136,11 @@ class _$ServerPingInfoCopyWithImpl<$Res>
 }
 
 /// @nodoc
-abstract class _$ServerPingInfoCopyWith<$Res>
+abstract class _$$_ServerPingInfoCopyWith<$Res>
     implements $ServerPingInfoCopyWith<$Res> {
-  factory _$ServerPingInfoCopyWith(
-          _ServerPingInfo value, $Res Function(_ServerPingInfo) then) =
-      __$ServerPingInfoCopyWithImpl<$Res>;
+  factory _$$_ServerPingInfoCopyWith(
+          _$_ServerPingInfo value, $Res Function(_$_ServerPingInfo) then) =
+      __$$_ServerPingInfoCopyWithImpl<$Res>;
   @override
   $Res call(
       {Version version,
@@ -184,15 +160,15 @@ abstract class _$ServerPingInfoCopyWith<$Res>
 }
 
 /// @nodoc
-class __$ServerPingInfoCopyWithImpl<$Res>
+class __$$_ServerPingInfoCopyWithImpl<$Res>
     extends _$ServerPingInfoCopyWithImpl<$Res>
-    implements _$ServerPingInfoCopyWith<$Res> {
-  __$ServerPingInfoCopyWithImpl(
-      _ServerPingInfo _value, $Res Function(_ServerPingInfo) _then)
-      : super(_value, (v) => _then(v as _ServerPingInfo));
+    implements _$$_ServerPingInfoCopyWith<$Res> {
+  __$$_ServerPingInfoCopyWithImpl(
+      _$_ServerPingInfo _value, $Res Function(_$_ServerPingInfo) _then)
+      : super(_value, (v) => _then(v as _$_ServerPingInfo));
 
   @override
-  _ServerPingInfo get _value => super._value as _ServerPingInfo;
+  _$_ServerPingInfo get _value => super._value as _$_ServerPingInfo;
 
   @override
   $Res call({
@@ -202,7 +178,7 @@ class __$ServerPingInfoCopyWithImpl<$Res>
     Object? favicon = freezed,
     Object? modinfo = freezed,
   }) {
-    return _then(_ServerPingInfo(
+    return _then(_$_ServerPingInfo(
       version: version == freezed
           ? _value.version
           : version // ignore: cast_nullable_to_non_nullable
@@ -238,28 +214,28 @@ class _$_ServerPingInfo implements _ServerPingInfo {
       this.modinfo});
 
   factory _$_ServerPingInfo.fromJson(Map<String, dynamic> json) =>
-      _$_$_ServerPingInfoFromJson(json);
-
-  @override
+      _$$_ServerPingInfoFromJson(json);
 
   /// Server and protocol version.
-  final Version version;
   @override
+  final Version version;
 
   /// Total and connected players.
-  final Players players;
   @override
+  final Players players;
 
   /// MOTD description.
+// ignore: invalid_annotation_target
+  @override
   @JsonKey(fromJson: _descriptionToJson)
   final Description description;
-  @override
 
   /// Favicon data uri.
-  final String? favicon;
   @override
+  final String? favicon;
 
   /// Server's mods.
+  @override
   final Modinfo? modinfo;
 
   @override
@@ -270,50 +246,45 @@ class _$_ServerPingInfo implements _ServerPingInfo {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is _ServerPingInfo &&
-            (identical(other.version, version) ||
-                const DeepCollectionEquality()
-                    .equals(other.version, version)) &&
-            (identical(other.players, players) ||
-                const DeepCollectionEquality()
-                    .equals(other.players, players)) &&
-            (identical(other.description, description) ||
-                const DeepCollectionEquality()
-                    .equals(other.description, description)) &&
-            (identical(other.favicon, favicon) ||
-                const DeepCollectionEquality()
-                    .equals(other.favicon, favicon)) &&
-            (identical(other.modinfo, modinfo) ||
-                const DeepCollectionEquality().equals(other.modinfo, modinfo)));
+        (other.runtimeType == runtimeType &&
+            other is _$_ServerPingInfo &&
+            const DeepCollectionEquality().equals(other.version, version) &&
+            const DeepCollectionEquality().equals(other.players, players) &&
+            const DeepCollectionEquality()
+                .equals(other.description, description) &&
+            const DeepCollectionEquality().equals(other.favicon, favicon) &&
+            const DeepCollectionEquality().equals(other.modinfo, modinfo));
   }
-
-  @override
-  int get hashCode =>
-      runtimeType.hashCode ^
-      const DeepCollectionEquality().hash(version) ^
-      const DeepCollectionEquality().hash(players) ^
-      const DeepCollectionEquality().hash(description) ^
-      const DeepCollectionEquality().hash(favicon) ^
-      const DeepCollectionEquality().hash(modinfo);
 
   @JsonKey(ignore: true)
   @override
-  _$ServerPingInfoCopyWith<_ServerPingInfo> get copyWith =>
-      __$ServerPingInfoCopyWithImpl<_ServerPingInfo>(this, _$identity);
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(version),
+      const DeepCollectionEquality().hash(players),
+      const DeepCollectionEquality().hash(description),
+      const DeepCollectionEquality().hash(favicon),
+      const DeepCollectionEquality().hash(modinfo));
+
+  @JsonKey(ignore: true)
+  @override
+  _$$_ServerPingInfoCopyWith<_$_ServerPingInfo> get copyWith =>
+      __$$_ServerPingInfoCopyWithImpl<_$_ServerPingInfo>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$_$_ServerPingInfoToJson(this);
+    return _$$_ServerPingInfoToJson(this);
   }
 }
 
 abstract class _ServerPingInfo implements ServerPingInfo {
   const factory _ServerPingInfo(
-      {required Version version,
-      required Players players,
-      @JsonKey(fromJson: _descriptionToJson) required Description description,
-      String? favicon,
-      Modinfo? modinfo}) = _$_ServerPingInfo;
+      {required final Version version,
+      required final Players players,
+      @JsonKey(fromJson: _descriptionToJson)
+          required final Description description,
+      final String? favicon,
+      final Modinfo? modinfo}) = _$_ServerPingInfo;
 
   factory _ServerPingInfo.fromJson(Map<String, dynamic> json) =
       _$_ServerPingInfo.fromJson;
@@ -329,6 +300,7 @@ abstract class _ServerPingInfo implements ServerPingInfo {
   @override
 
   /// MOTD description.
+// ignore: invalid_annotation_target
   @JsonKey(fromJson: _descriptionToJson)
   Description get description => throw _privateConstructorUsedError;
   @override
@@ -341,32 +313,13 @@ abstract class _ServerPingInfo implements ServerPingInfo {
   Modinfo? get modinfo => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
-  _$ServerPingInfoCopyWith<_ServerPingInfo> get copyWith =>
+  _$$_ServerPingInfoCopyWith<_$_ServerPingInfo> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 Description _$DescriptionFromJson(Map<String, dynamic> json) {
   return _Description.fromJson(json);
 }
-
-/// @nodoc
-class _$DescriptionTearOff {
-  const _$DescriptionTearOff();
-
-  _Description call({List<Extra>? extra, required String text}) {
-    return _Description(
-      extra: extra,
-      text: text,
-    );
-  }
-
-  Description fromJson(Map<String, Object> json) {
-    return Description.fromJson(json);
-  }
-}
-
-/// @nodoc
-const $Description = _$DescriptionTearOff();
 
 /// @nodoc
 mixin _$Description {
@@ -417,33 +370,33 @@ class _$DescriptionCopyWithImpl<$Res> implements $DescriptionCopyWith<$Res> {
 }
 
 /// @nodoc
-abstract class _$DescriptionCopyWith<$Res>
+abstract class _$$_DescriptionCopyWith<$Res>
     implements $DescriptionCopyWith<$Res> {
-  factory _$DescriptionCopyWith(
-          _Description value, $Res Function(_Description) then) =
-      __$DescriptionCopyWithImpl<$Res>;
+  factory _$$_DescriptionCopyWith(
+          _$_Description value, $Res Function(_$_Description) then) =
+      __$$_DescriptionCopyWithImpl<$Res>;
   @override
   $Res call({List<Extra>? extra, String text});
 }
 
 /// @nodoc
-class __$DescriptionCopyWithImpl<$Res> extends _$DescriptionCopyWithImpl<$Res>
-    implements _$DescriptionCopyWith<$Res> {
-  __$DescriptionCopyWithImpl(
-      _Description _value, $Res Function(_Description) _then)
-      : super(_value, (v) => _then(v as _Description));
+class __$$_DescriptionCopyWithImpl<$Res> extends _$DescriptionCopyWithImpl<$Res>
+    implements _$$_DescriptionCopyWith<$Res> {
+  __$$_DescriptionCopyWithImpl(
+      _$_Description _value, $Res Function(_$_Description) _then)
+      : super(_value, (v) => _then(v as _$_Description));
 
   @override
-  _Description get _value => super._value as _Description;
+  _$_Description get _value => super._value as _$_Description;
 
   @override
   $Res call({
     Object? extra = freezed,
     Object? text = freezed,
   }) {
-    return _then(_Description(
+    return _then(_$_Description(
       extra: extra == freezed
-          ? _value.extra
+          ? _value._extra
           : extra // ignore: cast_nullable_to_non_nullable
               as List<Extra>?,
       text: text == freezed
@@ -457,18 +410,26 @@ class __$DescriptionCopyWithImpl<$Res> extends _$DescriptionCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$_Description implements _Description {
-  const _$_Description({this.extra, required this.text});
+  const _$_Description({final List<Extra>? extra, required this.text})
+      : _extra = extra;
 
   factory _$_Description.fromJson(Map<String, dynamic> json) =>
-      _$_$_DescriptionFromJson(json);
-
-  @override
+      _$$_DescriptionFromJson(json);
 
   /// Extra MOTD text.
-  final List<Extra>? extra;
+  final List<Extra>? _extra;
+
+  /// Extra MOTD text.
   @override
+  List<Extra>? get extra {
+    final value = _extra;
+    if (value == null) return null;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
 
   /// Motd text.
+  @override
   final String text;
 
   @override
@@ -479,33 +440,33 @@ class _$_Description implements _Description {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is _Description &&
-            (identical(other.extra, extra) ||
-                const DeepCollectionEquality().equals(other.extra, extra)) &&
-            (identical(other.text, text) ||
-                const DeepCollectionEquality().equals(other.text, text)));
+        (other.runtimeType == runtimeType &&
+            other is _$_Description &&
+            const DeepCollectionEquality().equals(other._extra, _extra) &&
+            const DeepCollectionEquality().equals(other.text, text));
   }
-
-  @override
-  int get hashCode =>
-      runtimeType.hashCode ^
-      const DeepCollectionEquality().hash(extra) ^
-      const DeepCollectionEquality().hash(text);
 
   @JsonKey(ignore: true)
   @override
-  _$DescriptionCopyWith<_Description> get copyWith =>
-      __$DescriptionCopyWithImpl<_Description>(this, _$identity);
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(_extra),
+      const DeepCollectionEquality().hash(text));
+
+  @JsonKey(ignore: true)
+  @override
+  _$$_DescriptionCopyWith<_$_Description> get copyWith =>
+      __$$_DescriptionCopyWithImpl<_$_Description>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$_$_DescriptionToJson(this);
+    return _$$_DescriptionToJson(this);
   }
 }
 
 abstract class _Description implements Description {
-  const factory _Description({List<Extra>? extra, required String text}) =
-      _$_Description;
+  const factory _Description(
+      {final List<Extra>? extra, required final String text}) = _$_Description;
 
   factory _Description.fromJson(Map<String, dynamic> json) =
       _$_Description.fromJson;
@@ -520,42 +481,13 @@ abstract class _Description implements Description {
   String get text => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
-  _$DescriptionCopyWith<_Description> get copyWith =>
+  _$$_DescriptionCopyWith<_$_Description> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 Extra _$ExtraFromJson(Map<String, dynamic> json) {
   return _Extra.fromJson(json);
 }
-
-/// @nodoc
-class _$ExtraTearOff {
-  const _$ExtraTearOff();
-
-  _Extra call(
-      {String? color,
-      required String text,
-      bool? bold,
-      bool? strikethrough,
-      bool? italic,
-      bool? underlined}) {
-    return _Extra(
-      color: color,
-      text: text,
-      bold: bold,
-      strikethrough: strikethrough,
-      italic: italic,
-      underlined: underlined,
-    );
-  }
-
-  Extra fromJson(Map<String, Object> json) {
-    return Extra.fromJson(json);
-  }
-}
-
-/// @nodoc
-const $Extra = _$ExtraTearOff();
 
 /// @nodoc
 mixin _$Extra {
@@ -642,9 +574,9 @@ class _$ExtraCopyWithImpl<$Res> implements $ExtraCopyWith<$Res> {
 }
 
 /// @nodoc
-abstract class _$ExtraCopyWith<$Res> implements $ExtraCopyWith<$Res> {
-  factory _$ExtraCopyWith(_Extra value, $Res Function(_Extra) then) =
-      __$ExtraCopyWithImpl<$Res>;
+abstract class _$$_ExtraCopyWith<$Res> implements $ExtraCopyWith<$Res> {
+  factory _$$_ExtraCopyWith(_$_Extra value, $Res Function(_$_Extra) then) =
+      __$$_ExtraCopyWithImpl<$Res>;
   @override
   $Res call(
       {String? color,
@@ -656,13 +588,13 @@ abstract class _$ExtraCopyWith<$Res> implements $ExtraCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$ExtraCopyWithImpl<$Res> extends _$ExtraCopyWithImpl<$Res>
-    implements _$ExtraCopyWith<$Res> {
-  __$ExtraCopyWithImpl(_Extra _value, $Res Function(_Extra) _then)
-      : super(_value, (v) => _then(v as _Extra));
+class __$$_ExtraCopyWithImpl<$Res> extends _$ExtraCopyWithImpl<$Res>
+    implements _$$_ExtraCopyWith<$Res> {
+  __$$_ExtraCopyWithImpl(_$_Extra _value, $Res Function(_$_Extra) _then)
+      : super(_value, (v) => _then(v as _$_Extra));
 
   @override
-  _Extra get _value => super._value as _Extra;
+  _$_Extra get _value => super._value as _$_Extra;
 
   @override
   $Res call({
@@ -673,7 +605,7 @@ class __$ExtraCopyWithImpl<$Res> extends _$ExtraCopyWithImpl<$Res>
     Object? italic = freezed,
     Object? underlined = freezed,
   }) {
-    return _then(_Extra(
+    return _then(_$_Extra(
       color: color == freezed
           ? _value.color
           : color // ignore: cast_nullable_to_non_nullable
@@ -714,31 +646,30 @@ class _$_Extra implements _Extra {
       this.underlined});
 
   factory _$_Extra.fromJson(Map<String, dynamic> json) =>
-      _$_$_ExtraFromJson(json);
-
-  @override
+      _$$_ExtraFromJson(json);
 
   /// Text color.
-  final String? color;
   @override
+  final String? color;
 
   /// Actual text.
-  final String text;
   @override
+  final String text;
 
   /// Bold text.
-  final bool? bold;
   @override
+  final bool? bold;
 
   /// Strikethrough text.
-  final bool? strikethrough;
   @override
+  final bool? strikethrough;
 
   /// Italic text.
-  final bool? italic;
   @override
+  final bool? italic;
 
   /// Underlined text.
+  @override
   final bool? underlined;
 
   @override
@@ -749,52 +680,48 @@ class _$_Extra implements _Extra {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is _Extra &&
-            (identical(other.color, color) ||
-                const DeepCollectionEquality().equals(other.color, color)) &&
-            (identical(other.text, text) ||
-                const DeepCollectionEquality().equals(other.text, text)) &&
-            (identical(other.bold, bold) ||
-                const DeepCollectionEquality().equals(other.bold, bold)) &&
-            (identical(other.strikethrough, strikethrough) ||
-                const DeepCollectionEquality()
-                    .equals(other.strikethrough, strikethrough)) &&
-            (identical(other.italic, italic) ||
-                const DeepCollectionEquality().equals(other.italic, italic)) &&
-            (identical(other.underlined, underlined) ||
-                const DeepCollectionEquality()
-                    .equals(other.underlined, underlined)));
+        (other.runtimeType == runtimeType &&
+            other is _$_Extra &&
+            const DeepCollectionEquality().equals(other.color, color) &&
+            const DeepCollectionEquality().equals(other.text, text) &&
+            const DeepCollectionEquality().equals(other.bold, bold) &&
+            const DeepCollectionEquality()
+                .equals(other.strikethrough, strikethrough) &&
+            const DeepCollectionEquality().equals(other.italic, italic) &&
+            const DeepCollectionEquality()
+                .equals(other.underlined, underlined));
   }
-
-  @override
-  int get hashCode =>
-      runtimeType.hashCode ^
-      const DeepCollectionEquality().hash(color) ^
-      const DeepCollectionEquality().hash(text) ^
-      const DeepCollectionEquality().hash(bold) ^
-      const DeepCollectionEquality().hash(strikethrough) ^
-      const DeepCollectionEquality().hash(italic) ^
-      const DeepCollectionEquality().hash(underlined);
 
   @JsonKey(ignore: true)
   @override
-  _$ExtraCopyWith<_Extra> get copyWith =>
-      __$ExtraCopyWithImpl<_Extra>(this, _$identity);
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(color),
+      const DeepCollectionEquality().hash(text),
+      const DeepCollectionEquality().hash(bold),
+      const DeepCollectionEquality().hash(strikethrough),
+      const DeepCollectionEquality().hash(italic),
+      const DeepCollectionEquality().hash(underlined));
+
+  @JsonKey(ignore: true)
+  @override
+  _$$_ExtraCopyWith<_$_Extra> get copyWith =>
+      __$$_ExtraCopyWithImpl<_$_Extra>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$_$_ExtraToJson(this);
+    return _$$_ExtraToJson(this);
   }
 }
 
 abstract class _Extra implements Extra {
   const factory _Extra(
-      {String? color,
-      required String text,
-      bool? bold,
-      bool? strikethrough,
-      bool? italic,
-      bool? underlined}) = _$_Extra;
+      {final String? color,
+      required final String text,
+      final bool? bold,
+      final bool? strikethrough,
+      final bool? italic,
+      final bool? underlined}) = _$_Extra;
 
   factory _Extra.fromJson(Map<String, dynamic> json) = _$_Extra.fromJson;
 
@@ -824,31 +751,13 @@ abstract class _Extra implements Extra {
   bool? get underlined => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
-  _$ExtraCopyWith<_Extra> get copyWith => throw _privateConstructorUsedError;
+  _$$_ExtraCopyWith<_$_Extra> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 Modinfo _$ModinfoFromJson(Map<String, dynamic> json) {
   return _Modinfo.fromJson(json);
 }
-
-/// @nodoc
-class _$ModinfoTearOff {
-  const _$ModinfoTearOff();
-
-  _Modinfo call({required String type, required List<Mod> modList}) {
-    return _Modinfo(
-      type: type,
-      modList: modList,
-    );
-  }
-
-  Modinfo fromJson(Map<String, Object> json) {
-    return Modinfo.fromJson(json);
-  }
-}
-
-/// @nodoc
-const $Modinfo = _$ModinfoTearOff();
 
 /// @nodoc
 mixin _$Modinfo {
@@ -897,34 +806,35 @@ class _$ModinfoCopyWithImpl<$Res> implements $ModinfoCopyWith<$Res> {
 }
 
 /// @nodoc
-abstract class _$ModinfoCopyWith<$Res> implements $ModinfoCopyWith<$Res> {
-  factory _$ModinfoCopyWith(_Modinfo value, $Res Function(_Modinfo) then) =
-      __$ModinfoCopyWithImpl<$Res>;
+abstract class _$$_ModinfoCopyWith<$Res> implements $ModinfoCopyWith<$Res> {
+  factory _$$_ModinfoCopyWith(
+          _$_Modinfo value, $Res Function(_$_Modinfo) then) =
+      __$$_ModinfoCopyWithImpl<$Res>;
   @override
   $Res call({String type, List<Mod> modList});
 }
 
 /// @nodoc
-class __$ModinfoCopyWithImpl<$Res> extends _$ModinfoCopyWithImpl<$Res>
-    implements _$ModinfoCopyWith<$Res> {
-  __$ModinfoCopyWithImpl(_Modinfo _value, $Res Function(_Modinfo) _then)
-      : super(_value, (v) => _then(v as _Modinfo));
+class __$$_ModinfoCopyWithImpl<$Res> extends _$ModinfoCopyWithImpl<$Res>
+    implements _$$_ModinfoCopyWith<$Res> {
+  __$$_ModinfoCopyWithImpl(_$_Modinfo _value, $Res Function(_$_Modinfo) _then)
+      : super(_value, (v) => _then(v as _$_Modinfo));
 
   @override
-  _Modinfo get _value => super._value as _Modinfo;
+  _$_Modinfo get _value => super._value as _$_Modinfo;
 
   @override
   $Res call({
     Object? type = freezed,
     Object? modList = freezed,
   }) {
-    return _then(_Modinfo(
+    return _then(_$_Modinfo(
       type: type == freezed
           ? _value.type
           : type // ignore: cast_nullable_to_non_nullable
               as String,
       modList: modList == freezed
-          ? _value.modList
+          ? _value._modList
           : modList // ignore: cast_nullable_to_non_nullable
               as List<Mod>,
     ));
@@ -934,19 +844,25 @@ class __$ModinfoCopyWithImpl<$Res> extends _$ModinfoCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$_Modinfo implements _Modinfo {
-  const _$_Modinfo({required this.type, required this.modList});
+  const _$_Modinfo({required this.type, required final List<Mod> modList})
+      : _modList = modList;
 
   factory _$_Modinfo.fromJson(Map<String, dynamic> json) =>
-      _$_$_ModinfoFromJson(json);
-
-  @override
+      _$$_ModinfoFromJson(json);
 
   /// Mods type.
-  final String type;
   @override
+  final String type;
 
   /// Mods list.
-  final List<Mod> modList;
+  final List<Mod> _modList;
+
+  /// Mods list.
+  @override
+  List<Mod> get modList {
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_modList);
+  }
 
   @override
   String toString() {
@@ -956,33 +872,34 @@ class _$_Modinfo implements _Modinfo {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is _Modinfo &&
-            (identical(other.type, type) ||
-                const DeepCollectionEquality().equals(other.type, type)) &&
-            (identical(other.modList, modList) ||
-                const DeepCollectionEquality().equals(other.modList, modList)));
+        (other.runtimeType == runtimeType &&
+            other is _$_Modinfo &&
+            const DeepCollectionEquality().equals(other.type, type) &&
+            const DeepCollectionEquality().equals(other._modList, _modList));
   }
-
-  @override
-  int get hashCode =>
-      runtimeType.hashCode ^
-      const DeepCollectionEquality().hash(type) ^
-      const DeepCollectionEquality().hash(modList);
 
   @JsonKey(ignore: true)
   @override
-  _$ModinfoCopyWith<_Modinfo> get copyWith =>
-      __$ModinfoCopyWithImpl<_Modinfo>(this, _$identity);
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(type),
+      const DeepCollectionEquality().hash(_modList));
+
+  @JsonKey(ignore: true)
+  @override
+  _$$_ModinfoCopyWith<_$_Modinfo> get copyWith =>
+      __$$_ModinfoCopyWithImpl<_$_Modinfo>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$_$_ModinfoToJson(this);
+    return _$$_ModinfoToJson(this);
   }
 }
 
 abstract class _Modinfo implements Modinfo {
-  const factory _Modinfo({required String type, required List<Mod> modList}) =
-      _$_Modinfo;
+  const factory _Modinfo(
+      {required final String type,
+      required final List<Mod> modList}) = _$_Modinfo;
 
   factory _Modinfo.fromJson(Map<String, dynamic> json) = _$_Modinfo.fromJson;
 
@@ -996,33 +913,13 @@ abstract class _Modinfo implements Modinfo {
   List<Mod> get modList => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
-  _$ModinfoCopyWith<_Modinfo> get copyWith =>
+  _$$_ModinfoCopyWith<_$_Modinfo> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 Players _$PlayersFromJson(Map<String, dynamic> json) {
   return _Players.fromJson(json);
 }
-
-/// @nodoc
-class _$PlayersTearOff {
-  const _$PlayersTearOff();
-
-  _Players call({required int max, required int online, List<Sample>? sample}) {
-    return _Players(
-      max: max,
-      online: online,
-      sample: sample,
-    );
-  }
-
-  Players fromJson(Map<String, Object> json) {
-    return Players.fromJson(json);
-  }
-}
-
-/// @nodoc
-const $Players = _$PlayersTearOff();
 
 /// @nodoc
 mixin _$Players {
@@ -1079,21 +976,22 @@ class _$PlayersCopyWithImpl<$Res> implements $PlayersCopyWith<$Res> {
 }
 
 /// @nodoc
-abstract class _$PlayersCopyWith<$Res> implements $PlayersCopyWith<$Res> {
-  factory _$PlayersCopyWith(_Players value, $Res Function(_Players) then) =
-      __$PlayersCopyWithImpl<$Res>;
+abstract class _$$_PlayersCopyWith<$Res> implements $PlayersCopyWith<$Res> {
+  factory _$$_PlayersCopyWith(
+          _$_Players value, $Res Function(_$_Players) then) =
+      __$$_PlayersCopyWithImpl<$Res>;
   @override
   $Res call({int max, int online, List<Sample>? sample});
 }
 
 /// @nodoc
-class __$PlayersCopyWithImpl<$Res> extends _$PlayersCopyWithImpl<$Res>
-    implements _$PlayersCopyWith<$Res> {
-  __$PlayersCopyWithImpl(_Players _value, $Res Function(_Players) _then)
-      : super(_value, (v) => _then(v as _Players));
+class __$$_PlayersCopyWithImpl<$Res> extends _$PlayersCopyWithImpl<$Res>
+    implements _$$_PlayersCopyWith<$Res> {
+  __$$_PlayersCopyWithImpl(_$_Players _value, $Res Function(_$_Players) _then)
+      : super(_value, (v) => _then(v as _$_Players));
 
   @override
-  _Players get _value => super._value as _Players;
+  _$_Players get _value => super._value as _$_Players;
 
   @override
   $Res call({
@@ -1101,7 +999,7 @@ class __$PlayersCopyWithImpl<$Res> extends _$PlayersCopyWithImpl<$Res>
     Object? online = freezed,
     Object? sample = freezed,
   }) {
-    return _then(_Players(
+    return _then(_$_Players(
       max: max == freezed
           ? _value.max
           : max // ignore: cast_nullable_to_non_nullable
@@ -1111,7 +1009,7 @@ class __$PlayersCopyWithImpl<$Res> extends _$PlayersCopyWithImpl<$Res>
           : online // ignore: cast_nullable_to_non_nullable
               as int,
       sample: sample == freezed
-          ? _value.sample
+          ? _value._sample
           : sample // ignore: cast_nullable_to_non_nullable
               as List<Sample>?,
     ));
@@ -1121,23 +1019,32 @@ class __$PlayersCopyWithImpl<$Res> extends _$PlayersCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$_Players implements _Players {
-  const _$_Players({required this.max, required this.online, this.sample});
+  const _$_Players(
+      {required this.max, required this.online, final List<Sample>? sample})
+      : _sample = sample;
 
   factory _$_Players.fromJson(Map<String, dynamic> json) =>
-      _$_$_PlayersFromJson(json);
-
-  @override
+      _$$_PlayersFromJson(json);
 
   /// Max players.
-  final int max;
   @override
+  final int max;
 
   /// Connected players.
-  final int online;
   @override
+  final int online;
 
   /// Connected players list.
-  final List<Sample>? sample;
+  final List<Sample>? _sample;
+
+  /// Connected players list.
+  @override
+  List<Sample>? get sample {
+    final value = _sample;
+    if (value == null) return null;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
 
   @override
   String toString() {
@@ -1147,38 +1054,37 @@ class _$_Players implements _Players {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is _Players &&
-            (identical(other.max, max) ||
-                const DeepCollectionEquality().equals(other.max, max)) &&
-            (identical(other.online, online) ||
-                const DeepCollectionEquality().equals(other.online, online)) &&
-            (identical(other.sample, sample) ||
-                const DeepCollectionEquality().equals(other.sample, sample)));
+        (other.runtimeType == runtimeType &&
+            other is _$_Players &&
+            const DeepCollectionEquality().equals(other.max, max) &&
+            const DeepCollectionEquality().equals(other.online, online) &&
+            const DeepCollectionEquality().equals(other._sample, _sample));
   }
-
-  @override
-  int get hashCode =>
-      runtimeType.hashCode ^
-      const DeepCollectionEquality().hash(max) ^
-      const DeepCollectionEquality().hash(online) ^
-      const DeepCollectionEquality().hash(sample);
 
   @JsonKey(ignore: true)
   @override
-  _$PlayersCopyWith<_Players> get copyWith =>
-      __$PlayersCopyWithImpl<_Players>(this, _$identity);
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(max),
+      const DeepCollectionEquality().hash(online),
+      const DeepCollectionEquality().hash(_sample));
+
+  @JsonKey(ignore: true)
+  @override
+  _$$_PlayersCopyWith<_$_Players> get copyWith =>
+      __$$_PlayersCopyWithImpl<_$_Players>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$_$_PlayersToJson(this);
+    return _$$_PlayersToJson(this);
   }
 }
 
 abstract class _Players implements Players {
   const factory _Players(
-      {required int max,
-      required int online,
-      List<Sample>? sample}) = _$_Players;
+      {required final int max,
+      required final int online,
+      final List<Sample>? sample}) = _$_Players;
 
   factory _Players.fromJson(Map<String, dynamic> json) = _$_Players.fromJson;
 
@@ -1196,32 +1102,13 @@ abstract class _Players implements Players {
   List<Sample>? get sample => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
-  _$PlayersCopyWith<_Players> get copyWith =>
+  _$$_PlayersCopyWith<_$_Players> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 Sample _$SampleFromJson(Map<String, dynamic> json) {
   return _Sample.fromJson(json);
 }
-
-/// @nodoc
-class _$SampleTearOff {
-  const _$SampleTearOff();
-
-  _Sample call({required String id, required String name}) {
-    return _Sample(
-      id: id,
-      name: name,
-    );
-  }
-
-  Sample fromJson(Map<String, Object> json) {
-    return Sample.fromJson(json);
-  }
-}
-
-/// @nodoc
-const $Sample = _$SampleTearOff();
 
 /// @nodoc
 mixin _$Sample {
@@ -1270,28 +1157,28 @@ class _$SampleCopyWithImpl<$Res> implements $SampleCopyWith<$Res> {
 }
 
 /// @nodoc
-abstract class _$SampleCopyWith<$Res> implements $SampleCopyWith<$Res> {
-  factory _$SampleCopyWith(_Sample value, $Res Function(_Sample) then) =
-      __$SampleCopyWithImpl<$Res>;
+abstract class _$$_SampleCopyWith<$Res> implements $SampleCopyWith<$Res> {
+  factory _$$_SampleCopyWith(_$_Sample value, $Res Function(_$_Sample) then) =
+      __$$_SampleCopyWithImpl<$Res>;
   @override
   $Res call({String id, String name});
 }
 
 /// @nodoc
-class __$SampleCopyWithImpl<$Res> extends _$SampleCopyWithImpl<$Res>
-    implements _$SampleCopyWith<$Res> {
-  __$SampleCopyWithImpl(_Sample _value, $Res Function(_Sample) _then)
-      : super(_value, (v) => _then(v as _Sample));
+class __$$_SampleCopyWithImpl<$Res> extends _$SampleCopyWithImpl<$Res>
+    implements _$$_SampleCopyWith<$Res> {
+  __$$_SampleCopyWithImpl(_$_Sample _value, $Res Function(_$_Sample) _then)
+      : super(_value, (v) => _then(v as _$_Sample));
 
   @override
-  _Sample get _value => super._value as _Sample;
+  _$_Sample get _value => super._value as _$_Sample;
 
   @override
   $Res call({
     Object? id = freezed,
     Object? name = freezed,
   }) {
-    return _then(_Sample(
+    return _then(_$_Sample(
       id: id == freezed
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -1310,15 +1197,14 @@ class _$_Sample implements _Sample {
   const _$_Sample({required this.id, required this.name});
 
   factory _$_Sample.fromJson(Map<String, dynamic> json) =>
-      _$_$_SampleFromJson(json);
-
-  @override
+      _$$_SampleFromJson(json);
 
   /// Players' UUID.
-  final String id;
   @override
+  final String id;
 
   /// Players' name.
+  @override
   final String name;
 
   @override
@@ -1329,32 +1215,33 @@ class _$_Sample implements _Sample {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is _Sample &&
-            (identical(other.id, id) ||
-                const DeepCollectionEquality().equals(other.id, id)) &&
-            (identical(other.name, name) ||
-                const DeepCollectionEquality().equals(other.name, name)));
+        (other.runtimeType == runtimeType &&
+            other is _$_Sample &&
+            const DeepCollectionEquality().equals(other.id, id) &&
+            const DeepCollectionEquality().equals(other.name, name));
   }
-
-  @override
-  int get hashCode =>
-      runtimeType.hashCode ^
-      const DeepCollectionEquality().hash(id) ^
-      const DeepCollectionEquality().hash(name);
 
   @JsonKey(ignore: true)
   @override
-  _$SampleCopyWith<_Sample> get copyWith =>
-      __$SampleCopyWithImpl<_Sample>(this, _$identity);
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(id),
+      const DeepCollectionEquality().hash(name));
+
+  @JsonKey(ignore: true)
+  @override
+  _$$_SampleCopyWith<_$_Sample> get copyWith =>
+      __$$_SampleCopyWithImpl<_$_Sample>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$_$_SampleToJson(this);
+    return _$$_SampleToJson(this);
   }
 }
 
 abstract class _Sample implements Sample {
-  const factory _Sample({required String id, required String name}) = _$_Sample;
+  const factory _Sample(
+      {required final String id, required final String name}) = _$_Sample;
 
   factory _Sample.fromJson(Map<String, dynamic> json) = _$_Sample.fromJson;
 
@@ -1368,31 +1255,13 @@ abstract class _Sample implements Sample {
   String get name => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
-  _$SampleCopyWith<_Sample> get copyWith => throw _privateConstructorUsedError;
+  _$$_SampleCopyWith<_$_Sample> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 Version _$VersionFromJson(Map<String, dynamic> json) {
   return _Version.fromJson(json);
 }
-
-/// @nodoc
-class _$VersionTearOff {
-  const _$VersionTearOff();
-
-  _Version call({required String name, required int protocol}) {
-    return _Version(
-      name: name,
-      protocol: protocol,
-    );
-  }
-
-  Version fromJson(Map<String, Object> json) {
-    return Version.fromJson(json);
-  }
-}
-
-/// @nodoc
-const $Version = _$VersionTearOff();
 
 /// @nodoc
 mixin _$Version {
@@ -1441,28 +1310,29 @@ class _$VersionCopyWithImpl<$Res> implements $VersionCopyWith<$Res> {
 }
 
 /// @nodoc
-abstract class _$VersionCopyWith<$Res> implements $VersionCopyWith<$Res> {
-  factory _$VersionCopyWith(_Version value, $Res Function(_Version) then) =
-      __$VersionCopyWithImpl<$Res>;
+abstract class _$$_VersionCopyWith<$Res> implements $VersionCopyWith<$Res> {
+  factory _$$_VersionCopyWith(
+          _$_Version value, $Res Function(_$_Version) then) =
+      __$$_VersionCopyWithImpl<$Res>;
   @override
   $Res call({String name, int protocol});
 }
 
 /// @nodoc
-class __$VersionCopyWithImpl<$Res> extends _$VersionCopyWithImpl<$Res>
-    implements _$VersionCopyWith<$Res> {
-  __$VersionCopyWithImpl(_Version _value, $Res Function(_Version) _then)
-      : super(_value, (v) => _then(v as _Version));
+class __$$_VersionCopyWithImpl<$Res> extends _$VersionCopyWithImpl<$Res>
+    implements _$$_VersionCopyWith<$Res> {
+  __$$_VersionCopyWithImpl(_$_Version _value, $Res Function(_$_Version) _then)
+      : super(_value, (v) => _then(v as _$_Version));
 
   @override
-  _Version get _value => super._value as _Version;
+  _$_Version get _value => super._value as _$_Version;
 
   @override
   $Res call({
     Object? name = freezed,
     Object? protocol = freezed,
   }) {
-    return _then(_Version(
+    return _then(_$_Version(
       name: name == freezed
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -1481,15 +1351,14 @@ class _$_Version implements _Version {
   const _$_Version({required this.name, required this.protocol});
 
   factory _$_Version.fromJson(Map<String, dynamic> json) =>
-      _$_$_VersionFromJson(json);
-
-  @override
+      _$$_VersionFromJson(json);
 
   /// Version name.
-  final String name;
   @override
+  final String name;
 
   /// Version protocol.
+  @override
   final int protocol;
 
   @override
@@ -1500,34 +1369,33 @@ class _$_Version implements _Version {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is _Version &&
-            (identical(other.name, name) ||
-                const DeepCollectionEquality().equals(other.name, name)) &&
-            (identical(other.protocol, protocol) ||
-                const DeepCollectionEquality()
-                    .equals(other.protocol, protocol)));
+        (other.runtimeType == runtimeType &&
+            other is _$_Version &&
+            const DeepCollectionEquality().equals(other.name, name) &&
+            const DeepCollectionEquality().equals(other.protocol, protocol));
   }
-
-  @override
-  int get hashCode =>
-      runtimeType.hashCode ^
-      const DeepCollectionEquality().hash(name) ^
-      const DeepCollectionEquality().hash(protocol);
 
   @JsonKey(ignore: true)
   @override
-  _$VersionCopyWith<_Version> get copyWith =>
-      __$VersionCopyWithImpl<_Version>(this, _$identity);
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(name),
+      const DeepCollectionEquality().hash(protocol));
+
+  @JsonKey(ignore: true)
+  @override
+  _$$_VersionCopyWith<_$_Version> get copyWith =>
+      __$$_VersionCopyWithImpl<_$_Version>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$_$_VersionToJson(this);
+    return _$$_VersionToJson(this);
   }
 }
 
 abstract class _Version implements Version {
-  const factory _Version({required String name, required int protocol}) =
-      _$_Version;
+  const factory _Version(
+      {required final String name, required final int protocol}) = _$_Version;
 
   factory _Version.fromJson(Map<String, dynamic> json) = _$_Version.fromJson;
 
@@ -1541,32 +1409,13 @@ abstract class _Version implements Version {
   int get protocol => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
-  _$VersionCopyWith<_Version> get copyWith =>
+  _$$_VersionCopyWith<_$_Version> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 Mod _$ModFromJson(Map<String, dynamic> json) {
   return _Mod.fromJson(json);
 }
-
-/// @nodoc
-class _$ModTearOff {
-  const _$ModTearOff();
-
-  _Mod call({required String modid, required String version}) {
-    return _Mod(
-      modid: modid,
-      version: version,
-    );
-  }
-
-  Mod fromJson(Map<String, Object> json) {
-    return Mod.fromJson(json);
-  }
-}
-
-/// @nodoc
-const $Mod = _$ModTearOff();
 
 /// @nodoc
 mixin _$Mod {
@@ -1615,28 +1464,28 @@ class _$ModCopyWithImpl<$Res> implements $ModCopyWith<$Res> {
 }
 
 /// @nodoc
-abstract class _$ModCopyWith<$Res> implements $ModCopyWith<$Res> {
-  factory _$ModCopyWith(_Mod value, $Res Function(_Mod) then) =
-      __$ModCopyWithImpl<$Res>;
+abstract class _$$_ModCopyWith<$Res> implements $ModCopyWith<$Res> {
+  factory _$$_ModCopyWith(_$_Mod value, $Res Function(_$_Mod) then) =
+      __$$_ModCopyWithImpl<$Res>;
   @override
   $Res call({String modid, String version});
 }
 
 /// @nodoc
-class __$ModCopyWithImpl<$Res> extends _$ModCopyWithImpl<$Res>
-    implements _$ModCopyWith<$Res> {
-  __$ModCopyWithImpl(_Mod _value, $Res Function(_Mod) _then)
-      : super(_value, (v) => _then(v as _Mod));
+class __$$_ModCopyWithImpl<$Res> extends _$ModCopyWithImpl<$Res>
+    implements _$$_ModCopyWith<$Res> {
+  __$$_ModCopyWithImpl(_$_Mod _value, $Res Function(_$_Mod) _then)
+      : super(_value, (v) => _then(v as _$_Mod));
 
   @override
-  _Mod get _value => super._value as _Mod;
+  _$_Mod get _value => super._value as _$_Mod;
 
   @override
   $Res call({
     Object? modid = freezed,
     Object? version = freezed,
   }) {
-    return _then(_Mod(
+    return _then(_$_Mod(
       modid: modid == freezed
           ? _value.modid
           : modid // ignore: cast_nullable_to_non_nullable
@@ -1654,15 +1503,14 @@ class __$ModCopyWithImpl<$Res> extends _$ModCopyWithImpl<$Res>
 class _$_Mod implements _Mod {
   const _$_Mod({required this.modid, required this.version});
 
-  factory _$_Mod.fromJson(Map<String, dynamic> json) => _$_$_ModFromJson(json);
-
-  @override
+  factory _$_Mod.fromJson(Map<String, dynamic> json) => _$$_ModFromJson(json);
 
   /// Mod id.
-  final String modid;
   @override
+  final String modid;
 
   /// Mod version.
+  @override
   final String version;
 
   @override
@@ -1673,32 +1521,33 @@ class _$_Mod implements _Mod {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is _Mod &&
-            (identical(other.modid, modid) ||
-                const DeepCollectionEquality().equals(other.modid, modid)) &&
-            (identical(other.version, version) ||
-                const DeepCollectionEquality().equals(other.version, version)));
+        (other.runtimeType == runtimeType &&
+            other is _$_Mod &&
+            const DeepCollectionEquality().equals(other.modid, modid) &&
+            const DeepCollectionEquality().equals(other.version, version));
   }
-
-  @override
-  int get hashCode =>
-      runtimeType.hashCode ^
-      const DeepCollectionEquality().hash(modid) ^
-      const DeepCollectionEquality().hash(version);
 
   @JsonKey(ignore: true)
   @override
-  _$ModCopyWith<_Mod> get copyWith =>
-      __$ModCopyWithImpl<_Mod>(this, _$identity);
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(modid),
+      const DeepCollectionEquality().hash(version));
+
+  @JsonKey(ignore: true)
+  @override
+  _$$_ModCopyWith<_$_Mod> get copyWith =>
+      __$$_ModCopyWithImpl<_$_Mod>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$_$_ModToJson(this);
+    return _$$_ModToJson(this);
   }
 }
 
 abstract class _Mod implements Mod {
-  const factory _Mod({required String modid, required String version}) = _$_Mod;
+  const factory _Mod(
+      {required final String modid, required final String version}) = _$_Mod;
 
   factory _Mod.fromJson(Map<String, dynamic> json) = _$_Mod.fromJson;
 
@@ -1712,5 +1561,5 @@ abstract class _Mod implements Mod {
   String get version => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
-  _$ModCopyWith<_Mod> get copyWith => throw _privateConstructorUsedError;
+  _$$_ModCopyWith<_$_Mod> get copyWith => throw _privateConstructorUsedError;
 }

@@ -17,8 +17,11 @@ class DummyServer {
     tcpSocket.listen(newSocket);
   }
 
-  static Future<DummyServer> bind(dynamic address,
-      {int port = 27015, String password = ''}) async {
+  static Future<DummyServer> bind(
+    dynamic address, {
+    int port = 27015,
+    String password = '',
+  }) async {
     final tcpSocket = await ServerSocket.bind(address, port);
     final udpSocket = await RawDatagramSocket.bind(address, port);
     return DummyServer._(tcpSocket, udpSocket, password);
@@ -181,9 +184,12 @@ class DummyServer {
   void newSocket(Socket socket) {
     authStatus[socket.address] = false;
 
-    socket.listen((data) => onRconData(socket, data), onDone: () {
-      authStatus.remove(socket.address);
-    });
+    socket.listen(
+      (data) => onRconData(socket, data),
+      onDone: () {
+        authStatus.remove(socket.address);
+      },
+    );
   }
 
   Future<void> onRconData(Socket socket, Uint8List data) async {
@@ -203,11 +209,13 @@ class DummyServer {
       if (password.isNotEmpty && password == packet.bodyAsString) {
         // Workaround to avoid this and the previous packet to be added to the same packet.
         await Future(
-            () => socket.add(RconPacket.from(id: packet.id, type: 2).bytes));
+          () => socket.add(RconPacket.from(id: packet.id, type: 2).bytes),
+        );
         authStatus[socket.address] = true;
       } else {
         await Future(
-            () => socket.add(RconPacket.from(id: 0xFFFFFFFF, type: 2).bytes));
+          () => socket.add(RconPacket.from(id: 0xFFFFFFFF, type: 2).bytes),
+        );
       }
       return;
     }
@@ -223,15 +231,21 @@ class DummyServer {
 
       // The only valid command
       if (args[0] != 'echo') {
-        socket.add(RconPacket.from(
-                id: packet.id, body: 'Unknown command "${args[0]}"\n')
-            .bytes);
+        socket.add(
+          RconPacket.from(
+            id: packet.id,
+            body: 'Unknown command "${args[0]}"\n',
+          ).bytes,
+        );
         return;
       }
 
-      socket.add(RconPacket.from(
-              id: packet.id, body: '${args.sublist(1).join(' ')} \n')
-          .bytes);
+      socket.add(
+        RconPacket.from(
+          id: packet.id,
+          body: '${args.sublist(1).join(' ')} \n',
+        ).bytes,
+      );
     }
   }
 }

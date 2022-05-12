@@ -98,7 +98,8 @@ class _RconSocketImpl implements RconSocket {
   Future<String> command(String command) {
     if (!(authStatus ?? false)) {
       throw const RconException(
-          'Cannot send an RCON command while not authenticated!');
+        'Cannot send an RCON command while not authenticated!',
+      );
     }
     final resultCompleter = Completer<String>();
 

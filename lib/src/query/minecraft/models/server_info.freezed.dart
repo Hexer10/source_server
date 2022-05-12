@@ -1,5 +1,7 @@
+// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides
+// ignore_for_file: type=lint
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
 part of 'server_info.dart';
 
@@ -10,34 +12,7 @@ part of 'server_info.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
-
-/// @nodoc
-class _$ServerInfoTearOff {
-  const _$ServerInfoTearOff();
-
-  _ServerInfo call(
-      {required String motd,
-      required String gametype,
-      required String map,
-      required int players,
-      required int maxPlayers,
-      required int port,
-      required String ip}) {
-    return _ServerInfo(
-      motd: motd,
-      gametype: gametype,
-      map: map,
-      players: players,
-      maxPlayers: maxPlayers,
-      port: port,
-      ip: ip,
-    );
-  }
-}
-
-/// @nodoc
-const $ServerInfo = _$ServerInfoTearOff();
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
 mixin _$ServerInfo {
@@ -134,10 +109,11 @@ class _$ServerInfoCopyWithImpl<$Res> implements $ServerInfoCopyWith<$Res> {
 }
 
 /// @nodoc
-abstract class _$ServerInfoCopyWith<$Res> implements $ServerInfoCopyWith<$Res> {
-  factory _$ServerInfoCopyWith(
-          _ServerInfo value, $Res Function(_ServerInfo) then) =
-      __$ServerInfoCopyWithImpl<$Res>;
+abstract class _$$_ServerInfoCopyWith<$Res>
+    implements $ServerInfoCopyWith<$Res> {
+  factory _$$_ServerInfoCopyWith(
+          _$_ServerInfo value, $Res Function(_$_ServerInfo) then) =
+      __$$_ServerInfoCopyWithImpl<$Res>;
   @override
   $Res call(
       {String motd,
@@ -150,14 +126,14 @@ abstract class _$ServerInfoCopyWith<$Res> implements $ServerInfoCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$ServerInfoCopyWithImpl<$Res> extends _$ServerInfoCopyWithImpl<$Res>
-    implements _$ServerInfoCopyWith<$Res> {
-  __$ServerInfoCopyWithImpl(
-      _ServerInfo _value, $Res Function(_ServerInfo) _then)
-      : super(_value, (v) => _then(v as _ServerInfo));
+class __$$_ServerInfoCopyWithImpl<$Res> extends _$ServerInfoCopyWithImpl<$Res>
+    implements _$$_ServerInfoCopyWith<$Res> {
+  __$$_ServerInfoCopyWithImpl(
+      _$_ServerInfo _value, $Res Function(_$_ServerInfo) _then)
+      : super(_value, (v) => _then(v as _$_ServerInfo));
 
   @override
-  _ServerInfo get _value => super._value as _ServerInfo;
+  _$_ServerInfo get _value => super._value as _$_ServerInfo;
 
   @override
   $Res call({
@@ -169,7 +145,7 @@ class __$ServerInfoCopyWithImpl<$Res> extends _$ServerInfoCopyWithImpl<$Res>
     Object? port = freezed,
     Object? ip = freezed,
   }) {
-    return _then(_ServerInfo(
+    return _then(_$_ServerInfo(
       motd: motd == freezed
           ? _value.motd
           : motd // ignore: cast_nullable_to_non_nullable
@@ -214,33 +190,32 @@ class _$_ServerInfo implements _ServerInfo {
       required this.port,
       required this.ip});
 
-  @override
-
   /// MOTD.
-  final String motd;
   @override
+  final String motd;
 
   /// Gametype.
-  final String gametype;
   @override
+  final String gametype;
 
   /// Map.
-  final String map;
   @override
+  final String map;
 
   /// Number of players on the server.
-  final int players;
   @override
+  final int players;
 
   /// Maximum number of players the server reports it can hold.
-  final int maxPlayers;
   @override
+  final int maxPlayers;
 
   /// Server's port.
-  final int port;
   @override
+  final int port;
 
   /// Server's name.
+  @override
   final String ip;
 
   @override
@@ -251,52 +226,44 @@ class _$_ServerInfo implements _ServerInfo {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is _ServerInfo &&
-            (identical(other.motd, motd) ||
-                const DeepCollectionEquality().equals(other.motd, motd)) &&
-            (identical(other.gametype, gametype) ||
-                const DeepCollectionEquality()
-                    .equals(other.gametype, gametype)) &&
-            (identical(other.map, map) ||
-                const DeepCollectionEquality().equals(other.map, map)) &&
-            (identical(other.players, players) ||
-                const DeepCollectionEquality()
-                    .equals(other.players, players)) &&
-            (identical(other.maxPlayers, maxPlayers) ||
-                const DeepCollectionEquality()
-                    .equals(other.maxPlayers, maxPlayers)) &&
-            (identical(other.port, port) ||
-                const DeepCollectionEquality().equals(other.port, port)) &&
-            (identical(other.ip, ip) ||
-                const DeepCollectionEquality().equals(other.ip, ip)));
+        (other.runtimeType == runtimeType &&
+            other is _$_ServerInfo &&
+            const DeepCollectionEquality().equals(other.motd, motd) &&
+            const DeepCollectionEquality().equals(other.gametype, gametype) &&
+            const DeepCollectionEquality().equals(other.map, map) &&
+            const DeepCollectionEquality().equals(other.players, players) &&
+            const DeepCollectionEquality()
+                .equals(other.maxPlayers, maxPlayers) &&
+            const DeepCollectionEquality().equals(other.port, port) &&
+            const DeepCollectionEquality().equals(other.ip, ip));
   }
 
   @override
-  int get hashCode =>
-      runtimeType.hashCode ^
-      const DeepCollectionEquality().hash(motd) ^
-      const DeepCollectionEquality().hash(gametype) ^
-      const DeepCollectionEquality().hash(map) ^
-      const DeepCollectionEquality().hash(players) ^
-      const DeepCollectionEquality().hash(maxPlayers) ^
-      const DeepCollectionEquality().hash(port) ^
-      const DeepCollectionEquality().hash(ip);
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(motd),
+      const DeepCollectionEquality().hash(gametype),
+      const DeepCollectionEquality().hash(map),
+      const DeepCollectionEquality().hash(players),
+      const DeepCollectionEquality().hash(maxPlayers),
+      const DeepCollectionEquality().hash(port),
+      const DeepCollectionEquality().hash(ip));
 
   @JsonKey(ignore: true)
   @override
-  _$ServerInfoCopyWith<_ServerInfo> get copyWith =>
-      __$ServerInfoCopyWithImpl<_ServerInfo>(this, _$identity);
+  _$$_ServerInfoCopyWith<_$_ServerInfo> get copyWith =>
+      __$$_ServerInfoCopyWithImpl<_$_ServerInfo>(this, _$identity);
 }
 
 abstract class _ServerInfo implements ServerInfo {
   factory _ServerInfo(
-      {required String motd,
-      required String gametype,
-      required String map,
-      required int players,
-      required int maxPlayers,
-      required int port,
-      required String ip}) = _$_ServerInfo;
+      {required final String motd,
+      required final String gametype,
+      required final String map,
+      required final int players,
+      required final int maxPlayers,
+      required final int port,
+      required final String ip}) = _$_ServerInfo;
 
   @override
 
@@ -328,6 +295,6 @@ abstract class _ServerInfo implements ServerInfo {
   String get ip => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
-  _$ServerInfoCopyWith<_ServerInfo> get copyWith =>
+  _$$_ServerInfoCopyWith<_$_ServerInfo> get copyWith =>
       throw _privateConstructorUsedError;
 }

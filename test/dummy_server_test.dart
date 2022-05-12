@@ -78,9 +78,10 @@ void main() {
       final dummy =
           await DummyServer.bind('127.0.0.1', port: 9124, password: '1234');
       expect(
-          await SourceServer.connect('127.0.0.1', 9124, password: '1234')
-            ..close(),
-          isA<SourceServer>());
+        await SourceServer.connect('127.0.0.1', 9124, password: '1234')
+          ..close(),
+        isA<SourceServer>(),
+      );
 
       await dummy.close();
     });
@@ -89,10 +90,11 @@ void main() {
       final dummy =
           await DummyServer.bind('127.0.0.1', port: 9125, password: '1234');
       await expectLater(
-          () async =>
-              await SourceServer.connect('127.0.0.1', 9125, password: '12345')
-                ..close(),
-          throwsA(isA<RconAuthenticationException>()));
+        () async =>
+            await SourceServer.connect('127.0.0.1', 9125, password: '12345')
+              ..close(),
+        throwsA(isA<RconAuthenticationException>()),
+      );
       await dummy.close();
     });
 
@@ -103,8 +105,10 @@ void main() {
           await SourceServer.connect('127.0.0.1', 9126, password: '1234');
 
       await expectLater(server.command('echo a'), completion('a \n'));
-      await expectLater(server.command('hello world'),
-          completion('Unknown command "hello"\n'));
+      await expectLater(
+        server.command('hello world'),
+        completion('Unknown command "hello"\n'),
+      );
 
       server.close();
       await dummy.close();
@@ -116,7 +120,9 @@ void main() {
       final server = await SourceServer.connect('127.0.0.1', 9127);
 
       await expectLater(
-          () => server.command('echo a'), throwsA(isA<RconException>()));
+        () => server.command('echo a'),
+        throwsA(isA<RconException>()),
+      );
 
       server.close();
       await dummy.close();

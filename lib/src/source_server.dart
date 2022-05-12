@@ -18,15 +18,23 @@ class SourceServer implements RconSocket, QuerySocket {
 
   RconSocket? _rconSocket;
 
-  SourceServer._(this.address, this.port, this._querySocket, this._rconSocket,
-      this.timeout);
+  SourceServer._(
+    this.address,
+    this.port,
+    this._querySocket,
+    this._rconSocket,
+    this.timeout,
+  );
 
   /// Connects to the remote server using the server query protocol
   /// and the rcon protocol if the password was specified.
   /// This throws a [SocketException] if the authentication with the remote server failed.
-  static Future<SourceServer> connect(dynamic address, int port,
-      {String? password,
-      Duration timeout = const Duration(seconds: 30)}) async {
+  static Future<SourceServer> connect(
+    dynamic address,
+    int port, {
+    String? password,
+    Duration timeout = const Duration(seconds: 30),
+  }) async {
     final querySocket = await QuerySocket.connect(address, port);
     RconSocket? rconSocket;
     if (password != null) {
@@ -68,7 +76,8 @@ class SourceServer implements RconSocket, QuerySocket {
   Future<String> command(String command) {
     if (_rconSocket == null) {
       throw const RconException(
-          'Cannot send an RCON command while not authenticated!');
+        'Cannot send an RCON command while not authenticated!',
+      );
     }
     return _rconSocket!.command(command).timeout(timeout);
   }

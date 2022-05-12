@@ -15,8 +15,10 @@ typedef ServerFullInfo = Map<String, String>;
 /// Wrapper for the query protocol.
 abstract class QuerySocket {
   factory QuerySocket._(
-          InternetAddress address, int port, RawDatagramSocket socket) =
-      _QuerySocketImpl;
+    InternetAddress address,
+    int port,
+    RawDatagramSocket socket,
+  ) = _QuerySocketImpl;
 
   /// Returns the info about this server.
   /// See [getFullInfo]
@@ -31,8 +33,11 @@ abstract class QuerySocket {
 
   /// Setup the connection to the remote server.
   /// This does not guarantee that the connection will be established successfully.
-  static Future<QuerySocket> connect(dynamic address, int port,
-      {int localPort = 0}) async {
+  static Future<QuerySocket> connect(
+    dynamic address,
+    int port, {
+    int localPort = 0,
+  }) async {
     assert(address is String || address is InternetAddress);
     if (address is String) {
       // ignore: parameter_assignments
@@ -78,7 +83,12 @@ class _QuerySocketImpl implements QuerySocket {
     infoCompleter = Completer<ServerInfo>();
 
     getChallenge().then(
-        (value) => socket.send(QueryPacket.info(value).bytes, address, port));
+      (value) => socket.send(
+        QueryPacket.info(value).bytes,
+        address,
+        port,
+      ),
+    );
 
     return infoCompleter!.future;
   }
@@ -92,8 +102,13 @@ class _QuerySocketImpl implements QuerySocket {
 
     fullInfoCompleter = Completer<ServerFullInfo>();
 
-    getChallenge().then((value) =>
-        socket.send(QueryPacket.fullInfo(value).bytes, address, port));
+    getChallenge().then(
+      (value) => socket.send(
+        QueryPacket.fullInfo(value).bytes,
+        address,
+        port,
+      ),
+    );
 
     return fullInfoCompleter!.future;
   }
@@ -117,14 +132,17 @@ class _QuerySocketImpl implements QuerySocket {
     final port = read.int16;
     final ip = read.string;
 
-    infoCompleter!.complete(ServerInfo(
+    infoCompleter!.complete(
+      ServerInfo(
         motd: motd,
         gametype: gametype,
         map: map,
         players: numPlayers,
         maxPlayers: maxPlayers,
         port: port,
-        ip: ip));
+        ip: ip,
+      ),
+    );
     infoCompleter = null;
   }
 

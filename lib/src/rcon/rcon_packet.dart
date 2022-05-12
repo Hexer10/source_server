@@ -20,8 +20,11 @@ class RconPacket {
 
   RconPacket(this.bytes) : _byteData = ByteData.view(bytes.buffer);
 
-  factory RconPacket.from(
-      {int id = 0, int type = 0, dynamic body = const [0x00]}) {
+  factory RconPacket.from({
+    int id = 0,
+    int type = 0,
+    dynamic body = const [0x00],
+  }) {
     assert((body is List<int> && body.isNotEmpty) || body is String);
     if (body is String) {
       body = [...utf8.encode(body), 0x00];

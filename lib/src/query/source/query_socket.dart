@@ -3,6 +3,8 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:collection/collection.dart';
+import 'package:concurrent_queue/concurrent_queue.dart';
+import 'package:logging/logging.dart';
 
 import '../../../source_server.dart';
 import '../../buffer.dart';
@@ -11,8 +13,10 @@ import 'query_packet.dart';
 /// Wrapper for the query protocol.
 abstract class QuerySocket {
   factory QuerySocket._(
-          InternetAddress address, int port, RawDatagramSocket socket) =
-      _QuerySocketImpl;
+    InternetAddress address,
+    int port,
+    RawDatagramSocket socket,
+  ) = _QuerySocketImpl;
 
   /// Returns the info about this server.
   Future<ServerInfo> getInfo();
@@ -30,8 +34,11 @@ abstract class QuerySocket {
 
   /// Setup the connection to the remote server.
   /// This does not guarantee that the connection will be established successfully.
-  static Future<QuerySocket> connect(dynamic address, int port,
-      {int localPort = 0}) async {
+  static Future<QuerySocket> connect(
+    dynamic address,
+    int port, {
+    int localPort = 0,
+  }) async {
     assert(address is String || address is InternetAddress);
     if (address is String) {
       // ignore: parameter_assignments
@@ -48,6 +55,7 @@ class _QuerySocketImpl implements QuerySocket {
   final InternetAddress address;
   final int port;
   final RawDatagramSocket socket;
+  final ConcurrentQueue queue = ConcurrentQueue(concurrency: 1);
 
   Completer<ServerInfo>? infoCompleter;
   Completer<Uint8List>? challengeCompleter;
@@ -56,7 +64,10 @@ class _QuerySocketImpl implements QuerySocket {
 
   Uint8List? _challenge;
 
-  _QuerySocketImpl(this.address, this.port, this.socket) {
+  final Logger _logger;
+
+  _QuerySocketImpl(this.address, this.port, this.socket)
+      : _logger = Logger('QuerySocket${address.address}:$port') {
     socket.listen(onEvent);
   }
 
@@ -75,39 +86,48 @@ class _QuerySocketImpl implements QuerySocket {
 
   @override
   Future<ServerInfo> getInfo() {
-    assert(!(infoCompleter?.isCompleted ?? false));
-    if (infoCompleter != null) {
+    return queue.add(() {
+      assert(!(infoCompleter?.isCompleted ?? false));
+      if (infoCompleter != null) {
+        return infoCompleter!.future;
+      }
+      infoCompleter = Completer<ServerInfo>();
+      _logger.finest('Packet: ${QueryPacket.info.bytes.printHex()}');
+      socket.send(QueryPacket.info.bytes, address, port);
       return infoCompleter!.future;
-    }
-    infoCompleter = Completer<ServerInfo>();
-    socket.send(QueryPacket.info.bytes, address, port);
-    return infoCompleter!.future;
+    });
   }
 
   @override
   Future<List<QueryPlayer>> getPlayers() async {
-    assert(!(playersCompleter?.isCompleted ?? false));
-    if (playersCompleter != null) {
+    return queue.add(() {
+      assert(!(playersCompleter?.isCompleted ?? false));
+      if (playersCompleter != null) {
+        return playersCompleter!.future;
+      }
+      playersCompleter = Completer<UnmodifiableListView<QueryPlayer>>();
+      // ignore: unawaited_futures
+      getChallenge().then(
+        (value) => socket.send(QueryPacket.players(value).bytes, address, port),
+      );
       return playersCompleter!.future;
-    }
-    playersCompleter = Completer<UnmodifiableListView<QueryPlayer>>();
-    // ignore: unawaited_futures
-    getChallenge().then((value) =>
-        socket.send(QueryPacket.players(value).bytes, address, port));
-    return playersCompleter!.future;
+    });
   }
 
   @override
   Future<List<ServerRule>> getRules() async {
-    assert(!(rulesCompleter?.isCompleted ?? false));
-    if (rulesCompleter != null) {
+    return queue.add(() {
+      assert(!(rulesCompleter?.isCompleted ?? false));
+      if (rulesCompleter != null) {
+        return rulesCompleter!.future;
+      }
+      rulesCompleter = Completer<UnmodifiableListView<ServerRule>>();
+      // ignore: unawaited_futures
+      getChallenge().then(
+        (value) => socket.send(QueryPacket.rules(value).bytes, address, port),
+      );
       return rulesCompleter!.future;
-    }
-    rulesCompleter = Completer<UnmodifiableListView<ServerRule>>();
-    // ignore: unawaited_futures
-    getChallenge().then(
-        (value) => socket.send(QueryPacket.rules(value).bytes, address, port));
-    return rulesCompleter!.future;
+    });
   }
 
   void parseInfo(Uint8List bytes) {
@@ -129,20 +149,21 @@ class _QuerySocketImpl implements QuerySocket {
     /* TODO: Add TheShip flags*/
     final version = read.string;
     var info = ServerInfo(
-        protocol: protocol,
-        name: name,
-        map: map,
-        folder: folder,
-        game: game,
-        id: id,
-        players: players,
-        maxPlayers: maxPlayers,
-        bots: bots,
-        type: type,
-        os: os,
-        visibility: visibility,
-        vac: vac,
-        version: version);
+      protocol: protocol,
+      name: name,
+      map: map,
+      folder: folder,
+      game: game,
+      id: id,
+      players: players,
+      maxPlayers: maxPlayers,
+      bots: bots,
+      type: type,
+      os: os,
+      visibility: visibility,
+      vac: vac,
+      version: version,
+    );
     if (read.canReadMore) {
       final edf = read.uint8;
       int? port;
@@ -169,12 +190,13 @@ class _QuerySocketImpl implements QuerySocket {
         gameId = read.uint64;
       }
       info = info.copyWith(
-          port: port,
-          steamId: steamId,
-          tvPort: tvPort,
-          tvName: tvName,
-          keywords: keywords,
-          gameId: gameId);
+        port: port,
+        steamId: steamId,
+        tvPort: tvPort,
+        tvName: tvName,
+        keywords: keywords,
+        gameId: gameId,
+      );
     }
 
     infoCompleter!.complete(info);
@@ -182,6 +204,13 @@ class _QuerySocketImpl implements QuerySocket {
   }
 
   void parseChallenge(Uint8List bytes) {
+    // Sometimes when requesting and info packet the server might require a challenge.
+    if (infoCompleter != null) {
+      _challenge = bytes;
+      socket.send([...QueryPacket.info.bytes, ...bytes], address, port);
+      return;
+    }
+
     _challenge = bytes;
     challengeCompleter!.complete(_challenge);
     challengeCompleter = null;
@@ -198,11 +227,14 @@ class _QuerySocketImpl implements QuerySocket {
     final read = ReadBuffer.fromUint8List(bytes.sublist(1));
     final players = <QueryPlayer>[];
     while (read.canReadMore) {
-      players.add(QueryPlayer(
+      players.add(
+        QueryPlayer(
           index: read.uint8,
           name: read.string,
           score: read.int32,
-          duration: read.float32));
+          duration: read.float32,
+        ),
+      );
       /* TODO: Add TheShip params */
     }
     playersCompleter!.complete(UnmodifiableListView(players));
@@ -233,6 +265,8 @@ class _QuerySocketImpl implements QuerySocket {
     final data = datagram.data;
     final header = data[4];
 
+    _logger.finest('Packet: ${data.printHex()}');
+
     if (header == 0x49) {
       parseInfo(data.sublist(5));
     } else if (header == 0x41) {
@@ -248,4 +282,8 @@ class _QuerySocketImpl implements QuerySocket {
 
   @override
   void close() => socket.close();
+}
+
+extension on List<int> {
+  String printHex() => '[${map((e) => e.toRadixString(16)).join(',')}]';
 }
