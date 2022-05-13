@@ -6,7 +6,7 @@ Future<void> main() async {
   // and put correct ip, port and rcon password
   const svIp = '127.0.0.1';
   const svPort = 27015;
-  const svRconPass = 'ciao';
+  const String? svRconPass = null;
 
   final server = await SourceServer.connect(svIp, svPort, password: svRconPass);
 
@@ -26,8 +26,12 @@ Future<void> main() async {
     expect(rules, isA<List<ServerRule>>());
   });
 
-  test('Test Custom Command', () async {
-    final status = await server.command('status');
-    expect(status, isA<String>());
-  });
+  test(
+    'Test Custom Command',
+    () async {
+      final status = await server.command('status');
+      expect(status, isA<String>());
+    },
+    skip: svRconPass == null,
+  );
 }

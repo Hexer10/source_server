@@ -58,11 +58,8 @@ class _QuerySocketImpl implements QuerySocket {
   final ConcurrentQueue queue = ConcurrentQueue(concurrency: 1);
 
   Completer<ServerInfo>? infoCompleter;
-  Completer<Uint8List>? challengeCompleter;
   Completer<UnmodifiableListView<QueryPlayer>>? playersCompleter;
   Completer<UnmodifiableListView<ServerRule>>? rulesCompleter;
-
-  Uint8List? _challenge;
 
   final Logger _logger;
 
@@ -71,17 +68,9 @@ class _QuerySocketImpl implements QuerySocket {
     socket.listen(onEvent);
   }
 
-  Future<Uint8List> getChallenge() async {
-    if (_challenge != null) {
-      return _challenge!;
-    }
-    // assert(!(challengeCompleter?.isCompleted ?? false));
-    if (challengeCompleter != null) {
-      return challengeCompleter!.future;
-    }
-    challengeCompleter = Completer<Uint8List>();
+  /// Requests challenge and gets
+  void requestChallenge() {
     socket.send(QueryPacket.challenge.bytes, address, port);
-    return challengeCompleter!.future;
   }
 
   @override
@@ -106,10 +95,7 @@ class _QuerySocketImpl implements QuerySocket {
         return playersCompleter!.future;
       }
       playersCompleter = Completer<UnmodifiableListView<QueryPlayer>>();
-      // ignore: unawaited_futures
-      getChallenge().then(
-        (value) => socket.send(QueryPacket.players(value).bytes, address, port),
-      );
+      requestChallenge();
       return playersCompleter!.future;
     });
   }
@@ -122,10 +108,7 @@ class _QuerySocketImpl implements QuerySocket {
         return rulesCompleter!.future;
       }
       rulesCompleter = Completer<UnmodifiableListView<ServerRule>>();
-      // ignore: unawaited_futures
-      getChallenge().then(
-        (value) => socket.send(QueryPacket.rules(value).bytes, address, port),
-      );
+      requestChallenge();
       return rulesCompleter!.future;
     });
   }
@@ -203,21 +186,21 @@ class _QuerySocketImpl implements QuerySocket {
     infoCompleter = null;
   }
 
+  /// Parse the challenge and send the corresponding request.
   void parseChallenge(Uint8List bytes) {
-    // Sometimes when requesting and info packet the server might require a challenge.
+    QueryPacket? packet;
     if (infoCompleter != null) {
-      _challenge = bytes;
-      socket.send([...QueryPacket.info.bytes, ...bytes], address, port);
-      return;
+      packet = QueryPacket.infoChallenge(bytes);
+    } else if (playersCompleter != null) {
+      packet = QueryPacket.players(bytes);
+    } else if (rulesCompleter != null) {
+      packet = QueryPacket.rules(bytes);
     }
 
-    _challenge = bytes;
-    challengeCompleter!.complete(_challenge);
-    challengeCompleter = null;
-
-    // Since 2020 also the A2S_INFO packet could need the challenge on some servers.
-    if (infoCompleter != null && !infoCompleter!.isCompleted) {
-      socket.send(QueryPacket.infoChallenge(bytes).bytes, address, port);
+    if (packet != null) {
+      socket.send(packet.bytes, address, port);
+    } else {
+      _logger.severe('Requested challenge packet without any completer.');
     }
   }
 

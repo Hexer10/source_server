@@ -90,9 +90,7 @@ void main() {
       final dummy =
           await DummyServer.bind('127.0.0.1', port: 9125, password: '1234');
       await expectLater(
-        () async =>
-            await SourceServer.connect('127.0.0.1', 9125, password: '12345')
-              ..close(),
+        () async => SourceServer.connect('127.0.0.1', 9125, password: '12345'),
         throwsA(isA<RconAuthenticationException>()),
       );
       await dummy.close();

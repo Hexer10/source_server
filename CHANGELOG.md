@@ -1,3 +1,8 @@
+# 3.0.0
+- Updated to dart 2.17.0.
+- Code cleanup.
+- Minor fixes.
+
 ## 3.3.0-dev
 - Increased minimum sdk version: 2.14
 - Implemented minecraft ping protocol.

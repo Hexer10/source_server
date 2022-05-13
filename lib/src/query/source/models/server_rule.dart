@@ -10,4 +10,7 @@ class ServerRule {
 
   /// Construct a new [ServerRule] from its [name] and [value].
   const ServerRule(this.name, this.value);
+
+  @override
+  String toString() => 'ServerRule($name, $value)';
 }
