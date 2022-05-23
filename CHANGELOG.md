@@ -1,3 +1,6 @@
+# 4.0.0+1
+- Make `requestPing` true by default.
+
 # 4.0.0
 
 - Implemented `MinecraftServer.isConnected`

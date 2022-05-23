@@ -133,7 +133,7 @@ class MinecraftServer implements RconSocket, QuerySocket, ListPingSocket {
   String? get errorMessage => _rconSocket?.errorMessage;
 
   @override
-  Future<ServerPingInfo> getPingInfo({bool requestPing = false}) =>
+  Future<ServerPingInfo> getPingInfo({bool requestPing = true}) =>
       _listPingSocket.getPingInfo(requestPing: requestPing).timeout(timeout);
 
   @override

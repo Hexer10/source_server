@@ -1,6 +1,6 @@
 name: source_server
 description: A dart implementation of Source's Query Protocol and RCON. Supports most of the Source Games + Minecraft.
-version: 4.0.0
+version: 4.0.0+1
 homepage: https://github.com/Hexer10/source_server
 
 environment:

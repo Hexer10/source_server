@@ -19,7 +19,7 @@ abstract class ListPingSocket {
   /// Fetches the server info such a the MOTD, total number of players and other.
   /// Note: After this method is run the connection to the socket is closed, and the result is cached.
   ///       if you want to refresh the result you should create a new socket connection.
-  Future<ServerPingInfo> getPingInfo({bool requestPing = false});
+  Future<ServerPingInfo> getPingInfo({bool requestPing = true});
 
   /// Closes the connection
   void close();
@@ -56,7 +56,7 @@ class _ListPingSocket implements ListPingSocket {
     socket.destroy();
   }
 
-  bool requestPing = false;
+  bool requestPing = true;
   ServerPingInfo? info;
 
   void onEvent(Uint8List event) {
@@ -118,7 +118,7 @@ class _ListPingSocket implements ListPingSocket {
   }
 
   @override
-  Future<ServerPingInfo> getPingInfo({bool requestPing = false}) {
+  Future<ServerPingInfo> getPingInfo({bool requestPing = true}) {
     if (infoCompleter != null) {
       return infoCompleter!.future;
     }
