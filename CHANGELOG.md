@@ -1,8 +1,9 @@
-# 3.0.1
+# 4.0.0
 
 - Implemented `MinecraftServer.isConnected`
 - Now `MinecraftServer.getPingInfo` takes a named parameter (`requestPing`) which can be used to retrieve the server's
   ping from the `ServerPingInfo` class.
+- Updated to `v4.0.0` to fix versioning.
 
 # 3.0.0
 
