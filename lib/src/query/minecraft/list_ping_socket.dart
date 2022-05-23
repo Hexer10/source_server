@@ -13,10 +13,13 @@ import 'models/server_ping_info.dart';
 abstract class ListPingSocket {
   factory ListPingSocket._(Socket socket) = _ListPingSocket;
 
+  /// True if the server is connected.
+  bool get isConnected;
+
   /// Fetches the server info such a the MOTD, total number of players and other.
   /// Note: After this method is run the connection to the socket is closed, and the result is cached.
   ///       if you want to refresh the result you should create a new socket connection.
-  Future<ServerPingInfo> getPingInfo();
+  Future<ServerPingInfo> getPingInfo({bool requestPing = false});
 
   /// Closes the connection
   void close();
@@ -30,6 +33,9 @@ abstract class ListPingSocket {
 }
 
 class _ListPingSocket implements ListPingSocket {
+  @override
+  bool isConnected = true;
+
   late final Logger logger =
       Logger('ListPingSocket(${socket.address.address}:${socket.port})');
 
@@ -39,13 +45,19 @@ class _ListPingSocket implements ListPingSocket {
   Completer<ServerPingInfo>? infoCompleter;
 
   _ListPingSocket(this.socket) {
-    socket.listen(onEvent);
+    socket.listen(onEvent).onDone(() {
+      isConnected = false;
+    });
   }
 
   @override
   void close() {
+    isConnected = false;
     socket.destroy();
   }
+
+  bool requestPing = false;
+  ServerPingInfo? info;
 
   void onEvent(Uint8List event) {
     logger.fine('Received packet(${event.length}):\n$event\n');
@@ -53,40 +65,64 @@ class _ListPingSocket implements ListPingSocket {
 
     final id = _readVarInt(event.skip(size.length));
     if (id.value == -1) {
-      throw Exception('Premature end of stream.');
+      throw Exception('Invalid packet id.');
     }
 
-    final length = _readVarInt(event.skip(id.length + size.length));
-    if (length.value == -1) {
-      throw Exception('Premature end of stream.');
-    }
+    if (id.value == 0) {
+      final length = _readVarInt(event.skip(id.length + size.length));
 
-    if (length.value == 0) {
-      throw Exception('Invalid string length');
-    }
+      final str =
+          String.fromCharCodes(event, id.length + size.length + length.length);
 
-    final str =
-        String.fromCharCodes(event, id.length + size.length + length.length);
+      buffer.write(str);
 
-    buffer.write(str);
-
-    if (str.endsWith('}')) {
       final decoded = json.decode(buffer.toString()) as Map<String, dynamic>;
       if ((decoded['translate'] as String?)?.contains('disconnect') ?? false) {
         throw SocketException('${decoded['translate']}: ${decoded['with']}');
       }
 
       final info = ServerPingInfo.fromJson(decoded);
-      infoCompleter!.complete(info);
-      socket.close();
+      if (requestPing) {
+        this.info = info;
+
+        final write = WriteBuffer(9, fixedSize: true);
+        write.writeUint8(0x01);
+        write.writeUint64(
+          DateTime.now().millisecondsSinceEpoch,
+          Endian.big,
+        );
+
+        final decoded = write.data.buffer.asUint8List();
+        final packet = [..._writeVarNumber(decoded.length), ...decoded];
+
+        socket.add(packet);
+      } else {
+        infoCompleter!.complete(info);
+        close();
+      }
+    }
+    if (id.value == 1) {
+      final buffer = ReadBuffer.fromUint8List(
+        Uint8List.fromList(event.skip(2).toList()),
+        // Skip the packet length and id.
+        Endian.big,
+      ); // Skip the packet length and id.
+
+      infoCompleter!.complete(
+        info!.copyWith(
+          ping: DateTime.now().millisecondsSinceEpoch - buffer.uint64,
+        ),
+      );
+      close();
     }
   }
 
   @override
-  Future<ServerPingInfo> getPingInfo() {
+  Future<ServerPingInfo> getPingInfo({bool requestPing = false}) {
     if (infoCompleter != null) {
       return infoCompleter!.future;
     }
+    this.requestPing = requestPing;
 
     infoCompleter = Completer<ServerPingInfo>();
 

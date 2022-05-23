@@ -6,59 +6,61 @@ import 'dart:typed_data';
 class ReadBuffer {
   int _pos = 0;
   final ByteData data;
+  Endian endian;
 
-  ReadBuffer(this.data);
+  ReadBuffer(this.data, [this.endian = Endian.little]);
 
-  ReadBuffer.fromUint8List(Uint8List list) : data = ByteData.view(list.buffer);
+  ReadBuffer.fromUint8List(Uint8List list, [this.endian = Endian.little])
+      : data = ByteData.view(list.buffer);
 
   int get uint8 => data.getUint8(_pos++);
 
   int get int8 => data.getInt8(_pos++);
 
   int get uint16 {
-    final val = data.getUint16(_pos, Endian.little);
+    final val = data.getUint16(_pos, endian);
     _pos += 2;
     return val;
   }
 
   int get int16 {
-    final val = data.getInt16(_pos, Endian.little);
+    final val = data.getInt16(_pos, endian);
     _pos += 2;
     return val;
   }
 
   int get uint32 {
-    final val = data.getUint32(_pos, Endian.little);
+    final val = data.getUint32(_pos, endian);
     _pos += 4;
     return val;
   }
 
   int get int32 {
-    final val = data.getInt32(_pos, Endian.little);
+    final val = data.getInt32(_pos, endian);
     _pos += 4;
     return val;
   }
 
   int get uint64 {
-    final val = data.getUint64(_pos, Endian.little);
+    final val = data.getUint64(_pos, endian);
     _pos += 8;
     return val;
   }
 
   int get int64 {
-    final val = data.getInt64(_pos, Endian.little);
+    final val = data.getInt64(_pos, endian);
     _pos += 8;
     return val;
   }
 
   double get float32 {
-    final val = data.getFloat32(_pos, Endian.little);
+    final val = data.getFloat32(_pos, endian);
     _pos += 4;
     return val;
   }
 
   double get float64 {
-    final val = data.getFloat64(_pos, Endian.little);
+    final val = data.getFloat64(_pos, endian);
     _pos += 8;
     return val;
   }
@@ -142,9 +144,9 @@ class WriteBuffer {
     data.setInt32(pos, value, Endian.little);
   }
 
-  void writeUint64(int value) {
+  void writeUint64(int value, [Endian endian = Endian.little]) {
     final pos = _checkSize(8);
-    data.setUint64(pos, value, Endian.little);
+    data.setUint64(pos, value, endian);
   }
 
   void writeInt64(int value) {

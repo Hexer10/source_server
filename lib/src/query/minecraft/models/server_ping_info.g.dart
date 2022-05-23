@@ -15,6 +15,7 @@ _$_ServerPingInfo _$$_ServerPingInfoFromJson(Map<String, dynamic> json) =>
       modinfo: json['modinfo'] == null
           ? null
           : Modinfo.fromJson(json['modinfo'] as Map<String, dynamic>),
+      ping: json['ping'] as int?,
     );
 
 Map<String, dynamic> _$$_ServerPingInfoToJson(_$_ServerPingInfo instance) =>
@@ -24,6 +25,7 @@ Map<String, dynamic> _$$_ServerPingInfoToJson(_$_ServerPingInfo instance) =>
       'description': instance.description,
       'favicon': instance.favicon,
       'modinfo': instance.modinfo,
+      'ping': instance.ping,
     };
 
 _$_Description _$$_DescriptionFromJson(Map<String, dynamic> json) =>

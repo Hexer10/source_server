@@ -24,6 +24,9 @@ class ServerPingInfo with _$ServerPingInfo {
 
     /// Server's mods.
     Modinfo? modinfo,
+
+    /// Server's ping.
+    int? ping,
   }) = _ServerPingInfo;
 
   ///

@@ -37,6 +37,9 @@ mixin _$ServerPingInfo {
   /// Server's mods.
   Modinfo? get modinfo => throw _privateConstructorUsedError;
 
+  /// Server's ping.
+  int? get ping => throw _privateConstructorUsedError;
+
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   $ServerPingInfoCopyWith<ServerPingInfo> get copyWith =>
@@ -53,7 +56,8 @@ abstract class $ServerPingInfoCopyWith<$Res> {
       Players players,
       @JsonKey(fromJson: _descriptionToJson) Description description,
       String? favicon,
-      Modinfo? modinfo});
+      Modinfo? modinfo,
+      int? ping});
 
   $VersionCopyWith<$Res> get version;
   $PlayersCopyWith<$Res> get players;
@@ -77,6 +81,7 @@ class _$ServerPingInfoCopyWithImpl<$Res>
     Object? description = freezed,
     Object? favicon = freezed,
     Object? modinfo = freezed,
+    Object? ping = freezed,
   }) {
     return _then(_value.copyWith(
       version: version == freezed
@@ -99,6 +104,10 @@ class _$ServerPingInfoCopyWithImpl<$Res>
           ? _value.modinfo
           : modinfo // ignore: cast_nullable_to_non_nullable
               as Modinfo?,
+      ping: ping == freezed
+          ? _value.ping
+          : ping // ignore: cast_nullable_to_non_nullable
+              as int?,
     ));
   }
 
@@ -147,7 +156,8 @@ abstract class _$$_ServerPingInfoCopyWith<$Res>
       Players players,
       @JsonKey(fromJson: _descriptionToJson) Description description,
       String? favicon,
-      Modinfo? modinfo});
+      Modinfo? modinfo,
+      int? ping});
 
   @override
   $VersionCopyWith<$Res> get version;
@@ -177,6 +187,7 @@ class __$$_ServerPingInfoCopyWithImpl<$Res>
     Object? description = freezed,
     Object? favicon = freezed,
     Object? modinfo = freezed,
+    Object? ping = freezed,
   }) {
     return _then(_$_ServerPingInfo(
       version: version == freezed
@@ -199,6 +210,10 @@ class __$$_ServerPingInfoCopyWithImpl<$Res>
           ? _value.modinfo
           : modinfo // ignore: cast_nullable_to_non_nullable
               as Modinfo?,
+      ping: ping == freezed
+          ? _value.ping
+          : ping // ignore: cast_nullable_to_non_nullable
+              as int?,
     ));
   }
 }
@@ -211,7 +226,8 @@ class _$_ServerPingInfo implements _ServerPingInfo {
       required this.players,
       @JsonKey(fromJson: _descriptionToJson) required this.description,
       this.favicon,
-      this.modinfo});
+      this.modinfo,
+      this.ping});
 
   factory _$_ServerPingInfo.fromJson(Map<String, dynamic> json) =>
       _$$_ServerPingInfoFromJson(json);
@@ -238,9 +254,13 @@ class _$_ServerPingInfo implements _ServerPingInfo {
   @override
   final Modinfo? modinfo;
 
+  /// Server's ping.
+  @override
+  final int? ping;
+
   @override
   String toString() {
-    return 'ServerPingInfo(version: $version, players: $players, description: $description, favicon: $favicon, modinfo: $modinfo)';
+    return 'ServerPingInfo(version: $version, players: $players, description: $description, favicon: $favicon, modinfo: $modinfo, ping: $ping)';
   }
 
   @override
@@ -253,7 +273,8 @@ class _$_ServerPingInfo implements _ServerPingInfo {
             const DeepCollectionEquality()
                 .equals(other.description, description) &&
             const DeepCollectionEquality().equals(other.favicon, favicon) &&
-            const DeepCollectionEquality().equals(other.modinfo, modinfo));
+            const DeepCollectionEquality().equals(other.modinfo, modinfo) &&
+            const DeepCollectionEquality().equals(other.ping, ping));
   }
 
   @JsonKey(ignore: true)
@@ -264,7 +285,8 @@ class _$_ServerPingInfo implements _ServerPingInfo {
       const DeepCollectionEquality().hash(players),
       const DeepCollectionEquality().hash(description),
       const DeepCollectionEquality().hash(favicon),
-      const DeepCollectionEquality().hash(modinfo));
+      const DeepCollectionEquality().hash(modinfo),
+      const DeepCollectionEquality().hash(ping));
 
   @JsonKey(ignore: true)
   @override
@@ -284,7 +306,8 @@ abstract class _ServerPingInfo implements ServerPingInfo {
       @JsonKey(fromJson: _descriptionToJson)
           required final Description description,
       final String? favicon,
-      final Modinfo? modinfo}) = _$_ServerPingInfo;
+      final Modinfo? modinfo,
+      final int? ping}) = _$_ServerPingInfo;
 
   factory _ServerPingInfo.fromJson(Map<String, dynamic> json) =
       _$_ServerPingInfo.fromJson;
@@ -311,6 +334,10 @@ abstract class _ServerPingInfo implements ServerPingInfo {
 
   /// Server's mods.
   Modinfo? get modinfo => throw _privateConstructorUsedError;
+  @override
+
+  /// Server's ping.
+  int? get ping => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$$_ServerPingInfoCopyWith<_$_ServerPingInfo> get copyWith =>
