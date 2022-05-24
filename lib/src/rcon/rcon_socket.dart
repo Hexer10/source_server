@@ -68,7 +68,14 @@ class _RconSocketImpl implements RconSocket {
   bool? authStatus;
 
   _RconSocketImpl(this.socket) {
-    socket.listen(onEvent);
+    socket.listen(onEvent,
+        onError: (Error e, StackTrace s) {
+          logger.severe('socket error.', e, s);
+        },
+        cancelOnError: true,
+        onDone: () {
+          logger.fine('socket closed.');
+        });
   }
 
   @override

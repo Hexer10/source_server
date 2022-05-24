@@ -45,9 +45,7 @@ class _ListPingSocket implements ListPingSocket {
   Completer<ServerPingInfo>? infoCompleter;
 
   _ListPingSocket(this.socket) {
-    socket.listen(onEvent).onDone(() {
-      isConnected = false;
-    });
+    socket.listen(onEvent, onDone: () => isConnected = false);
   }
 
   @override
