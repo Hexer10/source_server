@@ -3,6 +3,12 @@
 import 'dart:convert';
 import 'dart:typed_data';
 
+/*
+3: SERVERDATA_AUTH
+2: SERVERDATA_EXECCOMMAND
+2: SERVERDATA_AUTH_RESPONSE
+0: SERVERDATA_RESPONSE_VALUE
+ */
 class RconPacket {
   final Uint8List bytes;
 
@@ -17,6 +23,8 @@ class RconPacket {
   Uint8List get body => bytes.sublist(12, bytes.length - 2);
 
   String get bodyAsString => utf8.decode(body, allowMalformed: true);
+
+  bool get terminated => bytes.last == 0x00 && bytes[bytes.length -2] == 0x00;
 
   RconPacket(this.bytes) : _byteData = ByteData.view(bytes.buffer);
 
@@ -56,6 +64,12 @@ class RconPacket {
 
   factory RconPacket.command({required String command, required int id}) {
     return RconPacket.from(body: command, type: 2, id: id);
+  }
+
+  /// Used only to add content to body when receiving multi-packets replies.
+  RconPacket expandBody(Iterable<int> content) {
+    assert(!terminated);
+    return RconPacket(Uint8List.fromList([...bytes, ...content]));
   }
 }
 

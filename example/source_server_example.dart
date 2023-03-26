@@ -9,7 +9,7 @@ Future<void> main() async {
   print(players);
 
   final rules = await server
-      .getRules(); // Note: this doesn't work in CS:GO, unless you have a specific SourceMod plugin installed.
+      .getRules();
   print(rules);
 
   final status = await server.command('status');

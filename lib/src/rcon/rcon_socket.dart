@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:collection';
+import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
 
@@ -66,6 +67,8 @@ class _RconSocketImpl implements RconSocket {
   bool skip = true;
   int packetId = 2;
   bool? authStatus;
+  late RconPacket _buffer;
+
 
   _RconSocketImpl(this.socket) {
     socket.listen(onEvent);
@@ -119,7 +122,6 @@ class _RconSocketImpl implements RconSocket {
   }
 
   void onEvent(Uint8List event) {
-    logger.fine('Received packet(${event.length}):\n$event\n');
     final packet = RconPacket(event);
     if (packet.id == 0) {
       return;
@@ -137,7 +139,34 @@ class _RconSocketImpl implements RconSocket {
       final body = packet.bodyAsString;
       _commandStream.add(body);
 
-      cmdMap.remove(packet.id)?.complete(body);
+      // Check if this a multi-packet reply or not.
+      if (packet.terminated) {
+        cmdMap.remove(packet.id)?.complete(body);
+        return;
+      }
+
+      // This is a multi-packet reply,
+      // save the packet for when we have the full packet.
+      _buffer = packet;
+      return;
+    } else {
+      // Immediately send the text to the command stream
+      _commandStream.add(
+        utf8.decode(
+          [
+            for (final byte in packet.bytes) // Filter the null bytes
+              if (byte != 0x00) byte
+          ],
+          allowMalformed: true,
+        ),
+      );
+
+      // Expand the buffer and if it's terminated complete the command's future.
+      _buffer = _buffer.expandBody(packet.bytes);
+      if (packet.terminated) {
+        cmdMap.remove(_buffer.id)?.complete(_buffer.bodyAsString);
+        return;
+      }
     }
   }
 }
